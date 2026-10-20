@@ -40,7 +40,7 @@ ok(mapped.includes('cx="15" cy="16" r="5"'),'Circle markers must stay circular')
 ok(mapped.includes('font-size="11"'),'Font size must remain independent of row compression');
 ok(!core.buildSVG(c,{},true).inner.includes('TÌNH HUỐNG LÂM SÀNG'),'Chart-only export is the default');
 ok(core.buildSVG(c,{design:{exportNarrative:true}},true).inner.includes('TÌNH HUỐNG LÂM SÀNG'),'Narrative can be included');
-ok(!core.buildSVG(c,{design:{showLegend:false}},true).inner.includes('CƠN CO: hoa văn'),'Legend can be excluded');
+ok(!core.buildSVG(c,{design:{showLegend:false}},true).inner.includes('CƠN CO · THỜI GIAN MỖI CƠN'),'Legend can be excluded');
 const custom = core.buildSVG(c,{design:{series:{ctc:{marker:'diamond',color:'#123456',width:3,dash:'dotted'}}}});
 ok(custom.inner.includes('stroke="#123456"') && custom.inner.includes('stroke-dasharray="1 4"'),'Per-series color and dash customization');
 const noLine = core.buildSVG(c,{design:{series:{ctc:{dash:'none'}}}});
@@ -138,7 +138,7 @@ const sparse=core.buildSVG(onlyCTC),all=core.buildSVG(onlyCTC,{design:{rowMode:'
 ok(sparse.height<all.height/2,'A sparse case removes meaningful vertical dead space');
 ok(!sparse.tailCell,'A point-only final observation does not add an unnecessary table cell');
 const sparseExport=core.buildSVG(onlyCTC,{},true);
-ok(!sparseExport.inner.includes('Mạch mẹ · lần/phút')&&!sparseExport.inner.includes('CƠN CO: hoa văn'),'Export legends follow the sections actually shown');
+ok(!sparseExport.inner.includes('Mạch mẹ · lần/phút')&&!sparseExport.inner.includes('CƠN CO · THỜI GIAN MỖI CƠN'),'Export legends follow the sections actually shown');
 for(const compact of [false,true])for(const exporting of [false,true]){const drawing=core.buildSVG(onlyCTC,{compact},exporting);ok(drawing.inner.includes('OXYTOCIN · IU/L')&&drawing.inner.includes('THUỐC KHÁC')&&drawing.inner.includes('DỊCH TRUYỀN'),'Automatic and compact drawings retain empty oxytocin, medication and IV-fluid rows, including exports');ok(!drawing.hiddenRows.includes('Oxytocin')&&!drawing.hiddenRows.includes('Thuốc & dịch truyền'),'Automatic row hiding cannot conceal medication entry points')}
 ok(!core.buildSVG(onlyCTC,{design:{rowMode:'custom',sections:{oxy:false,medication:false}}},true).inner.includes('OXYTOCIN · IU/L'),'Explicit custom section choices still apply');
 const terminal=core.buildSVG(eightHours,{design:{rowMode:'all',cellWidth:1,rowHeight:1}});
@@ -328,7 +328,7 @@ ok(!anonymous.includes('PRIVATE_NAME')&&!anonymous.includes('PRIVATE_CODE')&&ano
 ok(anonymous.includes('Times New Roman, serif')&&anonymous.includes('#6789ab'),'Font and grid customization reach exported SVG');
 const normalView=core.buildSVG(c,{design:{exportNarrative:true,showLegend:true}}),exportView=core.buildSVG(c,{design:{exportNarrative:true,showLegend:true}},true);
 ok(normalView.width===exportView.width&&normalView.height===exportView.height,'Noninteractive chart and export share the same layout');
-ok(normalView.inner.includes('TÌNH HUỐNG LÂM SÀNG')&&normalView.inner.includes('CƠN CO: hoa văn'),'Narrative and legend are visible while designing');
+ok(normalView.inner.includes('TÌNH HUỐNG LÂM SÀNG')&&normalView.inner.includes('CƠN CO · THỜI GIAN MỖI CƠN'),'Narrative and legend are visible while designing');
 const publicCase=JSON.parse(core.caseJSON(c));
 ok(publicCase.fluidNotation==='vn'&&publicCase.observations[0].fluid==='C','Public JSON declares VN and uses C for intact membranes');
 ok(publicCase.observations.some(o=>o.fluid==='T'),'Public JSON uses T for white fluid');

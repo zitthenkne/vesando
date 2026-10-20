@@ -5,7 +5,7 @@ const http=require('node:http');
 const path=require('node:path');
 const os=require('node:os');
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
-const files=new Set(['index.html','studio.css','workspace.css','interaction.css','clinical-rules.js','guidance.js','enhancements.js']);
+const files=new Set(['index.html','studio.css','workspace.css','interaction.css','theme.css','clinical-rules.js','guidance.js','enhancements.js']);
 const server=http.createServer(async(req,res)=>{
   const name=new URL(req.url,'http://localhost').pathname.slice(1)||'index.html';
   if(!files.has(name)){res.writeHead(404);res.end();return}
@@ -83,11 +83,11 @@ const expectedSVG=p=>p.evaluate(()=>{const a=document.querySelector('#app')._vno
     await page.keyboard.press('Alt+1');await page.getByRole('button',{name:'Chi tiết',exact:true}).click();await page.getByRole('button',{name:'Thai & ối',exact:true}).click();
     await page.locator('.fluid-primary button').nth(0).click();assert.equal(await page.getByLabel('Ối: mức phân su hoặc máu',{exact:true}).inputValue(),'I');await page.locator('.fluid-primary button').nth(1).click();assert.equal(await page.getByLabel('Ối: mức phân su hoặc máu',{exact:true}).inputValue(),'C');await page.getByRole('button',{name:'Hủy thay đổi',exact:true}).click();
 
-    await page.getByLabel('Phân hệ làm việc',{exact:true}).selectOption('clinical');await page.keyboard.press('Alt+1');await page.getByRole('button',{name:'Nhập bảng',exact:true}).click();await page.locator('#quick-fhr').fill('149');
+    await page.getByRole('radio',{name:'Theo dõi',exact:true}).click();await page.keyboard.press('Alt+1');await page.getByRole('button',{name:'Nhập bảng',exact:true}).click();await page.locator('#quick-fhr').fill('149');
     await page.evaluate(()=>{document.querySelector('#app')._vnode.component.setupState.selectedTime=.5});await page.locator('#quick-fhr').fill('151');await page.locator('.quick-export').click();
     const clinicalExport=await download(page,()=>page.getByRole('button',{name:'Áp dụng & tải SVG',exact:true}).click());const recorded=(await readState(page)).case;assert.equal(recorded.observations.find(o=>o.time===0).fhr,149);assert.equal(recorded.observations.find(o=>o.time===.5).fhr,151);assert.equal(clinicalExport.bytes.toString(),await expectedSVG(page));
     await page.evaluate(()=>{const a=document.querySelector('#app')._vnode.component.setupState;a.undo()});assert.equal((await readState(page)).case.observations[0].fhr,null);
-    await page.getByLabel('Phân hệ làm việc',{exact:true}).selectOption('exam');
+    await page.getByRole('radio',{name:'Soạn đề',exact:true}).click();
     console.log('PASS: clinical drafts at multiple times export together and undo as one transaction');
 
     await page.keyboard.press('0');await page.keyboard.press('?');await page.waitForSelector('.shortcut-sheet[open]');await page.keyboard.press('Escape');

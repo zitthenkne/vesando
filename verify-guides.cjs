@@ -5,7 +5,7 @@ const http=require('node:http');
 const path=require('node:path');
 const os=require('node:os');
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
-const files=new Set(['index.html','studio.css','workspace.css','interaction.css','clinical-rules.js','guidance.js','enhancements.js']);
+const files=new Set(['index.html','studio.css','workspace.css','interaction.css','theme.css','clinical-rules.js','guidance.js','enhancements.js']);
 const server=http.createServer(async(req,res)=>{const name=new URL(req.url,'http://localhost').pathname.slice(1)||'index.html';if(!files.has(name)){res.writeHead(404);res.end();return}try{res.setHeader('Content-Type',(name.endsWith('.css')?'text/css':name.endsWith('.js')?'application/javascript':'text/html')+'; charset=utf-8');res.end(await fs.readFile(path.join(__dirname,name)))}catch{res.writeHead(500);res.end()}});
 const courses=["Bắt đầu","Lập sản đồ bằng AI","Sửa sản đồ","Cơn co & huyết áp","Thuốc & dịch truyền","Chỉnh bản vẽ","Xuất & lưu"];
 const model=p=>p.evaluate(()=>{const a=document.querySelector('#app')._vnode.component.setupState;return JSON.stringify({cases:a.cases,clinical:a.clinical,json:a.jsonText,design:a.design,examPast:a.examPast,examFuture:a.examFuture,history:a.history,mode:a.mode})});

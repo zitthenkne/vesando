@@ -44,3 +44,13 @@ Kết quả cuối: `verify.cjs` đạt **795 checks**. Sáu bộ browser `verif
 - Bước **Lập sản đồ bằng AI** trong mục Bắt đầu mô tả cả chuỗi: đề bài → prompt → AI → dán phản hồi → sản đồ.
 - Mục **Sửa sản đồ** có thêm bước **Mũi tên chú thích** (6 bước): Ghi nhanh → Mũi tên chú thích → chọn thời điểm, nhập nội dung, lưu.
 - Toàn bộ câu chữ mới dùng giọng trang trọng, mỗi mô tả tối đa 15 từ.
+
+## Đồng bộ với đợt nâng cấp 5 (20/10/2026)
+
+- **Quản lý ca**: tên ca hiện trên cả điện thoại (tầng 2 của thanh trên), không cần mở ⋯.
+- **Gửi prompt cho AI**: có thể chọn ChatGPT, Gemini hoặc Claude để sao chép và mở ngay.
+- **Nhập phản hồi**: quay lại trang là hộp thoại tự mở Bước 2; chọn **Dán phản hồi**.
+- **Đối chiếu bản xem trước**: dùng thẻ số liệu "Đối chiếu nhanh" phía trên bản xem trước.
+- Số bước và mã hướng dẫn giữ nguyên (39 bước).
+- **Chọn chế độ** nhắc vị trí ô **Quy chuẩn** ngay trên sản đồ.
+- Xuất & lưu: bước **Xem trước** được thay bằng **Gửi để kiểm tra** (thẻ JSON kiểm tra trong Xuất đề); vẫn 5 bước.

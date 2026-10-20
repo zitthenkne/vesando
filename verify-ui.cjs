@@ -6,7 +6,7 @@ const http=require('node:http');
 const path=require('node:path');
 const os=require('node:os');
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
-const files={'/':'index.html','/index.html':'index.html','/interaction.css':'interaction.css','/workspace.css':'workspace.css','/studio.css':'studio.css','/clinical-rules.js':'clinical-rules.js','/guidance.js':'guidance.js','/enhancements.js':'enhancements.js'};
+const files={'/':'index.html','/index.html':'index.html','/interaction.css':'interaction.css','/theme.css':'theme.css','/workspace.css':'workspace.css','/studio.css':'studio.css','/clinical-rules.js':'clinical-rules.js','/guidance.js':'guidance.js','/enhancements.js':'enhancements.js'};
 const server=http.createServer(async(req,res)=>{const file=files[new URL(req.url,'http://localhost').pathname];if(!file){res.writeHead(404);res.end();return}try{const bytes=await fs.readFile(path.join(__dirname,file));res.setHeader('Content-Type',(file.endsWith('.css')?'text/css':file.endsWith('.js')?'application/javascript':'text/html')+'; charset=utf-8');res.end(bytes)}catch{res.writeHead(500);res.end()}});
 async function source(page,clinical=false){return page.evaluate(c=>JSON.stringify(document.querySelector('#app')._vnode.component.setupState[c?'clinical':'activeCase'].observations),clinical)}
 async function change(input,value){await input.fill(String(value));await input.press('Tab')}
@@ -333,7 +333,7 @@ async function themeUI(p){await p.getByRole('button',{name:'Tùy biến không g
     await controls.locator('.workspace-menu>summary').click();
     const themeBefore=await controls.locator('html').getAttribute('data-theme');await controls.locator('.mobile-theme-action').click();assert.notEqual(await controls.locator('html').getAttribute('data-theme'),themeBefore);
     assert.equal(await controls.locator('.workspace-menu').getAttribute('open'),null);
-    await controls.getByLabel('Phân hệ làm việc',{exact:true}).selectOption('clinical');await controls.locator('.workspace-menu>summary').click();
+    await controls.getByRole('radio',{name:'Theo dõi',exact:true}).click();await controls.locator('.workspace-menu>summary').click();
     const [sessionDownload]=await Promise.all([controls.waitForEvent('download'),controls.locator('.workspace-menu').getByRole('button',{name:'Lưu phiên JSON',exact:true}).click()]);
     const sessionText=await fs.readFile(await sessionDownload.path(),'utf8');assert.ok(JSON.parse(sessionText).observations.length);
     const importedSession=JSON.parse(sessionText);importedSession.observations[0].fhr=151;
@@ -366,7 +366,7 @@ async function themeUI(p){await p.getByRole('button',{name:'Tùy biến không g
     assert.equal(await f.locator('.editor .field-changed').count(),1);assert.ok((await f.locator('.editor-footer .form-state').innerText()).includes('1 mục'));
     await fullValue.press('Control+Enter');await f.waitForSelector('.editor',{state:'detached'});assert.equal(JSON.parse(await source(f)).find(o=>o.time===2).cervix,7);
     assert.equal(await f.evaluate(()=>!!document.activeElement.closest('.data-mode-picker')),true);
-    await f.getByLabel('Phân hệ làm việc',{exact:true}).selectOption('clinical');await f.getByRole('button',{name:'Nhập bảng',exact:true}).click();
+    await f.getByRole('radio',{name:'Theo dõi',exact:true}).click();await f.getByRole('button',{name:'Nhập bảng',exact:true}).click();
     const qv=f.locator('#quick-fhr'),quickSave=f.locator('.quick-entry-actions button');assert.equal(await quickSave.isDisabled(),true);
     await qv.fill('151');assert.equal(await f.locator('.quick-fields .field-changed').count(),1);await qv.press('Control+Enter');
     assert.equal(await quickSave.getAttribute('data-action-state'),'success');assert.equal(await quickSave.isDisabled(),true);assert.equal(JSON.parse(await source(f))[0].fhr,151);
@@ -393,7 +393,7 @@ async function themeUI(p){await p.getByRole('button',{name:'Tùy biến không g
     await f.evaluate(()=>window.finishClipboard(false));await f.waitForFunction(()=>document.querySelector('.copy-image').dataset.actionState==='error');assert.equal(await imageCopy.isDisabled(),false);
     await imageCopy.click();await f.evaluate(()=>window.finishClipboard(true));await f.waitForFunction(()=>document.querySelector('.copy-image').dataset.actionState==='success');
     await f.screenshot({path:path.join(os.tmpdir(),'vesando-feedback-success.png'),animations:'disabled'});
-    await f.getByLabel('Phân hệ làm việc',{exact:true}).selectOption('exam');await f.locator('.case-menu>summary').click();await f.getByRole('button',{name:'Thư viện ca',exact:true}).click();
+    await f.getByRole('radio',{name:'Soạn đề',exact:true}).click();await f.locator('.case-menu>summary').click();await f.getByRole('button',{name:'Thư viện ca',exact:true}).click();
     await f.locator('.toolbox .sidebar-tool').first().locator('summary').click();const textCopy=f.locator('.json-label button').last();
     await f.evaluate(()=>navigator.clipboard.writeText=text=>new Promise(resolve=>{window.copiedText=text;window.finishTextCopy=resolve}));await textCopy.click();assert.equal(await textCopy.getAttribute('aria-busy'),'true');
     await f.evaluate(()=>window.finishTextCopy());await f.waitForFunction(()=>document.querySelector('.json-label [data-action-state=success]'));

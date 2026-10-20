@@ -5,7 +5,7 @@ const http=require('node:http');
 const path=require('node:path');
 const os=require('node:os');
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
-const files=new Set(['index.html','studio.css','workspace.css','interaction.css','clinical-rules.js','guidance.js','enhancements.js']);
+const files=new Set(['index.html','studio.css','workspace.css','interaction.css','theme.css','clinical-rules.js','guidance.js','enhancements.js']);
 const server=http.createServer(async(req,res)=>{
   const file=new URL(req.url,'http://localhost').pathname.slice(1)||'index.html';
   if(!files.has(file)){res.writeHead(404);res.end();return}
@@ -28,7 +28,8 @@ async function preferences(p){await p.getByRole('button',{name:'Tùy biến khô
     assert.equal(await page.locator('.view-menu').getAttribute('open'),null);
     assert.equal(await page.locator('.case-header').isVisible(),false);
     assert.equal(await page.locator('.chart-diagnostics').isVisible(),false);
-    assert.ok(await page.locator('button:visible').count()<=11);
+    // The two-option mode switch replaces the former mode <select>; it is not extra clutter.
+    assert.ok(await page.locator('button:visible').count()-await page.locator('.workspace-mode>button').count()<=11);
     await page.screenshot({path:path.join(os.tmpdir(),'vesando-quiet-desktop.png'),fullPage:true,animations:'disabled'});
     console.log('PASS: quiet startup, eleven visible buttons including JSON and usage guides, closed secondary information and full-width paper');
 
@@ -112,7 +113,7 @@ async function preferences(p){await p.getByRole('button',{name:'Tùy biến khô
     await page.setViewportSize({width:390,height:844});await page.screenshot({path:path.join(os.tmpdir(),'vesando-quiet-mobile.png'),animations:'disabled'});
     await preferences(page);const mobileDialog=await page.locator('.workspace-preferences').boundingBox();assert.ok(mobileDialog.x>=0&&mobileDialog.x+mobileDialog.width<=390&&mobileDialog.y>=0&&mobileDialog.y+mobileDialog.height<=844);
     await page.screenshot({path:path.join(os.tmpdir(),'vesando-preferences-mobile.png'),animations:'disabled'});await page.keyboard.press('Escape');
-    await page.getByLabel('Phân hệ làm việc',{exact:true}).selectOption('clinical');assert.equal(await page.locator('.clinical-section').isVisible(),true);
+    await page.getByRole('radio',{name:'Theo dõi',exact:true}).click();assert.equal(await page.locator('.clinical-section').isVisible(),true);
     console.log('PASS: '+layouts+' responsive combinations, 44px primary targets, mobile dialog, and workspace switching');
 
     // Exercise the new interaction model with real input events and default settings.
@@ -159,7 +160,7 @@ async function preferences(p){await p.getByRole('button',{name:'Tùy biến khô
     await hit(2,'cervix').click();await precision.getByRole('button',{name:'Chi tiết',exact:true}).click();const form=await precision.locator('.editor').boundingBox(),paper=await precision.locator('.workarea').boundingBox();assert.ok(form.x>=paper.x+paper.width,'The full form is also in the right inspector');
     await precision.locator('.editor-values input[type=number]').nth(1).fill('6.5');assert.equal((await getCase()).observations.find(o=>o.time===2).cervix,6);await precision.locator('.editor-values input[type=number]').nth(1).press('Control+Enter');assert.equal((await getCase()).observations.find(o=>o.time===2).cervix,6.5);
     await precision.screenshot({path:path.join(os.tmpdir(),'vesando-precision-desktop.png'),animations:'disabled'});
-    await precision.getByLabel('Phân hệ làm việc',{exact:true}).selectOption('clinical');await precision.getByRole('button',{name:'Nhập bảng',exact:true}).click();
+    await precision.getByRole('radio',{name:'Theo dõi',exact:true}).click();await precision.getByRole('button',{name:'Nhập bảng',exact:true}).click();
     assert.equal(await precision.locator('#studio-toolbox .quick-entry').count(),1);assert.equal(await precision.locator('.clinical-section .quick-entry').count(),0);await precision.locator('#quick-fhr').fill('151');await precision.locator('#quick-fhr').press('Control+Enter');assert.equal((await getCase()).observations[0].fhr,151);
     await precisionContext.close();
     const tapContext=await browser.newContext({viewport:{width:390,height:844},hasTouch:true,isMobile:true,reducedMotion:'reduce'}),tap=await tapContext.newPage();await tap.goto(url);await tap.waitForSelector('#app:not([v-cloak])');
