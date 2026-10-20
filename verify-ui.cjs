@@ -22,7 +22,7 @@ async function themeUI(p){await p.getByRole('button',{name:'Tùy biến không g
     page.setDefaultTimeout(12000);page.on('pageerror',e=>errors.push(e.message));
     await page.goto(url);await page.waitForSelector('#app:not([v-cloak])');
     assert.equal(await page.locator('.toolbox').isVisible(),false,'The initial view gives the chart the full workspace');
-    assert.equal(await page.locator('.case-narrative').getAttribute('open'),null);
+    assert.equal(await page.locator('.dossier.open').count(),0);
     await page.screenshot({path:path.join(os.tmpdir(),'vesando-ui-clean-start.png'),fullPage:true,animations:'disabled'});
     await page.locator('.tool-tabs button').nth(1).click();
     // Convenience controls must change only their intended scope.
@@ -177,7 +177,7 @@ async function themeUI(p){await p.getByRole('button',{name:'Tùy biến không g
     await page.keyboard.press('Control+k');await page.waitForSelector('dialog[open]');assert.equal(await page.locator('.toolbox[aria-modal=true]').count(),0);await page.keyboard.press('Escape');
     console.log('PASS: 320/390/768/1024px layouts, mobile context sheet, focus trap and Escape');
 
-    await page.setViewportSize({width:1440,height:1000});await page.locator('.case-card:visible .case-extras>summary').click();await page.locator('.case-card:visible .case-actions >summary').click();await page.locator('.case-card:visible .card-foot >button').click();
+    await page.setViewportSize({width:1440,height:1000});await page.locator('.case-card:visible .dossier .t-actions').click();await page.locator('.case-card:visible .a-clinical').click();
     const clinicalBefore=await source(page,true);await page.locator('.clinical-section [data-design-section=progress]').focus();await page.keyboard.press('Enter');assert.equal(await sectionSelect.inputValue(),'progress');assert.equal(await source(page,true),clinicalBefore);
     await change(height,350);await page.keyboard.press('Alt+1');await page.locator('.data-mode-picker').getByRole('button',{name:'Thêm điểm',exact:true}).click();await page.locator('.data-series-picker button').last().click();
     await page.locator('.clinical-section [data-plot]').scrollIntoViewIfNeeded();
@@ -253,7 +253,7 @@ async function themeUI(p){await p.getByRole('button',{name:'Tùy biến không g
     assert.equal(directCase.find(o=>o.time===0).cervix,4);assert.equal(directCase.find(o=>o.time===.5).fhr,144);
     const [directExport]=await Promise.all([direct.waitForEvent('download'),(async()=>{await direct.locator('.quick-export').click();await direct.locator('.format-choice button').nth(1).click();await direct.locator('.export-main').click()})()]);
     const directSVG=await fs.readFile(await directExport.path(),'utf8');assert.ok(directSVG.includes('#7c3aed')&&!directSVG.includes('data-point-hit')&&!directSVG.includes('point-drag-ghost'));
-    await direct.keyboard.press('Alt+1');await direct.locator('.case-extras>summary').click();await direct.locator('.case-actions>summary').click();await direct.locator('.card-foot>button').click();
+    await direct.keyboard.press('Alt+1');await direct.locator('.dossier .t-actions').click();await direct.locator('.a-clinical').click();
     const clinicalDirectBefore=await directSource();await beginDrag(6,'fhr',6.5,150);await direct.mouse.up();
     let clinicalDirect=JSON.parse(await directSource());assert.equal(clinicalDirect.find(o=>o.time===6).fhr,null);assert.equal(clinicalDirect.find(o=>o.time===6).cervix,10);assert.ok(Math.abs(clinicalDirect.find(o=>o.time===6.5).fhr-150)<=1);
     await direct.getByRole('button',{name:'Hoàn tác dữ liệu',exact:true}).click();assert.equal(await directSource(),clinicalDirectBefore);

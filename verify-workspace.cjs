@@ -24,12 +24,12 @@ async function preferences(p){await p.getByRole('button',{name:'Tùy biến khô
     const original=await state(page);
     assert.equal(original.stage,'overview');assert.equal(await page.locator('.data-tools:visible').count(),0);
     assert.equal(await page.locator('.toolbox').isVisible(),false);
-    assert.equal(await page.locator('.case-extras').getAttribute('open'),null);
+    assert.equal(await page.locator('.dossier.open').count(),0);
     assert.equal(await page.locator('.view-menu').getAttribute('open'),null);
     assert.equal(await page.locator('.case-header').isVisible(),false);
     assert.equal(await page.locator('.chart-diagnostics').isVisible(),false);
-    // The two-option mode switch replaces the former mode <select>; it is not extra clutter.
-    assert.ok(await page.locator('button:visible').count()-await page.locator('.workspace-mode>button').count()<=11);
+    // The two-option mode switch replaces the former mode <select>; it is not extra clutter. Hồ sơ ca adds one tab bar (4 tabs + fold) in place of the old nested accordion.
+    assert.ok(await page.locator('button:visible').count()-await page.locator('.workspace-mode>button').count()<=16);
     await page.screenshot({path:path.join(os.tmpdir(),'vesando-quiet-desktop.png'),fullPage:true,animations:'disabled'});
     console.log('PASS: quiet startup, eleven visible buttons including JSON and usage guides, closed secondary information and full-width paper');
 

@@ -42,7 +42,7 @@ Kết quả cuối: `verify.cjs` đạt **795 checks**. Sáu bộ browser `verif
 
 - Hướng dẫn **Nhập JSON** đổi thành **Lập sản đồ bằng AI**, đi theo đúng hai bước của hộp thoại: Nhập đề bài → Chọn tác vụ → Gửi prompt cho AI → Nhập phản hồi → Đối chiếu bản xem trước → Dựng sản đồ.
 - Bước **Lập sản đồ bằng AI** trong mục Bắt đầu mô tả cả chuỗi: đề bài → prompt → AI → dán phản hồi → sản đồ.
-- Mục **Sửa sản đồ** có thêm bước **Mũi tên chú thích** (6 bước): Ghi nhanh → Mũi tên chú thích → chọn thời điểm, nhập nội dung, lưu.
+- Mục **Sửa sản đồ** có thêm bước **Mũi tên chú thích** (6 bước): Ghi nhanh → Mũi tên chú thích để thêm; bấm thẻ trên sản đồ để sửa nội dung, giờ, màu và cỡ.
 - Toàn bộ câu chữ mới dùng giọng trang trọng, mỗi mô tả tối đa 15 từ.
 
 ## Đồng bộ với đợt nâng cấp 5 (20/10/2026)

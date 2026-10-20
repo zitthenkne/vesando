@@ -175,6 +175,7 @@ const setHidden=(page,hidden)=>page.evaluate(h=>{Object.defineProperty(document,
       assert.ok(await p.locator('.chart-zoom-pill').isVisible());
       await p.getByRole('button',{name:'Phóng to nhanh',exact:true}).click();assert.equal(await p.locator('.zoom-readout').innerText(),'150%');
       await p.locator('.zoom-readout').click();assert.equal(await p.locator('.zoom-readout').innerText(),'100%');
+      await p.evaluate(()=>scrollTo(0,0)); // the page is now long enough for the click above to scroll it
       const box=await p.locator('.chart-scroll').boundingBox(),cdp=await phone.newCDPSession(p),cx=box.x+box.width/2,cy=box.y+Math.min(box.height,300)/2;
       await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:cx-30,y:cy},{x:cx+30,y:cy}]});
       for(const d of [50,80,110])await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:cx-d,y:cy},{x:cx+d,y:cy}]});
