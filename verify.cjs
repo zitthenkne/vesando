@@ -11,7 +11,8 @@ vm.runInContext(script + '\nwindow.testDesign={removeChartPoint,changeChartPoint
 const core = sandbox.window.PartographCore;
 const {designOptions,layoutSVG,defaults} = sandbox.window.testDesign;
 const original = core.runChecks();
-const c = core.presets[0];
+const showcase = core.presets[0];
+const c = core.validateCase({...showcase,events:[]});
 let checks = original.passed;
 function ok(value,message){assert.ok(value,message);checks++}
 // Clinical geometry: WHO/ICM 2008 Fig. 4.1–4.2, printed pp. 57–59.
@@ -358,5 +359,17 @@ for(const key of ['oxy','oxyDose','oxyRate'])ok(core.chartCellFields(key).map(f=
 const oxyCell={scope:'observation',key:'oxy',caseId:c.id,time:0,expected:{oxyDose:c.observations[0].oxyDose,oxyRate:c.observations[0].oxyRate},values:{oxyDose:2.5,oxyRate:8}},oxyChanged=editCell(c,oxyCell);
 ok(oxyChanged.observations[0].oxyDose===2.5&&oxyChanged.observations[0].oxyRate===8&&oxyChanged.observations[0].medication===c.observations[0].medication,'Oxytocin concentration and drip rate share one validated edit without changing medication');
 assert.throws(()=>editCell(c,{...oxyCell,expected:{...oxyCell.expected,oxyRate:99}}));checks++;
+// Arrow notes: normalisation, the dedicated band, and callout labels.
+ok(showcase.events?.length===4&&showcase.observations.filter(o=>o.headMarker).length===4,'Opening case shows arrow notes and head positions');
+const noted=core.validateCase({...c,events:[{time:'10:15',label:'  Bắt đầu oxytocin  '},{time:1.5,label:'Gây tê ngoài màng cứng'},{time:0.1,label:'Nhập phòng sinh'}]});
+ok(JSON.stringify(noted.events)===JSON.stringify([{time:0,label:'Nhập phòng sinh'},{time:1.5,label:'Gây tê ngoài màng cứng'},{time:2.25,label:'Bắt đầu oxytocin'}]),'Events accept clock times, round to 15 minutes, trim labels and sort by time');
+assert.throws(()=>core.validateCase({...c,events:[{time:2,label:''}]}));checks++;
+assert.throws(()=>core.validateCase({...c,events:[{time:30,label:'Ngoài giờ'}]}));checks++;
+ok(core.validateCase({...c,events:[]}).events===undefined,'An empty event list leaves the case unchanged');
+const plain=core.buildSVG(c,{design:{cellWidth:1,rowHeight:1,rowMode:'all'}}),withNotes=core.buildSVG(noted,{design:{cellWidth:1,rowHeight:1,rowMode:'all'}});
+ok(!plain.inner.includes('SỰ KIỆN')&&withNotes.inner.includes('>SỰ KIỆN<'),'The events band appears only when the case has notes');
+ok(withNotes.height-plain.height>=30,'The events band adds its own vertical space instead of overlapping the cervicograph');
+ok(['Nhập phòng sinh','Gây tê ngoài màng cứng','Bắt đầu oxytocin'].every(t=>withNotes.inner.includes('>'+t+'<')),'Callouts show full labels when they fit');
+ok((withNotes.inner.match(/data-event-index="/g)||[]).length===3,'Each note is one clickable callout');
 console.log(`PASS: ${checks} checks (including ${original.passed} existing checks).`);
 
