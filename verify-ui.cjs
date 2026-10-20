@@ -392,7 +392,7 @@ async function themeUI(p){await p.getByRole('button',{name:'Tùy biến không g
     await f.evaluate(()=>window.finishClipboard(false));await f.waitForFunction(()=>document.querySelector('.copy-image').dataset.actionState==='error');assert.equal(await imageCopy.isDisabled(),false);
     await imageCopy.click();await f.evaluate(()=>window.finishClipboard(true));await f.waitForFunction(()=>document.querySelector('.copy-image').dataset.actionState==='success');
     await f.screenshot({path:path.join(os.tmpdir(),'vesando-feedback-success.png'),animations:'disabled'});
-    await f.getByLabel('Phân hệ làm việc',{exact:true}).selectOption('exam');await f.locator('.workspace-menu>summary').click();await f.getByRole('button',{name:'Thư viện ca',exact:true}).click();
+    await f.getByLabel('Phân hệ làm việc',{exact:true}).selectOption('exam');await f.locator('.case-menu>summary').click();await f.getByRole('button',{name:'Thư viện ca',exact:true}).click();
     await f.locator('.toolbox .sidebar-tool').first().locator('summary').click();const textCopy=f.locator('.json-label button').last();
     await f.evaluate(()=>navigator.clipboard.writeText=text=>new Promise(resolve=>{window.copiedText=text;window.finishTextCopy=resolve}));await textCopy.click();assert.equal(await textCopy.getAttribute('aria-busy'),'true');
     await f.evaluate(()=>window.finishTextCopy());await f.waitForFunction(()=>document.querySelector('.json-label [data-action-state=success]'));

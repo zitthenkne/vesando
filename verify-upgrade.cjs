@@ -22,7 +22,7 @@ const expectedSVG=p=>p.evaluate(()=>{const a=document.querySelector('#app')._vno
     page.setDefaultTimeout(10000);page.on('pageerror',e=>errors.push(e.message));page.on('console',e=>{if(e.type()==='error')errors.push(e.text())});
     const url='http://127.0.0.1:'+server.address().port;await page.goto(url);await page.waitForSelector('.partograph');
     const original=await readState(page);assert.equal(original.design.fluidNotation,'vn');
-    await page.getByRole('button',{name:'Nhập JSON',exact:true}).click();await page.waitForSelector('.json-workbench[open]');
+    await page.getByRole('button',{name:'Lập sản đồ bằng AI',exact:true}).click();await page.waitForSelector('.json-workbench[open]');await page.getByRole('button',{name:'Bước 2: Nhập kết quả AI',exact:true}).click();
     const input=page.locator('#json-workbench-input');await input.fill('{bad}');assert.equal(await page.getByRole('button',{name:'Vẽ sản đồ',exact:true}).isDisabled(),true);assert.deepEqual((await readState(page)).case,original.case);
     const sample={id:'VN-TEST',title:'Ca thử nhập Việt',patient:{name:'TEN RIENG CAN AN',code:'CODE-RIENG',startTime:'08:00',date:'2026-10-17'},observations:[{time:0,cervix:4,descent:4,fhr:140,fluid:'C'},{time:1,cervix:5,descent:3,fhr:145,fluid:'T'},{time:2,cervix:6,descent:2,fluid:'K'},{time:3,cervix:7,descent:1,fluid:'X+++'}]};
     await input.fill('```json\n'+JSON.stringify([sample,{...sample,id:'VN-2',title:'Ca thứ hai'}])+'\n```');await page.getByLabel('Ký hiệu ối của JSON',{exact:true}).selectOption('vn');
@@ -33,13 +33,13 @@ const expectedSVG=p=>p.evaluate(()=>{const a=document.querySelector('#app')._vno
     await page.keyboard.press('Control+z');assert.equal((await readState(page)).case.id,original.case.id);await page.keyboard.press('Control+Shift+z');assert.equal((await readState(page)).case.id,'VN-TEST');
     console.log('PASS: prominent JSON entry, live invalid-data guard, multi-case Markdown preview, explicit VN conversion and undo/redo');
 
-    await page.getByRole('button',{name:'Nhập JSON',exact:true}).click();await page.getByRole('button',{name:'Prompt AI',exact:true}).click();
+    await page.getByRole('button',{name:'Lập sản đồ bằng AI',exact:true}).click();await page.getByRole('button',{name:'Bước 1: Soạn prompt',exact:true}).click();
     const subject='Đề bài có $& và dấu nháy: "test", không được thay đổi.';await page.locator('.prompt-setup textarea').fill(subject);
     const prompt=await page.getByLabel('Prompt tạo JSON sản đồ',{exact:true}).inputValue();assert.ok(prompt.includes(subject));assert.ok(prompt.includes('không tự tạo thông số chưa đo'));assert.ok(!prompt.includes('[DÁN ĐỀ BÀI Ở ĐÂY]'));
     await page.evaluate(()=>Object.defineProperty(navigator,'clipboard',{configurable:true,value:{writeText:async text=>window.__copiedPrompt=text}}));
     await page.getByRole('button',{name:'Sao chép prompt',exact:true}).click();await page.waitForFunction(()=>!!window.__copiedPrompt);assert.equal(await page.evaluate(()=>window.__copiedPrompt),prompt);
-    await page.locator('.prompt-setup select').selectOption('generate');assert.ok((await page.getByLabel('Prompt tạo JSON sản đồ',{exact:true}).inputValue()).includes('Tạo BA'));
-    await page.getByRole('button',{name:'Dán JSON kết quả',exact:true}).click();await page.locator('.json-input-column input[type=file]').setInputFiles({name:'ca.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(sample))});await page.getByLabel('Ký hiệu ối của JSON',{exact:true}).selectOption('vn');await page.getByRole('button',{name:'Định dạng',exact:true}).click();
+    await page.locator('.prompt-kind button').nth(1).click();assert.ok((await page.getByLabel('Prompt tạo JSON sản đồ',{exact:true}).inputValue()).includes('Tạo BA'));
+    await page.getByRole('button',{name:'Sang Bước 2',exact:true}).click();await page.locator('.json-input-column input[type=file]').setInputFiles({name:'ca.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(sample))});await page.getByLabel('Ký hiệu ối của JSON',{exact:true}).selectOption('vn');await page.getByRole('button',{name:'Định dạng',exact:true}).click();
     assert.equal(await page.getByLabel('Ký hiệu ối của JSON',{exact:true}).inputValue(),'auto');assert.equal(JSON.parse(await input.inputValue()).fluidNotation,'vn');assert.equal(JSON.parse(await input.inputValue()).observations[0].fluid,'C');await page.getByRole('button',{name:'Để sau',exact:true}).click();
     console.log('PASS: editable prompt subject, safe literal insertion, two prompt types, clipboard promise, file input and canonical formatting');
 
@@ -91,8 +91,8 @@ const expectedSVG=p=>p.evaluate(()=>{const a=document.querySelector('#app')._vno
     console.log('PASS: clinical drafts at multiple times export together and undo as one transaction');
 
     await page.keyboard.press('0');await page.keyboard.press('?');await page.waitForSelector('.shortcut-sheet[open]');await page.keyboard.press('Escape');
-    for(const width of [320,390,768,1024,1440]){await page.setViewportSize({width,height:900});await page.getByRole('button',{name:'Nhập JSON',exact:true}).click();for(const tab of ['Nhập JSON','Prompt AI']){await page.locator('.json-tabs').getByRole('button',{name:tab,exact:true}).click();assert.ok(await page.locator('.json-workbench').evaluate(e=>e.scrollWidth<=e.clientWidth+1),'JSON modal fits at '+width);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));}await page.getByRole('button',{name:'Đóng nhập JSON',exact:true}).click()}
-    await page.setViewportSize({width:390,height:844});await page.getByRole('button',{name:'Nhập JSON',exact:true}).click();await page.screenshot({path:path.join(os.tmpdir(),'vesando-v3-json-mobile.png'),animations:'disabled'});await page.keyboard.press('Escape');
+    for(const width of [320,390,768,1024,1440]){await page.setViewportSize({width,height:900});await page.getByRole('button',{name:'Lập sản đồ bằng AI',exact:true}).click();for(const tab of ['Bước 2: Nhập kết quả AI','Bước 1: Soạn prompt']){await page.locator('.json-tabs').getByRole('button',{name:tab,exact:true}).click();assert.ok(await page.locator('.json-workbench').evaluate(e=>e.scrollWidth<=e.clientWidth+1),'JSON modal fits at '+width);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));}await page.getByRole('button',{name:'Đóng nhập JSON',exact:true}).click()}
+    await page.setViewportSize({width:390,height:844});await page.getByRole('button',{name:'Lập sản đồ bằng AI',exact:true}).click();await page.screenshot({path:path.join(os.tmpdir(),'vesando-v3-json-mobile.png'),animations:'disabled'});await page.keyboard.press('Escape');
     assert.deepEqual(errors,[]);console.log('PASS: shortcuts, five responsive JSON/prompt layouts, dialog close and no browser runtime/console errors');
   }finally{await browser.close();server.close()}
 })().catch(e=>{console.error(e);process.exitCode=1;server.close()});
