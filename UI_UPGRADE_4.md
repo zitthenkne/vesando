@@ -35,7 +35,7 @@ Ngày thực hiện: 20/10/2026. Cách xuất SVG/PNG/PDF giữ nguyên; JSON c�
 
 | # | Thay đổi | Cách dùng / kết quả |
 |---|---|---|
-| 20 | Mũi tên đứt nét chỉ xuống trục thời gian của biểu đồ CTC | Nhãn đặt ở đầu biểu đồ, tự xếp tầng khi các mốc gần nhau; có trong bản xem trước và mọi tệp xuất. |
+| 20 | Huy hiệu số bo tròn có mũi tên ngắn chỉ xuống mốc giờ | Nằm trong dải trống giữa hàng Chồng khớp và biểu đồ CTC, không đè lên đường biểu diễn. Nhãn đặt cạnh huy hiệu khi đủ chỗ (ưu tiên bên phải, sau đó bên trái); khi quá sát, chỉ hiện số. Các mốc cách nhau dưới 15 phút gộp chung một huy hiệu (ví dụ "2·3"). Bấm huy hiệu để sửa đúng mũi tên đó. Có trong bản xem trước và mọi tệp xuất. |
 | 21 | Thêm/sửa/xóa trong bảng Dữ liệu | Mục **Mũi tên chú thích**: chọn thời điểm (bước 15 phút), nhập nội dung (có gợi ý: Chọc ối, Bắt đầu oxytocin…). Ghi nhanh → Mũi tên chú thích mở thẳng ô nhập. |
 | 22 | Dùng chung lịch sử hoàn tác | Thêm, sửa, xóa mũi tên đều hoàn tác/làm lại được. |
 | 23 | Trường JSON `events` | `[{"time": 2.5, "label": "Chọc ối"}]`; `time` là giờ tính từ `startTime` (làm tròn 15 phút) hoặc giờ đồng hồ `"HH:mm"`; `label` tối đa 60 ký tự; tối đa 30 mũi tên. Prompt hướng dẫn AI tự ghi các can thiệp vào `events`. |
@@ -45,7 +45,7 @@ Ngày thực hiện: 20/10/2026. Cách xuất SVG/PNG/PDF giữ nguyên; JSON c�
 | # | Thay đổi | Cách dùng / kết quả |
 |---|---|---|
 | 24 | Ca "Chuyển dạ tiến triển thuận lợi" minh họa đầy đủ khả năng hiển thị | 4 mũi tên chú thích (nhập phòng sinh, gây tê ngoài màng cứng, bấm ối, CTC mở trọn); hình kiểu thế xoay dần từ chẩm chậu trái ngang đến chẩm vệ; ngôi và kiểu thế ở đầu phiếu; thuốc và dịch truyền kèm bảng chi tiết; nước tiểu, acetone, chồng khớp. Diễn biến và đề bài thống nhất với số liệu; các số đo cũ giữ nguyên. |
-| 25 | Chú giải trên phiếu có mục "Mũi tên chú thích" | Chỉ hiện khi ca có mũi tên. |
+| 25 | Chú giải trên phiếu có mục "Chú thích sự kiện" | Liệt kê đủ số, giờ và nội dung mọi mũi tên theo hai cột; chỉ hiện khi ca có mũi tên. |
 | 26 | Dòng "Ngôi · Kiểu thế" chuyển xuống dưới tên ca | Không còn chạm nhãn trục tim thai. |
 
 ## Hướng dẫn trong ứng dụng
