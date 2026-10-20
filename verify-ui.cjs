@@ -55,17 +55,17 @@ async function themeUI(p){await p.getByRole('button',{name:'Tùy biến không g
     await page.getByRole('button',{name:'Khôi phục riêng CTC',exact:true}).click();assert.equal((await designState()).series.ctc.color,'#d42f4e');assert.deepEqual((await designState()).series.des,otherSeries);
     await page.locator('.design-nav').getByRole('button',{name:'Kiểu thế',exact:true}).click();
     const convenienceHead=page.locator('.head-marker-tool');await convenienceHead.locator('.head-position-grid>button').first().click();
-    await convenienceHead.getByRole('button',{name:'Màu #7c3aed',exact:true}).click();assert.equal(await page.locator('.partograph [data-head-marker] circle').getAttribute('stroke'),'#7c3aed');
+    await convenienceHead.getByRole('button',{name:'Màu #7c3aed',exact:true}).click();assert.equal(await page.locator('.partograph [data-observation-field="descent"][data-observation-time="0"] [data-head-marker] circle').getAttribute('stroke'),'#7c3aed');
     await page.getByRole('button',{name:'Mốc kiểu thế sau',exact:true}).click();await convenienceHead.locator('.head-position-grid>button').nth(6).click();
     await page.getByRole('button',{name:'Mốc kiểu thế trước',exact:true}).click();assert.equal(await convenienceHead.getByRole('button',{name:'Màu #7c3aed',exact:true}).getAttribute('aria-pressed'),'true');
     await convenienceHead.locator('.head-fine-tune>summary').click();await convenienceHead.locator('.head-hex>summary').click();const hex=convenienceHead.getByLabel('Mã màu hình kiểu thế',{exact:true});await change(hex,'badhex');assert.equal(await hex.getAttribute('aria-invalid'),'true');
     assert.equal(await page.locator('.partograph [data-head-marker]').first().locator('circle').getAttribute('stroke'),'#7c3aed');
     await change(hex,'#11AA66');assert.equal(await page.locator('.partograph [data-head-marker]').first().locator('circle').getAttribute('stroke'),'#11aa66');
     await convenienceHead.locator('.head-fine-tune>summary').click();await convenienceHead.locator('.head-batch>summary').click();await convenienceHead.getByLabel('Phạm vi áp dụng kiểu hình',{exact:true}).selectOption('all');await convenienceHead.locator('.head-batch button').click();
-    assert.equal(await page.locator('.partograph [data-head-marker]').count(),4);
+    assert.equal(await page.locator('.partograph [data-head-marker]').count(),4);assert.equal(await page.locator('.partograph [data-head-marker]').nth(3).locator('circle').getAttribute('stroke'),'#11aa66');
     assert.equal(await page.locator('.partograph [data-head-marker]').nth(1).getAttribute('data-angle'),'0','Batch formatting preserves each existing orientation');
-    await page.keyboard.press('Control+z');assert.equal(await page.locator('.partograph [data-head-marker]').count(),2);
-    await page.keyboard.press('Control+Shift+z');assert.equal(await page.locator('.partograph [data-head-marker]').count(),4);
+    await page.keyboard.press('Control+z');assert.notEqual(await page.locator('.partograph [data-head-marker]').nth(3).locator('circle').getAttribute('stroke'),'#11aa66');
+    await page.keyboard.press('Control+Shift+z');assert.equal(await page.locator('.partograph [data-head-marker]').nth(3).locator('circle').getAttribute('stroke'),'#11aa66');
     await convenienceHead.locator('.head-batch>summary').click();await page.getByRole('button',{name:'Tìm hình này trên sản đồ',exact:true}).click();assert.equal(await page.locator('.partograph .point-highlight').count(),1);
     assert.equal(await measurements(),beforeConvenience);
     await page.screenshot({path:path.join(os.tmpdir(),'vesando-usability-desktop.png'),fullPage:true,animations:'disabled'});
@@ -100,6 +100,7 @@ async function themeUI(p){await p.getByRole('button',{name:'Tùy biến không g
     assert.equal(await source(page),original);
     await page.keyboard.press('Alt+1');await page.locator('.data-mode-picker').getByRole('button',{name:'Nhập bảng',exact:true}).click();await page.waitForSelector('.editor:visible');await page.keyboard.press('Alt+2');
     console.log('PASS: clicking empty chart regions opens the matching inspector');
+    await page.evaluate(()=>{for(const o of document.querySelector('#app')._vnode.component.setupState.activeCase.observations)delete o.headMarker});
 
     await page.keyboard.press('Control+k');await page.locator('#studio-command-input').fill('kieu the');await page.keyboard.press('Enter');await page.waitForSelector('.head-marker-tool:visible');
     await page.locator('.head-marker-editor input[type=checkbox]').check();assert.equal(await page.locator('.partograph [data-head-marker]').count(),1);

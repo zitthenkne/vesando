@@ -40,6 +40,14 @@ Ngày thực hiện: 20/10/2026. Cách xuất SVG/PNG/PDF giữ nguyên; JSON c�
 | 22 | Dùng chung lịch sử hoàn tác | Thêm, sửa, xóa mũi tên đều hoàn tác/làm lại được. |
 | 23 | Trường JSON `events` | `[{"time": 2.5, "label": "Chọc ối"}]`; `time` là giờ tính từ `startTime` (làm tròn 15 phút) hoặc giờ đồng hồ `"HH:mm"`; `label` tối đa 60 ký tự; tối đa 30 mũi tên. Prompt hướng dẫn AI tự ghi các can thiệp vào `events`. |
 
+## Ca mẫu mở đầu
+
+| # | Thay đổi | Cách dùng / kết quả |
+|---|---|---|
+| 24 | Ca "Chuyển dạ tiến triển thuận lợi" minh họa đầy đủ khả năng hiển thị | 4 mũi tên chú thích (nhập phòng sinh, gây tê ngoài màng cứng, bấm ối, CTC mở trọn); hình kiểu thế xoay dần từ chẩm chậu trái ngang đến chẩm vệ; ngôi và kiểu thế ở đầu phiếu; thuốc và dịch truyền kèm bảng chi tiết; nước tiểu, acetone, chồng khớp. Diễn biến và đề bài thống nhất với số liệu; các số đo cũ giữ nguyên. |
+| 25 | Chú giải trên phiếu có mục "Mũi tên chú thích" | Chỉ hiện khi ca có mũi tên. |
+| 26 | Dòng "Ngôi · Kiểu thế" chuyển xuống dưới tên ca | Không còn chạm nhãn trục tim thai. |
+
 ## Hướng dẫn trong ứng dụng
 
 Đã đồng bộ, xem phần cuối `ONBOARDING.md`: 39 bước. Có bước Quản lý ca, hướng dẫn Lập sản đồ bằng AI theo hai bước, bước Mũi tên chú thích, câu hỏi "Hoàn tác thay đổi?". Câu chữ dùng giọng trang trọng.
