@@ -388,3 +388,26 @@ body{color:var(--ink);-webkit-font-smoothing:antialiased;text-rendering:optimize
 #app .review-share-actions .btn{flex:1 1 auto;min-height:44px}
 .review-badge{display:flex;align-items:center;gap:8px;margin-bottom:12px;padding:10px 12px;border:1px solid color-mix(in srgb,var(--success-ink) 35%,transparent);border-radius:12px;background:var(--success-bg);color:var(--ink);font-size:12.5px;line-height:1.5}
 .review-badge>svg{width:18px;height:18px;flex:none;color:var(--success-ink)}
+
+/* Floating point toolbar: direct edits beside the selected point */
+.point-toolbar{position:absolute;z-index:12;display:flex;align-items:center;gap:2px;padding:4px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);box-shadow:var(--shadow-3);transform:translate(-50%,-100%);white-space:nowrap;animation:bar-in .12s ease-out}
+.point-toolbar.below{transform:translate(-50%,0)}
+@keyframes bar-in{from{opacity:0;margin-top:4px}}
+.point-toolbar-label{display:flex;flex-direction:column;justify-content:center;padding:0 8px 0 6px;font-size:10.5px;line-height:1.25;color:var(--muted);font-variant-numeric:tabular-nums}
+.point-toolbar-label b{font-size:12px;color:var(--ink)}
+.point-toolbar>button{display:grid;place-items:center;width:34px;height:34px;border:0;border-radius:8px;background:transparent;color:var(--ink);cursor:pointer}
+.point-toolbar>button:hover{background:var(--surface-raised);color:var(--brand)}
+.point-toolbar>button.danger:hover{background:var(--error-bg);color:var(--error-ink)}
+.point-toolbar>button[aria-expanded=true]{background:var(--brand-soft);color:var(--brand)}
+.point-toolbar svg{width:17px;height:17px}
+.point-toolbar-sep{width:1px;height:22px;margin:0 3px;background:var(--line)}
+.point-toolbar-menu{position:absolute;right:0;top:calc(100% + 6px);display:grid;min-width:270px;padding:6px;border:1px solid var(--line);border-radius:12px;background:var(--surface);box-shadow:var(--shadow-3)}
+.point-toolbar.below .point-toolbar-menu{top:calc(100% + 6px)}
+.point-toolbar:not(.below) .point-toolbar-menu{top:auto;bottom:calc(100% + 6px)}
+.point-toolbar-menu>button{display:flex;align-items:center;gap:9px;min-height:40px;padding:0 10px;border:0;border-radius:8px;background:transparent;color:var(--ink);font-size:12.5px;font-weight:550;text-align:left;cursor:pointer}
+.point-toolbar-menu>button:hover{background:var(--surface-raised)}
+.point-toolbar-menu svg{width:16px;height:16px;color:var(--brand);flex:none}
+@media (pointer:coarse){.point-toolbar>button{width:42px;height:42px}.point-toolbar-label{display:none}}
+@media print{.point-toolbar{display:none!important}}
+#app .head-placement{margin-top:8px}
+#app .choice-caption{display:block;margin:12px 0 6px;font-size:11.5px;font-weight:650;color:var(--muted)}

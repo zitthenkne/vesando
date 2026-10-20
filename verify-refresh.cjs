@@ -83,6 +83,41 @@ const setHidden=(page,hidden)=>page.evaluate(h=>{Object.defineProperty(document,
     await page.locator('.case-card:visible .chart-viewbar').getByLabel('Quy chuẩn sản đồ',{exact:true}).selectOption('who1993');await page.evaluate(()=>{const a=document.querySelector('#app')._vnode.component.setupState;a.design.gridColor='#a8b4bf';a.selectTool('overview')});
     console.log('PASS: standard picker on the chart toolbar; review JSON downloads, copies and reopens with the same standard and design');
 
+    // Header strip, alternate FHR numbers, head figures that step aside, outline-only figure.
+    const svgTexts=()=>page.locator('.case-card:visible svg.partograph text').allTextContents();
+    let labels=await svgTexts();for(const t of ['HỌ TÊN','MÃ','PARA','TUỔI THAI','NGÀY','GIỜ BẮT ĐẦU','NGÔI · KIỂU THẾ','Sản phụ giả định'])assert.ok(labels.includes(t),'Header field '+t);
+    assert.ok(labels.includes('180')&&!labels.includes('190'),'FHR numbers alternate every 20 beats by default');
+    await page.evaluate(()=>{document.querySelector('#app')._vnode.component.setupState.design.fhrLabelStep=10});await page.waitForTimeout(100);assert.ok((await svgTexts()).includes('190'),'Every-10 labels can be restored');
+    await page.evaluate(()=>{const d=document.querySelector('#app')._vnode.component.setupState.design;d.fhrLabelStep=20;d.headerLayout='line'});await page.waitForTimeout(100);assert.ok((await svgTexts()).some(t=>t.startsWith('Mã: ')),'One-line header remains available');
+    await page.evaluate(()=>{document.querySelector('#app')._vnode.component.setupState.design.headerLayout='grid'});
+    assert.ok(await page.locator('.case-card:visible [data-head-callout]').count()>=1,'A figure that would hide the 08:00 cervix cross is moved aside');
+    const lift=await page.locator('.case-card:visible g[data-observation-time="0"][data-observation-field="descent"]').evaluate(g=>{const head=g.querySelector('[data-head-callout] [data-head-marker] circle'),dot=[...g.querySelectorAll(':scope>circle')].pop();return Number(dot.getAttribute('cy'))-Number(head.getAttribute('cy'))});assert.ok(lift>10,'With room above, the moved figure goes straight up');
+    const setMarker=patch=>page.evaluate(patch=>{const a=document.querySelector('#app')._vnode.component.setupState,c=JSON.parse(JSON.stringify(a.activeCase)),o=c.observations.find(o=>o.time===0);o.headMarker={...o.headMarker,...patch};a.cases[a.activeCaseIndex]=c},patch);
+    await setMarker({placement:'point'});await page.waitForTimeout(100);assert.equal(await page.locator('.case-card:visible [data-observation-time="0"][data-observation-field="descent"] [data-head-callout]').count(),0,'Placement can pin the figure to the point');
+    await setMarker({hidden:true});await page.waitForTimeout(100);
+    const plain=page.locator('.case-card:visible g[data-observation-time="0"][data-observation-field="descent"]');assert.equal(await plain.locator('[data-head-marker]').count(),0,'A hidden figure draws no head');assert.equal((await page.evaluate(()=>document.querySelector('#app')._vnode.component.setupState.activeCase.observations[0].headMarker)).angle,270,'Hiding keeps the angle');assert.equal(await plain.locator('circle[fill="none"]').count(),1,'It is the usual small circle, see-through over the cervix cross');
+    await page.locator('#studio-tools-navigation .tool-tabs button').nth(1).click();for(const name of ['Kiểu đầu phiếu','Khoảng cách số trên trục tim thai','Dải tim thai bình thường','Khoảng cách số trên trục mạch và huyết áp'])assert.ok(await page.getByLabel(name,{exact:true}).count(),'Design control '+name);
+    await page.keyboard.press('Control+z');await page.keyboard.press('Control+z');await page.evaluate(()=>document.querySelector('#app')._vnode.component.setupState.selectTool('overview'));
+    console.log('PASS: labelled header strip, alternate FHR numbers, head figures step aside with an arrow, per-moment hide keeps settings, upward placement, new design controls');
+
+    // Floating point toolbar: nudge, move, copy, shift the rest of the labour, right-click selection.
+    const obs=()=>page.evaluate(()=>document.querySelector('#app')._vnode.component.setupState.activeCase.observations.map(o=>[o.time,o.cervix]).filter(o=>o[1]!==null));
+    const before=await obs();await page.locator('.case-card:visible [data-point-hit][data-observation-time="2"][data-observation-field=cervix]').click({button:'right'});
+    const bar=page.locator('.point-toolbar');await bar.waitFor();assert.ok((await bar.innerText()).includes('CTC 6 cm'));
+    await bar.getByRole('button',{name:'Tăng số đo trên sản đồ',exact:true}).click();await page.waitForFunction(()=>document.querySelector('#app')._vnode.component.setupState.activeCase.observations.find(o=>o.time===2).cervix===6.5);
+    await bar.getByRole('button',{name:'Muộn hơn 30 phút',exact:true}).click();await page.waitForFunction(()=>document.querySelector('#app')._vnode.component.setupState.activeCase.observations.find(o=>o.time===2.5)?.cervix===6.5);
+    await bar.getByRole('button',{name:'Nhân bản sang 30 phút sau',exact:true}).click();await page.waitForFunction(()=>document.querySelector('#app')._vnode.component.setupState.activeCase.observations.find(o=>o.time===3)?.cervix===6.5);
+    for(let i=0;i<3;i++)await page.keyboard.press('Control+z');assert.deepEqual(await obs(),before,'Toolbar edits undo step by step');
+    await page.locator('.case-card:visible [data-point-hit][data-observation-time="4"][data-observation-field=descent]').click({button:'right'});
+    await bar.getByRole('button',{name:'Ẩn hình kiểu thế',exact:true}).click();await page.waitForFunction(()=>document.querySelector('#app')._vnode.component.setupState.activeCase.observations.find(o=>o.time===4).headMarker.hidden===true);
+    assert.equal(await page.locator('.case-card:visible g[data-observation-time="4"][data-observation-field="descent"] [data-head-marker]').count(),0);
+    await bar.getByRole('button',{name:'Hiện hình kiểu thế',exact:true}).click();await page.waitForFunction(()=>!document.querySelector('#app')._vnode.component.setupState.activeCase.observations.find(o=>o.time===4).headMarker.hidden);
+    await page.locator('.case-card:visible [data-point-hit][data-observation-time="4"][data-observation-field=cervix]').click({button:'right'});await bar.getByRole('button',{name:'Thêm thao tác với điểm',exact:true}).click();
+    await page.getByRole('menuitem',{name:'Dời điểm này và các mốc sau muộn 30 phút',exact:true}).click();
+    const moved=await obs();assert.deepEqual(moved.filter(o=>o[0]<4),before.filter(o=>o[0]<4),'Earlier data stays put');assert.deepEqual(moved.filter(o=>o[0]>=4.5).map(o=>o[1]),before.filter(o=>o[0]>=4).map(o=>o[1]),'Later data moves together');
+    await page.keyboard.press('Control+z');assert.deepEqual(await obs(),before);await page.keyboard.press('Escape');
+    console.log('PASS: point toolbar nudges, moves, copies and shifts later observations; eye button hides/shows a head figure; right-click selects; undo restores');
+
     // AI step 1: data checklist, sample brief, saved draft.
     await page.getByRole('button',{name:'Lập sản đồ bằng AI',exact:true}).click();await page.waitForSelector('.json-workbench[open]');
     assert.equal(await page.locator('.insight-head span').innerText(),'0/10 nhóm');
