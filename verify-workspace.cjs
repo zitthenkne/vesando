@@ -5,14 +5,14 @@ const http=require('node:http');
 const path=require('node:path');
 const os=require('node:os');
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
-const files=new Set(['index.html','studio.css','workspace.css','interaction.css','theme.css','clinical-rules.js','guidance.js','enhancements.js']);
+const files=new Set(['index.html','studio.css','workspace.css','interaction.css','theme.css','canvas.css','clinical-rules.js','guidance.js','enhancements.js']);
 const server=http.createServer(async(req,res)=>{
   const file=new URL(req.url,'http://localhost').pathname.slice(1)||'index.html';
   if(!files.has(file)){res.writeHead(404);res.end();return}
   try{res.setHeader('Content-Type',(file.endsWith('.css')?'text/css':file.endsWith('.js')?'application/javascript':'text/html')+'; charset=utf-8');res.end(await fs.readFile(path.join(__dirname,file)))}catch{res.writeHead(500);res.end()}
 });
 const state=p=>p.evaluate(()=>{const a=document.querySelector('#app')._vnode.component.setupState;return {ui:JSON.parse(JSON.stringify(a.ui)),panelWidth:a.panelWidth,stage:a.toolTab,data:JSON.stringify(a.activeCase),design:JSON.stringify(a.design)}});
-async function preferences(p){await p.getByRole('button',{name:'Tùy biến không gian',exact:true}).click()}
+async function preferences(p){const b=p.getByRole('button',{name:'Tùy biến không gian',exact:true});if(await b.isVisible())await b.click();else{await p.getByLabel('Ca và công cụ',{exact:true}).click();await p.locator('.workspace-menu .mobile-preferences-action').click()}}
 (async()=>{
   await new Promise(r=>server.listen(0,'127.0.0.1',r));
   const browser=await chromium.launch({headless:true,...(process.env.CHROME_EXECUTABLE?{executablePath:process.env.CHROME_EXECUTABLE}:{channel:'chrome'})});
@@ -29,7 +29,8 @@ async function preferences(p){await p.getByRole('button',{name:'Tùy biến khô
     assert.equal(await page.locator('.case-header').isVisible(),false);
     assert.equal(await page.locator('.chart-diagnostics').isVisible(),false);
     // The two-option mode switch replaces the former mode <select>; it is not extra clutter. Hồ sơ ca adds one tab bar (4 tabs + fold) in place of the old nested accordion.
-    assert.ok(await page.locator('button:visible').count()-await page.locator('.workspace-mode>button').count()<=16);
+    assert.equal(await page.locator('.progress-field-picker>button:visible').count(),2);
+    assert.ok(await page.locator('button:visible').count()-await page.locator('.workspace-mode>button').count()-await page.locator('.progress-field-picker>button:visible').count()<=16);
     await page.screenshot({path:path.join(os.tmpdir(),'vesando-quiet-desktop.png'),fullPage:true,animations:'disabled'});
     console.log('PASS: quiet startup, eleven visible buttons including JSON and usage guides, closed secondary information and full-width paper');
 
@@ -61,10 +62,10 @@ async function preferences(p){await p.getByRole('button',{name:'Tùy biến khô
     await page.locator('.preference-theme').click();await page.keyboard.press('Escape');
     console.log('PASS: presets, six live switches, native dialog focus, overlay layout, width persistence, separate theme persistence and layout-only reset');
 
-    await page.getByRole('button',{name:'Thiết kế',exact:true}).click();assert.equal(await page.locator('.toolbox').isVisible(),true);
+    await page.getByRole('button',{name:'Trình bày',exact:true}).click();assert.equal(await page.locator('.toolbox').isVisible(),true);
     assert.equal(await page.locator('.dimension-advanced').getAttribute('open'),null);
     await page.locator('.dimension-advanced>summary').click();assert.equal(await page.getByLabel('Rộng sản đồ (px)',{exact:true}).isVisible(),true);
-    await page.getByRole('button',{name:'Thiết kế',exact:true}).click();assert.equal((await state(page)).stage,'overview');
+    await page.getByRole('button',{name:'Trình bày',exact:true}).click();assert.equal((await state(page)).stage,'overview');
     await page.keyboard.press('Alt+2');await page.locator('.focus-toggle').focus();await page.keyboard.press('f');
     assert.equal(await page.locator('.tool-rail').isVisible(),false);assert.equal(await page.locator('.workbench-bar').isVisible(),false);
     assert.equal(await page.getByRole('button',{name:'Thoát tập trung',exact:true}).isVisible(),true);
@@ -74,9 +75,9 @@ async function preferences(p){await p.getByRole('button',{name:'Tùy biến khô
     await page.keyboard.press('Control+k');await page.locator('#studio-command-input').fill('tuy bien');await page.keyboard.press('Enter');assert.equal(await page.locator('.workspace-preferences').isVisible(),true);
     await page.keyboard.press('Control+k');assert.equal(await page.locator('dialog[open]').count(),1);assert.equal(await page.locator('.command-dialog').isVisible(),true);await page.keyboard.press('Escape');
     await page.locator('[data-point-hit][data-observation-time="2"][data-observation-field="cervix"]').first().click();
-    await page.waitForSelector('.point-quick-editor:visible');assert.equal(await page.locator('.editor').count(),0);
+    await page.waitForSelector('.point-toolbar:visible');assert.equal(await page.locator('.editor').count(),0);assert.equal((await state(page)).stage,'overview');
     await page.locator('.focus-toggle').focus();await page.keyboard.press('f');await page.keyboard.press('Escape');assert.equal(await page.locator('.workbench-bar').isVisible(),true,'Escape exits focus even with an existing point selection');
-    await page.getByRole('button',{name:'Đóng sửa nhanh',exact:true}).click();await page.locator('.overview-toggle').click();
+    assert.equal(await page.locator('.point-quick-editor').count(),0,'Focus dismisses the point controls');await page.locator('.overview-toggle').click();
     console.log('PASS: tool toggling, progressive dimensions, true focus mode, Escape/0, and preference search');
 
     const scroll=page.locator('.chart-scroll');await scroll.hover({position:{x:400,y:180}});
@@ -131,13 +132,17 @@ async function preferences(p){await p.getByRole('button',{name:'Tùy biến khô
       if(shift)await precision.keyboard.down('Shift');await precision.mouse.move(box.x+box.width/2,box.y+box.height/2);await precision.mouse.down();await precision.mouse.move(at.x,at.y,{steps:6});await precision.mouse.up();if(shift)await precision.keyboard.up('Shift');await precision.evaluate(()=>Vue.nextTick());
     }
     const undoPoint=async()=>{const button=precision.getByRole('button',{name:'Hoàn tác dữ liệu',exact:true});if(await button.isVisible())await button.click();else await precision.keyboard.press('Control+z')};
+    assert.equal((await state(precision)).ui.dragAxis,'free','All directions work immediately, without Shift or changing settings');
+    for(const [time,value] of [[1.5,5.5],[1.5,6.5],[2.5,5.5],[2.5,6.5],[2,5.5],[2,6.5],[1.5,6],[2.5,6]]){
+      await drag(2,'cervix',time,value);const moved=await getCase();assert.equal(moved.observations.find(o=>o.time===time).cervix,value,'Free drag to '+time+'h / '+value+'cm');assert.equal(moved.observations.find(o=>o.time===2).fhr,140);await undoPoint();assert.deepEqual(await getCase(),base,'Each direction undoes in one step');
+    }
     await drag(2,'cervix',2.5,6.5);
-    let changed=await getCase();assert.equal(changed.observations.find(o=>o.time===2).cervix,6.5);assert.equal(changed.observations.find(o=>o.time===2.5).cervix,null);
+    let changed=await getCase();assert.equal(changed.observations.find(o=>o.time===2).cervix,null);assert.equal(changed.observations.find(o=>o.time===2.5).cervix,6.5);
     assert.equal(changed.observations.find(o=>o.time===2).fhr,140);await undoPoint();assert.deepEqual(await getCase(),base);await precision.keyboard.press('Alt+1');
     const workarea=await precision.locator('.workarea').boundingBox(),dataBox=await precision.locator('.data-tools').boundingBox();assert.ok(dataBox.x>=workarea.x+workarea.width,'All data controls belong to the right inspector');
-    assert.equal(await precision.locator('.case-card .data-tools').count(),0);assert.equal(await precision.locator('.data-mode-picker button').count(),3);
+    assert.equal(await precision.locator('.case-card .data-tools').count(),0);assert.equal(await precision.locator('.data-mode-picker button').count(),2);
     await hit(2,'cervix').click();assert.deepEqual(await getCase(),base,'Selecting a point never records a new value');assert.equal(await precision.locator('.selected-point-ring').count(),1);
-    const input=precision.getByLabel('Giá trị điểm đang chọn',{exact:true});await precision.waitForFunction(()=>document.activeElement.id==='point-value-input');
+    const input=precision.getByLabel('Giá trị điểm đang chọn',{exact:true});assert.equal(await input.inputValue(),'6');
     await precision.getByRole('button',{name:'Tăng giá trị một bước',exact:true}).click();assert.equal((await getCase()).observations.find(o=>o.time===2).cervix,6.5);await undoPoint();
     await input.fill('6.5');await precision.getByRole('button',{name:'Điểm sau cùng thông số',exact:true}).click();
     assert.equal((await getCase()).observations.find(o=>o.time===2).cervix,6.5);assert.equal(await precision.evaluate(()=>document.querySelector('#app')._vnode.component.setupState.dataPoint.time),4);await undoPoint();
@@ -160,14 +165,23 @@ async function preferences(p){await p.getByRole('button',{name:'Tùy biến khô
     await hit(2,'cervix').click();await precision.getByRole('button',{name:'Chi tiết',exact:true}).click();const form=await precision.locator('.editor').boundingBox(),paper=await precision.locator('.workarea').boundingBox();assert.ok(form.x>=paper.x+paper.width,'The full form is also in the right inspector');
     await precision.locator('.editor-values input[type=number]').nth(1).fill('6.5');assert.equal((await getCase()).observations.find(o=>o.time===2).cervix,6);await precision.locator('.editor-values input[type=number]').nth(1).press('Control+Enter');assert.equal((await getCase()).observations.find(o=>o.time===2).cervix,6.5);
     await precision.screenshot({path:path.join(os.tmpdir(),'vesando-precision-desktop.png'),animations:'disabled'});
-    await precision.getByRole('radio',{name:'Theo dõi',exact:true}).click();await precision.getByRole('button',{name:'Nhập bảng',exact:true}).click();
-    assert.equal(await precision.locator('#studio-toolbox .quick-entry').count(),1);assert.equal(await precision.locator('.clinical-section .quick-entry').count(),0);await precision.locator('#quick-fhr').fill('151');await precision.locator('#quick-fhr').press('Control+Enter');assert.equal((await getCase()).observations[0].fhr,151);
+    await precision.getByRole('radio',{name:'Theo dõi',exact:true}).click();await precision.getByRole('button',{name:'Nhập số liệu',exact:true}).click();
+    assert.equal(await precision.locator('#studio-toolbox .quick-entry').count(),0);assert.equal(await precision.locator('.clinical-section .quick-entry').count(),1);assert.equal(await precision.locator('.bedside-entry').isVisible(),true);await precision.locator('#quick-fhr').fill('151');await precision.locator('#quick-fhr').press('Control+Enter');assert.equal((await getCase()).observations[0].fhr,151);
     await precisionContext.close();
     const tapContext=await browser.newContext({viewport:{width:390,height:844},hasTouch:true,isMobile:true,reducedMotion:'reduce'}),tap=await tapContext.newPage();await tap.goto(url);await tap.waitForSelector('#app:not([v-cloak])');
-    const tapBefore=(await state(tap)).data;await tap.locator('[data-point-hit][data-observation-time="2"][data-observation-field=cervix]').tap();await tap.waitForSelector('#studio-toolbox[aria-modal=true]');assert.equal(await tap.locator('#studio-toolbox[aria-modal=true]').count(),1);assert.equal(await tap.locator('.point-quick-editor').isVisible(),true);assert.equal((await state(tap)).data,tapBefore);
+    const tapBefore=(await state(tap)).data;await tap.locator('[data-point-hit][data-observation-time="2"][data-observation-field=cervix]').tap();await tap.waitForSelector('.point-toolbar');assert.equal(await tap.locator('#studio-toolbox[aria-modal=true]').count(),0,'A tap keeps the chart in view: floating toolbar, no full sheet');assert.equal((await state(tap)).data,tapBefore);
+    await tap.locator('.point-toolbar').getByRole('button',{name:'Thêm thao tác với điểm',exact:true}).tap();await tap.getByRole('menuitem',{name:'Mở ô nhập số liệu'}).tap();await tap.waitForSelector('#studio-toolbox[aria-modal=true]');assert.equal(await tap.locator('.point-quick-editor').isVisible(),true);assert.equal((await state(tap)).data,tapBefore);
     await tap.waitForTimeout(400);assert.equal(await tap.evaluate(()=>document.querySelector('#app')._vnode.component.setupState.dataMode),'drag','A synthesized touch click must not activate the newly displayed Add button');
     await tap.screenshot({path:path.join(os.tmpdir(),'vesando-precision-mobile.png'),animations:'disabled'});await tapContext.close();
-    console.log('PASS: right-side controls/forms, one-gesture drag from overview, value/time/Shift locks, nudge, save-before-navigation, invalid-input retention, time move, point deletion/undo, head-marker preservation, contextual style, clinical input and touch selection');
+    console.log('PASS: free drag in eight directions without Shift, one-step undo, right-side controls/forms, optional axis locks, nudge, save-before-navigation, invalid-input retention, head-marker preservation, clinical input and touch selection');
+
+    for(const key of ['partograph-workspace-v2','partograph-workspace-v3']){
+      const legacyContext=await browser.newContext(),legacy=await legacyContext.newPage();await legacy.goto(url);await legacy.waitForSelector('#app:not([v-cloak])');
+      await legacy.evaluate(key=>{localStorage.removeItem('partograph-workspace-v3');localStorage.setItem(key,JSON.stringify({ui:{dragAxis:'value',accent:'blue',labels:false},panelWidth:380}))},key);await legacy.reload();await legacy.waitForSelector('#app:not([v-cloak])');
+      const upgraded=await state(legacy);assert.equal(upgraded.ui.dragAxis,'free');assert.equal(upgraded.ui.accent,'blue');assert.equal(upgraded.ui.labels,false);assert.equal(upgraded.panelWidth,380);
+      await legacy.keyboard.press('Alt+1');await legacy.getByLabel('Hướng kéo điểm',{exact:true}).selectOption('time');await legacy.reload();await legacy.waitForSelector('#app:not([v-cloak])');assert.equal((await state(legacy)).ui.dragAxis,'time','A lock explicitly chosen after the upgrade remains saved');await legacyContext.close();
+    }
+    console.log('PASS: legacy v2/v3 axis-lock migration preserves other preferences and remembers later explicit locks');
 
     const malformed=await browser.newContext();await malformed.addInitScript(()=>localStorage.setItem('partograph-workspace-v3',JSON.stringify({ui:{labels:'false',dock:'invalid',panelMode:null,spacing:'wrong',patient:'must not be retained'},panelWidth:9999})));
     const invalid=await malformed.newPage();await invalid.goto(url);await invalid.waitForSelector('#app:not([v-cloak])');

@@ -1,0 +1,180 @@
+// Uses the same PLAYWRIGHT_MODULE / CHROME_EXECUTABLE as verify-ui.cjs.
+const assert=require('node:assert/strict');
+const fs=require('node:fs/promises');
+const http=require('node:http');
+const path=require('node:path');
+const os=require('node:os');
+const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
+const files=new Set(['index.html','studio.css','workspace.css','interaction.css','theme.css','canvas.css','clinical-rules.js','guidance.js','enhancements.js']);
+const server=http.createServer(async(req,res)=>{
+  const file=new URL(req.url,'http://localhost').pathname.slice(1)||'index.html';
+  if(!files.has(file)){res.writeHead(404);res.end();return}
+  try{res.setHeader('Content-Type',(file.endsWith('.css')?'text/css':file.endsWith('.js')?'application/javascript':'text/html')+'; charset=utf-8');res.end(await fs.readFile(path.join(__dirname,file)))}catch{res.writeHead(500);res.end()}
+});
+const appState=page=>page.evaluate(()=>{const a=document.querySelector('#app')._vnode.component.setupState;return {clinical:JSON.stringify(a.clinical),exam:JSON.stringify(a.cases),mode:a.mode,time:a.selectedTime,dirty:a.dirty,pending:[...a.pendingQuickTimes]}});
+const selectRecordedMoment=async(page,time)=>{const menu=page.locator('.clinical-chart-card .moment-browser');if(!await menu.evaluate(el=>el.open))await menu.locator('summary').click();await menu.getByRole('combobox',{name:'Chọn mốc đã ghi',exact:true}).selectOption(String(time));await menu.locator('summary').click()};
+(async()=>{
+  await new Promise(r=>server.listen(0,'127.0.0.1',r));
+  const browser=await chromium.launch({headless:true,...(process.env.CHROME_EXECUTABLE?{executablePath:process.env.CHROME_EXECUTABLE}:{channel:'chrome'})});
+  try{
+    const context=await browser.newContext({viewport:{width:1440,height:1000},reducedMotion:'reduce'}),page=await context.newPage(),errors=[];
+    page.on('pageerror',e=>errors.push(e.message));
+    await page.goto('http://127.0.0.1:'+server.address().port);await page.waitForSelector('#app:not([v-cloak])');
+    await page.getByRole('radio',{name:'Theo dõi',exact:true}).click();
+    const original=await appState(page);
+    assert.equal(await page.locator('.clinical-overview>details').count(),3);
+    assert.equal(await page.locator('.clinical-overview>details[open]').count(),0);
+    assert.equal(await page.locator('.clinical-readouts>button').count(),6);assert.equal(await page.locator('.clinical-measurement-fold').getAttribute('open'),null);
+    assert.ok((await page.locator('.clinical-chart-card .partograph').boundingBox()).y<600,'The default folded context keeps the chart close to the header');
+    await page.locator('.clinical-measurement-fold>summary').click();
+    await page.locator('.clinical-admin>summary').click();
+    await page.getByLabel('Họ tên sản phụ',{exact:true}).fill('Ca thử giao diện');
+    await page.getByLabel('Para',{exact:true}).fill('1001');
+    await page.locator('.clinical-admin>summary').click();
+    assert.match(await page.locator('.clinical-admin>summary').innerText(),/Ca thử giao diện/);
+    await page.getByRole('button',{name:'Ghi mốc',exact:true}).click();
+    assert.equal(await page.locator('.quick-entry').isVisible(),true);
+    await page.locator('#quick-cervix').fill('4');await page.locator('#quick-fhr').fill('140');
+    assert.equal(await page.evaluate(()=>document.querySelector('#app')._vnode.component.setupState.quick.fhr),'140');
+    await page.locator('.quick-entry button[type=submit]').click();
+    await page.waitForFunction(()=>document.querySelector('#app')._vnode.component.setupState.clinical.observations[0].fhr===140);
+    assert.deepEqual((await appState(page)).pending,[]);
+    assert.match(await page.locator('.clinical-readouts').innerText(),/140/);
+    await page.locator('#quick-time').selectOption('2');
+    await page.locator('#quick-cervix').fill('6');await page.locator('#quick-fhr').fill('145');
+    await page.locator('.quick-entry button[type=submit]').click();
+    await selectRecordedMoment(page,0);
+    assert.equal(await page.locator('#quick-time').inputValue(),'0');
+    assert.match(await page.locator('.clinical-readouts').innerText(),/140/);
+    await selectRecordedMoment(page,2);
+    assert.match(await page.locator('.clinical-readouts').innerText(),/145/);
+    const recorded=await appState(page);
+    await page.getByRole('button',{name:'Bảng thông số',exact:true}).click();
+    assert.equal(await page.locator('.table-scroll').isVisible(),true);
+    assert.ok((await page.locator('.table-scroll').boundingBox()).y<(await page.locator('.clinical-chart-card .partograph').boundingBox()).y);
+    await page.locator('.overview-toggle').click();
+    assert.equal(await page.locator('.clinical-chart-card .dossier').isVisible(),true,'Overview restores the dossier after table entry');
+    assert.equal((await appState(page)).clinical,recorded.clinical);
+    console.log('PASS: compact context, patient editing, direct recording, selected-moment readouts and table/overview navigation');
+
+    await page.getByRole('button',{name:'Ghi mốc',exact:true}).click();
+    await page.locator('#quick-fhr').fill('150');
+    await selectRecordedMoment(page,0);
+    assert.deepEqual((await appState(page)).pending,[2]);
+    await selectRecordedMoment(page,2);
+    assert.equal(await page.locator('#quick-fhr').inputValue(),'150');
+    await page.locator('.quick-entry button[type=submit]').click();
+    await page.locator('#quick-fhr').fill('90');await page.locator('.quick-entry button[type=submit]').click();
+    assert.equal(await page.locator('.clinical-assessment.critical').count(),1);
+    await page.locator('.clinical-assessment>summary').click();
+    assert.ok(await page.locator('.clinical-assessment .clinical-context-body').isVisible());
+    assert.equal(await page.locator('.clinical-readouts>.alert').count(),1);
+    await page.locator('#quick-fhr').fill('145');await page.locator('.quick-entry button[type=submit]').click();
+    await page.locator('.overview-toggle').click();
+    let saved=await appState(page);
+    await page.locator('.focus-toggle').click();
+    assert.equal(await page.locator('.clinical-overview').isVisible(),false);
+    assert.equal(await page.locator('.clinical-monitor').count(),0);
+    await page.keyboard.press('Escape');
+    await page.evaluate(async()=>{const a=document.querySelector('#app')._vnode.component.setupState;await a.selectTool('export')});
+    assert.equal(await page.locator('.clinical-overview').isVisible(),false);
+    assert.equal(await page.locator('.clinical-monitor').count(),0);
+    await page.locator('.overview-toggle').click();
+    assert.equal((await appState(page)).clinical,saved.clinical);
+    assert.equal((await appState(page)).exam,original.exam);
+    console.log('PASS: per-moment drafts, visible critical reasons, focus/export modes and unchanged exam data');
+
+    await page.locator('.clinical-measurement-fold>summary').click();await page.getByRole('button',{name:'Nhập HUYẾT ÁP MẸ',exact:true}).click();
+    assert.equal(await page.evaluate(()=>document.activeElement.id),'quick-systolic');
+    await page.locator('#quick-systolic').fill('120');await page.locator('#quick-diastolic').fill('80');await page.locator('#quick-temperature').fill('37');
+    await page.locator('[data-entry-group=fetal]>summary').click();await page.locator('#quick-fluid').selectOption('I');
+    await page.locator('[data-entry-group=care]>summary').click();await page.locator('#quick-medication').fill('Ghi chú thuốc để thử giao diện');
+    await page.locator('.quick-entry button[type=submit]').click();
+    let data=JSON.parse((await appState(page)).clinical),o=data.observations.find(o=>o.time===2);
+    assert.equal(o.systolic,120);assert.equal(o.diastolic,80);assert.equal(o.temperature,37);assert.equal(o.fluid,'I');assert.equal(o.medication,'Ghi chú thuốc để thử giao diện');
+    await page.locator('#quick-fhr').fill('146');await page.getByRole('button',{name:'Ghi & mốc tiếp',exact:true}).click();
+    assert.equal((await appState(page)).time,2.5);assert.equal(JSON.parse((await appState(page)).clinical).observations.some(o=>o.time===2.5),false,'Moving ahead does not invent a recorded observation');
+    await page.getByRole('button',{name:'Mốc đã ghi trước',exact:true}).click();assert.equal((await appState(page)).time,2);
+    assert.match(await page.locator('.clinical-readouts>button').first().innerText(),/\+6 so mốc trước/);
+    await page.locator('#quick-fhr').fill('90');await page.locator('.quick-entry button[type=submit]').click();
+    const beforeToggle=(await appState(page)).clinical;
+    await page.locator('.clinical-options>summary').click();
+    await page.getByRole('switch',{name:'Cảnh báo tự động',exact:true}).uncheck();
+    await page.getByRole('switch',{name:'Nhắc đánh giá CTC',exact:true}).uncheck();
+    assert.equal(await page.locator('.clinical-readouts>.alert').count(),0);
+    assert.match(await page.locator('.clinical-assessment>summary').innerText(),/đang tắt/);
+    assert.match(await page.locator('.clinical-schedule>summary').innerText(),/đang tắt/);
+    assert.equal((await appState(page)).clinical,beforeToggle);
+    await page.locator('.clinical-analysis-trigger').click();
+    assert.equal(await page.locator('.clinical-assistant .analysis-muted').isVisible(),true);
+    assert.ok(await page.locator('.analysis-finding.critical').count()>0);
+    assert.match(await page.locator('.analysis-finding').first().getAttribute('class'),/critical/);
+    await page.locator('.analysis-tabs').getByRole('button',{name:'Prompt AI',exact:true}).click();
+    const analysisPrompt=await page.locator('.analysis-prompt textarea').inputValue();
+    assert.equal(analysisPrompt.includes('Ca thử giao diện'),false,'Analysis prompt excludes the patient name');
+    assert.match(analysisPrompt,/WHO|UMP/);
+    await page.evaluate(()=>Object.defineProperty(navigator,'clipboard',{configurable:true,value:{writeText:async text=>{window.clinicalCopied=text},readText:async()=> 'Đề bài dán thử để kiểm tra prompt'}}));
+    await page.getByRole('button',{name:'Sao chép prompt phân tích',exact:true}).click();
+    assert.equal(await page.evaluate(()=>window.clinicalCopied),analysisPrompt);
+    await page.locator('.analysis-tabs').getByRole('button',{name:/Cần bổ sung/}).click();
+    await page.locator('.missing-field').filter({hasText:'Đầu còn trên vệ'}).click();
+    assert.equal(await page.evaluate(()=>document.activeElement.id),'quick-descent');
+    await page.locator('.overview-toggle').click();
+    const second=await page.context().newPage();await second.goto('http://127.0.0.1:'+server.address().port);await second.waitForSelector('#app:not([v-cloak])');
+    assert.equal(await second.evaluate(()=>document.querySelector('#app')._vnode.component.setupState.ui.clinicalAlerts),false);
+    assert.equal(await second.evaluate(()=>document.querySelector('#app')._vnode.component.setupState.ui.clinicalReminders),false);await second.close();
+    console.log('PASS: grouped text/numeric/enum entry, record-and-next, trends, persistent independent warning switches and manual source-backed analysis');
+
+    await page.getByRole('button',{name:'Lập sản đồ bằng AI',exact:true}).click();
+    await page.locator('.prompt-kind').getByRole('button',{name:'Có đề bài đầy đủ',exact:true}).click();
+    await page.locator('.prompt-subject').getByRole('button',{name:'Dán',exact:true}).click();
+    assert.match(await page.locator('#ai-subject').inputValue(),/Đề bài dán thử/);
+    assert.equal(await page.evaluate(()=>localStorage.getItem('partograph-ai-draft-v1')),null);
+    const remember=page.getByRole('switch',{name:'Tự lưu đề bài trên thiết bị',exact:true});await remember.check();
+    assert.match(await page.evaluate(()=>localStorage.getItem('partograph-ai-draft-v1')),/Đề bài dán thử/);
+    await remember.uncheck();assert.equal(await page.evaluate(()=>localStorage.getItem('partograph-ai-draft-v1')),null);
+    const downloadPromise=page.waitForEvent('download');await page.getByRole('button',{name:'Tải prompt .txt',exact:true}).click();
+    const promptDownload=await downloadPromise;assert.match(promptDownload.suggestedFilename(),/\.txt$/);assert.match(await fs.readFile(await promptDownload.path(),'utf8'),/Đề bài dán thử/);
+    await page.getByRole('button',{name:'Bước 2: Nhập kết quả AI',exact:true}).click();
+    assert.equal(await page.getByLabel('Nơi nhận sản đồ AI',{exact:true}).inputValue(),'clinical');
+    await page.locator('#json-workbench-input').fill(await page.evaluate(()=>document.querySelector('#app')._vnode.component.setupState.jsonExample));
+    const beforeImport=(await appState(page)).clinical;
+    await page.evaluate(()=>document.querySelector('#app')._vnode.component.setupState.setQuickField('pulse','81'));
+    await page.getByRole('button',{name:'Vẽ sản đồ',exact:true}).click();
+    assert.equal(await page.locator('.json-workbench[open]').count(),1,'Pending clinical drafts block an import');
+    assert.equal((await appState(page)).clinical,beforeImport);
+    await page.evaluate(()=>document.querySelector('#app')._vnode.component.setupState.cancelQuickDrafts());
+    await page.getByRole('button',{name:'Vẽ sản đồ',exact:true}).click();
+    assert.equal((await appState(page)).mode,'clinical');assert.equal((await appState(page)).exam,original.exam);
+    await page.evaluate(()=>document.querySelector('#app')._vnode.component.setupState.undo());
+    assert.equal((await appState(page)).clinical,beforeImport,'AI import has a complete undo snapshot');
+    const batchDownload=page.waitForEvent('download');
+    await page.evaluate(async()=>{const a=document.querySelector('#app')._vnode.component.setupState;a.selectedTime=2;a.exportFormat='svg';a.setQuickField('fluid','B');a.setQuickField('medication','Nội dung dạng chữ được giữ khi xuất');await a.applyAndExport()});
+    const svgDownload=await batchDownload,svg=await fs.readFile(await svgDownload.path(),'utf8');
+    assert.match(svgDownload.suggestedFilename(),/\.svg$/);assert.ok(!svg.includes('clinical-monitor'));
+    data=JSON.parse((await appState(page)).clinical);assert.equal(data.observations.find(o=>o.time===2).fluid,'B');assert.equal(data.observations.find(o=>o.time===2).medication,'Nội dung dạng chữ được giữ khi xuất');
+    await page.evaluate(()=>document.querySelector('#app')._vnode.component.setupState.undo());
+    assert.equal((await appState(page)).clinical,beforeImport);
+    await page.locator('.overview-toggle').click();
+    saved=await appState(page);
+    console.log('PASS: clipboard paste, prompt file, opt-in draft storage, clinical AI destination, pending-draft guard and undoable import without replacing exam cases');
+
+    for(const width of [320,390,768,1024,1440])for(const theme of ['light','dark']){
+      await page.setViewportSize({width,height:1000});
+      await page.evaluate(async theme=>{const a=document.querySelector('#app')._vnode.component.setupState;a.theme=theme;await Vue.nextTick()},theme);
+      for(const stage of ['overview','review','data','manual','table']){
+        await page.evaluate(async stage=>{const a=document.querySelector('#app')._vnode.component.setupState;if(stage==='overview'){a.toolTab='overview';a.inputsOpen=false}else if(stage==='review')await a.selectTool('review');else if(stage==='data'){await a.selectTool('data');a.selectDataMode('drag')}else{await a.openClinicalEntry();a.entry=stage==='table'?'table':'plot'}await Vue.nextTick();await new Promise(requestAnimationFrame);window.scrollTo(0,0)},stage);
+        assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,width+'px '+theme+' '+stage+' overflow');
+        if(stage==='overview'){
+          const record=page.locator('.clinical-record'),entry=await record.isVisible()?record:page.locator('.bedside-toggle');
+          const box=await entry.boundingBox();assert.ok(box.width>=44&&box.height>=44);
+          assert.equal(await entry.evaluate(e=>e.scrollWidth>e.clientWidth+1||e.scrollHeight>e.clientHeight+1),false);
+          if([390,1440].includes(width))await page.screenshot({path:path.join(os.tmpdir(),'vesando-clinical-'+width+'-'+theme+'.png'),fullPage:true});
+        }
+      }
+    }
+    assert.equal((await appState(page)).clinical,saved.clinical);
+    assert.deepEqual(errors,[]);
+    console.log('PASS: 50 clinical layouts across five widths, both themes and five editing states; no runtime errors');
+  }finally{await browser.close();await new Promise(r=>server.close(r))}
+})().catch(e=>{console.error(e);process.exitCode=1});

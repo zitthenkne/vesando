@@ -4,7 +4,7 @@ const fs=require('node:fs/promises');
 const http=require('node:http');
 const path=require('node:path');
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
-const files=new Set(['index.html','studio.css','workspace.css','interaction.css','theme.css','clinical-rules.js','guidance.js','enhancements.js']);
+const files=new Set(['index.html','studio.css','workspace.css','interaction.css','theme.css','canvas.css','clinical-rules.js','guidance.js','enhancements.js']);
 const server=http.createServer(async(req,res)=>{const name=new URL(req.url,'http://localhost').pathname.slice(1)||'index.html';if(!files.has(name)){res.writeHead(404);res.end();return}try{res.setHeader('Content-Type',(name.endsWith('.css')?'text/css':name.endsWith('.js')?'application/javascript':'text/html')+'; charset=utf-8');res.end(await fs.readFile(path.join(__dirname,name)))}catch{res.writeHead(500);res.end()}});
 const state=(page,pick)=>page.evaluate(pick=>{const s=document.querySelector('#app')._vnode.component.setupState;return pick.split(',').reduce((o,k)=>({...o,[k]:JSON.parse(JSON.stringify(k.split('.').reduce((v,p)=>v?.[p],s)??null))}),{})},pick);
 const svgOf=(page,options)=>page.evaluate(o=>{const s=document.querySelector('#app')._vnode.component.setupState;return buildSVG(JSON.parse(JSON.stringify(s.activeCase)),{...o,design:{...JSON.parse(JSON.stringify(s.design)),...(o.design||{})}},true).inner},options||{});

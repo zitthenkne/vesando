@@ -5,7 +5,7 @@ const http=require('node:http');
 const path=require('node:path');
 const os=require('node:os');
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
-const files=new Set(['index.html','studio.css','workspace.css','interaction.css','theme.css','clinical-rules.js','guidance.js','enhancements.js']);
+const files=new Set(['index.html','studio.css','workspace.css','interaction.css','theme.css','canvas.css','clinical-rules.js','guidance.js','enhancements.js']);
 const server=http.createServer(async(req,res)=>{const name=new URL(req.url,'http://localhost').pathname.slice(1)||'index.html';if(!files.has(name)){res.writeHead(404);res.end();return}try{res.setHeader('Content-Type',(name.endsWith('.css')?'text/css':name.endsWith('.js')?'application/javascript':'text/html')+'; charset=utf-8');res.end(await fs.readFile(path.join(__dirname,name)))}catch{res.writeHead(500);res.end()}});
 const app=page=>page.evaluate(()=>{const s=document.querySelector('#app')._vnode.component.setupState;return {mode:s.mode,inputsOpen:s.inputsOpen,toolTab:s.toolTab}});
 const setHidden=(page,hidden)=>page.evaluate(h=>{Object.defineProperty(document,'hidden',{configurable:true,get:()=>h});document.dispatchEvent(new Event('visibilitychange'))},hidden);
@@ -65,7 +65,7 @@ const setHidden=(page,hidden)=>page.evaluate(h=>{Object.defineProperty(document,
     assert.ok((await page.locator('.case-card:visible svg.partograph text').first().textContent()).includes('WHO LCG'));
     await picker.selectOption('modified');await page.evaluate(()=>{document.querySelector('#app')._vnode.component.setupState.design.gridColor='#7a4b9c'});
     await page.locator('#studio-tools-navigation .tool-tabs button').nth(3).click();
-    const [file]=await Promise.all([page.waitForEvent('download'),page.locator('.review-share').getByRole('button',{name:'Tải JSON',exact:true}).click()]);
+    await page.locator('.share-options>summary').click();const [file]=await Promise.all([page.waitForEvent('download'),page.locator('.review-share').getByRole('button',{name:'Tải JSON',exact:true}).click()]);
     assert.match(file.suggestedFilename(),/^san-do-CASE-001-kiem-tra\.json$/);
     const review=await fs.readFile(await file.path(),'utf8'),parsed=JSON.parse(review);
     assert.equal(parsed.kind,'partograph-review');assert.equal(parsed.standard,'modified');assert.equal(parsed.design.gridColor,'#7a4b9c');assert.equal(parsed.cases.length,1);assert.equal(parsed.cases[0].observations.length,13);assert.equal(parsed.cases[0].events.length,4);
@@ -105,13 +105,13 @@ const setHidden=(page,hidden)=>page.evaluate(h=>{Object.defineProperty(document,
     const before=await obs();await page.locator('.case-card:visible [data-point-hit][data-observation-time="2"][data-observation-field=cervix]').click({button:'right'});
     const bar=page.locator('.point-toolbar');await bar.waitFor();assert.ok((await bar.innerText()).includes('CTC 6 cm'));
     await bar.getByRole('button',{name:'Tăng số đo trên sản đồ',exact:true}).click();await page.waitForFunction(()=>document.querySelector('#app')._vnode.component.setupState.activeCase.observations.find(o=>o.time===2).cervix===6.5);
-    await bar.getByRole('button',{name:'Muộn hơn 30 phút',exact:true}).click();await page.waitForFunction(()=>document.querySelector('#app')._vnode.component.setupState.activeCase.observations.find(o=>o.time===2.5)?.cervix===6.5);
-    await bar.getByRole('button',{name:'Nhân bản sang 30 phút sau',exact:true}).click();await page.waitForFunction(()=>document.querySelector('#app')._vnode.component.setupState.activeCase.observations.find(o=>o.time===3)?.cervix===6.5);
+    await bar.getByRole('button',{name:'Thêm thao tác với điểm',exact:true}).click();await bar.getByRole('menuitem',{name:'Muộn hơn 30 phút',exact:true}).click();await page.waitForFunction(()=>document.querySelector('#app')._vnode.component.setupState.activeCase.observations.find(o=>o.time===2.5)?.cervix===6.5);
+    await bar.getByRole('button',{name:'Thêm thao tác với điểm',exact:true}).click();await bar.getByRole('menuitem',{name:'Chép số đo sang 30 phút sau',exact:true}).click();await page.waitForFunction(()=>document.querySelector('#app')._vnode.component.setupState.activeCase.observations.find(o=>o.time===3)?.cervix===6.5);
     for(let i=0;i<3;i++)await page.keyboard.press('Control+z');assert.deepEqual(await obs(),before,'Toolbar edits undo step by step');
     await page.locator('.case-card:visible [data-point-hit][data-observation-time="4"][data-observation-field=descent]').click({button:'right'});
-    await bar.getByRole('button',{name:'Ẩn hình kiểu thế',exact:true}).click();await page.waitForFunction(()=>document.querySelector('#app')._vnode.component.setupState.activeCase.observations.find(o=>o.time===4).headMarker.hidden===true);
+    await bar.getByRole('button',{name:'Thêm thao tác với điểm',exact:true}).click();await bar.getByRole('menuitem',{name:'Ẩn hình kiểu thế',exact:true}).click();await page.waitForFunction(()=>document.querySelector('#app')._vnode.component.setupState.activeCase.observations.find(o=>o.time===4).headMarker.hidden===true);
     assert.equal(await page.locator('.case-card:visible g[data-observation-time="4"][data-observation-field="descent"] [data-head-marker]').count(),0);
-    await bar.getByRole('button',{name:'Hiện hình kiểu thế',exact:true}).click();await page.waitForFunction(()=>!document.querySelector('#app')._vnode.component.setupState.activeCase.observations.find(o=>o.time===4).headMarker.hidden);
+    await bar.getByRole('button',{name:'Thêm thao tác với điểm',exact:true}).click();await bar.getByRole('menuitem',{name:'Hiện hình kiểu thế',exact:true}).click();await page.waitForFunction(()=>!document.querySelector('#app')._vnode.component.setupState.activeCase.observations.find(o=>o.time===4).headMarker.hidden);
     await page.locator('.case-card:visible [data-point-hit][data-observation-time="4"][data-observation-field=cervix]').click({button:'right'});await bar.getByRole('button',{name:'Thêm thao tác với điểm',exact:true}).click();
     await page.getByRole('menuitem',{name:'Dời điểm này và các mốc sau muộn 30 phút',exact:true}).click();
     const moved=await obs();assert.deepEqual(moved.filter(o=>o[0]<4),before.filter(o=>o[0]<4),'Earlier data stays put');assert.deepEqual(moved.filter(o=>o[0]>=4.5).map(o=>o[1]),before.filter(o=>o[0]>=4).map(o=>o[1]),'Later data moves together');
@@ -129,6 +129,9 @@ const setHidden=(page,hidden)=>page.evaluate(h=>{Object.defineProperty(document,
     assert.equal(await page.locator('details.prompt-output').getAttribute('open'),null,'The full prompt starts collapsed');
     assert.equal(await page.locator('.ai-links a').count(),3);
     for(const a of await page.locator('.ai-links a').all())assert.equal(await a.getAttribute('target'),'_blank');
+    assert.equal(await page.getByRole('switch',{name:'Tự lưu đề bài trên thiết bị',exact:true}).isChecked(),false);
+    assert.equal(await page.evaluate(()=>localStorage.getItem('partograph-ai-draft-v1')),null,'Draft persistence requires opt-in');
+    await page.getByRole('switch',{name:'Tự lưu đề bài trên thiết bị',exact:true}).check();
     await page.reload();await page.waitForSelector('#app:not([v-cloak])');
     await page.getByRole('button',{name:'Lập sản đồ bằng AI',exact:true}).click();
     assert.equal(await page.getByLabel('Đề bài lâm sàng',{exact:true}).inputValue(),brief,'The brief survives a reload');
@@ -195,8 +198,8 @@ const setHidden=(page,hidden)=>page.evaluate(h=>{Object.defineProperty(document,
     console.log('PASS: 320/390 phone header, bottom bar, zoom pill, pinch zoom, swipe-to-close sheet, full-screen AI dialog');
 
     // Dark theme keeps the AI action readable.
-    await page.evaluate(()=>{document.documentElement.dataset.theme='dark'});
-    const contrast=await page.locator('.json-entry').evaluate(e=>getComputedStyle(e).color);assert.equal(contrast,'rgb(255, 255, 255)');
+    await page.evaluate(()=>{document.documentElement.dataset.theme='dark'});await page.waitForTimeout(400);// let the 150 ms background transition settle
+    const contrast=await page.locator('.json-entry').evaluate(e=>{const s=getComputedStyle(e),rgb=v=>v.match(/[\d.]+/g).slice(0,3).map(Number),lum=c=>{const [r,g,b]=c.map(x=>{x/=255;return x<=.03928?x/12.92:((x+.055)/1.055)**2.4});return .2126*r+.7152*g+.0722*b},a=lum(rgb(s.color)),b=lum(rgb(s.backgroundColor));return (Math.max(a,b)+.05)/(Math.min(a,b)+.05)});assert.ok(contrast>=4.5,'AI action text contrast '+contrast.toFixed(2));
     assert.deepEqual(errors,[]);console.log('PASS: dark theme AI action; no runtime or console errors');
   }finally{await browser.close();server.close()}
 })().catch(e=>{console.error(e);process.exit(1)});

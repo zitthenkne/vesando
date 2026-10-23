@@ -1,0 +1,316 @@
+/* Đợt 8 · Chọn → chỉnh trên sản đồ. Loaded after theme.css.
+   One selection model: what is selected on the chart decides what the panel shows, data and layout together.
+   Every new control keeps the 44 px touch target used across the app. */
+
+/* ---------- Top bar: edit history next to the case, help as one icon ---------- */
+#app .history-actions{display:inline-flex;align-items:center;gap:0;flex:none;padding:0;border:1px solid var(--line);border-radius:10px;background:var(--surface-raised)}
+#app .history-actions .icon-btn{display:grid;place-items:center;width:44px;min-width:44px;height:44px;min-height:44px;padding:0;border:0;border-radius:9px;background:transparent;color:var(--ink)}
+#app .history-actions .icon-btn:hover:not(:disabled){background:var(--surface)}
+#app .history-actions .icon-btn:disabled{opacity:.35}
+#app .history-actions svg{width:17px;height:17px}
+/* Hidden until there is something to undo, so a fresh workspace stays quiet without the bar shifting later. */
+#app .history-actions.idle{visibility:hidden}
+#app .session-actions>.learning-trigger{place-items:center;width:44px;min-width:44px;height:44px;padding:0;border:1px solid transparent;border-radius:10px;background:transparent;color:var(--muted)}
+#app .session-actions>.learning-trigger:hover{background:var(--surface-raised);color:var(--ink);border-color:var(--line)}
+#app .session-actions>.learning-trigger svg{width:19px;height:19px}
+@media screen and (min-width:1101px){#app .session-actions>.learning-trigger{display:inline-grid}}
+/* AI keeps the single accent: outlined, the sparkle is its mark. */
+#app .session-actions>.json-entry{background:var(--brand-soft)!important;color:var(--brand)!important;border:1px solid color-mix(in srgb,var(--brand) 35%,transparent)!important;box-shadow:none!important;filter:none!important}
+#app .session-actions>.json-entry::after{display:none}
+#app .session-actions>.json-entry>svg{color:var(--brand)!important}
+#app .session-actions>.json-entry:hover{background:color-mix(in srgb,var(--brand) 16%,var(--surface))!important;border-color:var(--brand)!important}
+[data-theme=dark] #app .session-actions>.json-entry,[data-theme=dark] #app .session-actions>.json-entry>svg{color:var(--brand-strong)!important}
+/* Tablets and phones: help and workspace settings live in the ⋯ menu so the case name keeps its room. */
+@media screen and (max-width:1100px){
+  #app .session-actions>.learning-trigger,#app .session-actions>.preferences-trigger{display:none!important}
+  #app .workspace-menu .mobile-preferences-action{display:flex!important}
+}
+@media screen and (min-width:761px) and (max-width:1100px){
+  #app .session-actions>.command-trigger{display:none!important}
+  #app .workspace-menu .menu-search{display:flex!important}
+  #app .session-actions .quick-export>.desktop-button-label{display:none}
+  #app .session-actions .quick-export>.mobile-button-label{display:inline}
+}
+/* Rail tooltips only when names are hidden, never over an open panel. */
+#app .studio-workspace.show-tool-labels .tool-rail .dock-tooltip,#app .tool-rail button.active .dock-tooltip,#app .tool-rail button[aria-pressed=true] .dock-tooltip{display:none!important}
+/* Footer: one quiet line. */
+#app .site-credit{display:flex;justify-content:center;align-items:center;gap:6px 18px;flex-wrap:wrap;padding:14px 0 6px}
+#app .site-credit>a,#app .site-credit>span{display:inline-block;width:auto;margin:0;padding:6px 2px}
+
+/* ---------- Panel title names what is being edited ---------- */
+#app .toolbox-heading strong{display:flex;align-items:baseline;flex-wrap:wrap;gap:2px 8px;min-width:0}
+#app .panel-context{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+#app .panel-context::before{content:"›";margin-right:6px;color:var(--line-strong)}
+
+/* ---------- Point inspector: Số liệu | Trình bày ---------- */
+.inspector-switch{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin:12px 0 14px;padding:3px;border:1px solid var(--line);border-radius:10px;background:var(--surface-raised)}
+#app .inspector-switch>button{display:flex;align-items:center;justify-content:center;gap:6px;min-height:44px;border:0;border-radius:8px;background:transparent;color:var(--muted);font:inherit;font-size:12.5px;font-weight:650;cursor:pointer}
+.inspector-switch>button svg{width:15px;height:15px}
+#app .inspector-switch>button.active{background:var(--surface);color:var(--brand);box-shadow:var(--shadow-1),0 0 0 1px var(--line)}
+.point-style{display:flex;flex-direction:column;gap:14px}
+.point-style-scope{display:flex;gap:8px;align-items:flex-start;margin:0;padding:10px 12px;border-radius:var(--r-s);background:var(--brand-tint);font-size:11.5px;line-height:1.6;color:var(--muted)}
+.point-style-scope svg{flex:none;width:15px;height:15px;margin-top:2px;color:var(--brand)}.point-style-scope b{color:var(--ink)}
+.point-head-style{margin-top:4px;padding-top:14px;border-top:1px solid var(--line)}
+.point-head-style>h5{display:flex;align-items:center;gap:7px;margin:0 0 10px;font-size:12.5px}.point-head-style>h5 svg{width:15px;height:15px;color:var(--brand)}
+
+/* ---------- Line style editor (point inspector and Trình bày › Màu & nét) ---------- */
+.series-style{display:flex;flex-direction:column;gap:12px}
+.design-symbols .series-style{margin-top:16px}
+.style-row{display:flex;flex-direction:column;gap:4px}.style-row>span{font-size:11px;font-weight:650;color:var(--muted)}
+.style-swatches,.mini-swatches{display:flex;flex-wrap:wrap;align-items:center;gap:0}
+#app .style-swatches>button,#app .mini-swatches>button{position:relative;width:44px;min-width:44px;height:44px;min-height:44px;padding:0;border:0;border-radius:50%;background:transparent;box-shadow:none;cursor:pointer}
+#app .style-swatches>button::before,#app .mini-swatches>button::before{content:"";position:absolute;inset:9px;border-radius:50%;background:var(--swatch);box-shadow:0 0 0 1px var(--line-strong)}
+#app .style-swatches>button[aria-checked=true]::before,#app .mini-swatches>button[aria-checked=true]::before{box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--swatch)}
+#app .style-swatches>button:disabled,#app .mini-swatches>button:disabled{opacity:.35;cursor:not-allowed}
+.style-custom-color{position:relative;display:grid;place-items:center;width:44px;height:44px;cursor:pointer}
+.style-custom-color::before{content:"";width:26px;height:26px;border-radius:50%;background:conic-gradient(#d42f4e,#b45309,#0e6b62,#2469ab,#6d28d9,#d42f4e);box-shadow:0 0 0 1px var(--line-strong)}
+#app .style-custom-color input[type=color]{position:absolute;inset:0;width:100%;height:100%;min-height:0;padding:0;border:0;opacity:0;cursor:pointer}
+.style-markers,.mini-markers{display:flex;flex-wrap:wrap;gap:4px}
+#app .style-markers>button,#app .mini-markers>button{display:grid;place-items:center;width:44px;min-width:44px;height:44px;min-height:44px;padding:0;border:1px solid var(--line);border-radius:var(--r-s);background:var(--surface);color:var(--ink);font-size:17px;line-height:1;cursor:pointer}
+#app .style-markers>button[aria-checked=true],#app .mini-markers>button[aria-checked=true]{border-color:var(--brand);background:var(--brand-soft);color:var(--brand)}
+.series-style .seg{display:flex;flex-wrap:wrap}#app .series-style .seg button{flex:1;min-height:44px}
+.seg button[aria-checked=true]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow-1),0 0 0 1px var(--line)}
+.series-style .range-field{margin:0}
+#app .series-style input[type=range]{width:100%;min-height:32px;padding:0}
+#app .series-style>.text-btn{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;min-height:44px}
+
+/* ---------- Floating point toolbar: the line's colour sits in its ⋯ menu ---------- */
+.point-toolbar>.point-more-button{position:relative;display:grid;place-items:center}
+.point-more-button>i{position:absolute;right:8px;bottom:8px;width:9px;height:9px;border-radius:50%;box-shadow:0 0 0 2px var(--surface)}
+#app .point-style-menu{display:flex;flex-direction:column;gap:6px;padding:6px 6px 10px;margin-bottom:4px;border-bottom:1px solid var(--line)}
+.point-style-caption{padding:0 4px;font-size:10.5px;color:var(--muted)}
+
+/* ---------- Region panel: data and layout of one row group together ---------- */
+.section-data{display:flex;flex-direction:column;gap:10px;margin:12px 0 16px;padding:12px;border:1px solid var(--line);border-radius:var(--r-m);background:var(--surface-raised)}
+.section-data>p{display:flex;align-items:center;gap:8px;margin:0;font-size:12px;color:var(--muted)}.section-data>p svg{width:15px;height:15px;color:var(--brand);flex:none}.section-data>p b{color:var(--ink);font-family:var(--mono)}
+.section-data>div{display:flex;flex-wrap:wrap;gap:8px}#app .section-data .btn{flex:1 1 auto;min-height:44px;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+/* Row labels on the chart are selectable regions. */
+svg.partograph [data-label-section]:hover{fill:color-mix(in srgb,var(--brand) 7%,transparent)}
+.chart-cell-editor .cell-region-style{margin-left:auto;color:var(--muted)}
+.chart-cell-editor header:has(.cell-region-style)>div{flex:1;min-width:0}
+
+/* ---------- Data panel at rest: one line instead of an illustration ---------- */
+#app .point-empty-state{display:flex;flex-direction:column;align-items:flex-start;gap:2px;margin:12px 0;padding:12px 14px;border:1px dashed var(--line-strong);border-radius:var(--r-m);background:var(--surface-raised);text-align:left}
+#app .point-empty-state>svg{display:none}
+#app .point-empty-state>strong{font-size:12.5px}#app .point-empty-state>p{margin:0;font-size:11.5px;color:var(--muted)}
+#app .data-tools .drag-axis-field,#app .data-tools .data-undo{margin-top:10px}
+
+/* ---------- Right-click menu and pointer readout on the chart ---------- */
+.chart-context-menu{position:absolute;z-index:30;display:flex;flex-direction:column;padding:6px;border:1px solid var(--line);border-radius:var(--r-m);background:var(--surface);box-shadow:var(--shadow-3)}
+.chart-context-menu>.context-title{padding:6px 10px 8px;font-size:11px;font-weight:650;color:var(--muted);font-variant-numeric:tabular-nums}
+#app .chart-context-menu>button{display:flex;align-items:center;gap:10px;min-height:44px;padding:0 10px;border:0;border-radius:var(--r-s);background:transparent;color:var(--ink);font:inherit;font-size:12.5px;text-align:left;cursor:pointer}
+#app .chart-context-menu>button:hover,#app .chart-context-menu>button:focus-visible{background:var(--surface-raised)}
+.chart-context-menu>button svg{width:16px;height:16px;flex:none;color:var(--brand)}
+#app .chart-context-menu>button.divided{margin-top:5px;border-top:1px solid var(--line);border-radius:0 0 var(--r-s) var(--r-s)}
+.chart-hover-readout{position:absolute;z-index:8;padding:3px 8px;border-radius:6px;background:var(--ink);color:var(--surface);font-size:11px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap;pointer-events:none;box-shadow:var(--shadow-1)}
+@media (pointer:coarse){.chart-hover-readout{display:none}}
+
+/* ---------- Drop a file anywhere ---------- */
+.drop-overlay{position:fixed;inset:0;z-index:90;display:grid;place-items:center;padding:24px;background:color-mix(in srgb,var(--brand) 10%,var(--overlay));pointer-events:none}
+.drop-overlay>div{display:flex;flex-direction:column;align-items:center;gap:8px;max-width:420px;padding:28px 32px;border:2px dashed var(--brand);border-radius:var(--r-l);background:var(--surface);box-shadow:var(--shadow-3);text-align:center}
+.drop-overlay svg{width:32px;height:32px;color:var(--brand)}.drop-overlay strong{font-size:16px}.drop-overlay span{font-size:12px;color:var(--muted)}
+
+/* ---------- AI dialog in the single accent ---------- */
+:root:not([data-theme=dark]),:root[data-theme=dark]{--ai-a:var(--brand);--ai-b:var(--brand);--ai-c:var(--brand-strong);--ai-soft:var(--brand-soft);--ai-ink:var(--brand);--ai-line:color-mix(in srgb,var(--brand) 30%,var(--line))}
+:root[data-theme=dark]{--ai-ink:var(--brand-strong)}
+.ai-heading-mark{box-shadow:0 10px 24px -12px color-mix(in srgb,var(--brand) 70%,transparent)!important}
+.ai-steps>button.active>b{box-shadow:none!important}
+#app .prompt-copy,.json-workbench .prompt-copy{box-shadow:0 8px 20px -12px color-mix(in srgb,var(--brand) 80%,transparent)!important}
+.ai-step-line.done{background:var(--success-ink)!important}
+
+/* ---------- Theo dõi: what matters at this moment, without opening anything ---------- */
+.exam-countdown{display:inline-block;margin-left:8px;padding:1px 7px;border-radius:999px;background:var(--surface-raised);color:var(--muted);font-size:10.5px;font-weight:600;font-variant-numeric:tabular-nums}
+.exam-countdown.overdue{background:var(--warning-bg);color:var(--warning-ink)}
+#app .clinical-now{min-height:44px;display:inline-flex;align-items:center;gap:6px;padding:0 12px;font-size:12px}
+#app .clinical-now svg{width:15px;height:15px;color:var(--brand)}
+.clinical-measurement-fold>summary>.fold-title{flex:none}
+.fold-readouts{display:flex;flex-wrap:wrap;gap:4px 14px;min-width:0;margin-left:10px;color:var(--ink);font-size:12px}
+.fold-readouts b{font-weight:650;font-variant-numeric:tabular-nums;white-space:nowrap}.fold-readouts b small{font-weight:500;color:var(--muted)}
+.fold-readouts b.alert{color:var(--error-ink)}.fold-readouts i{font-style:normal;color:var(--muted)}
+.clinical-measurement-fold[open] .fold-readouts{display:none}
+
+@media screen and (max-width:760px){
+  .clinical-measurement-fold>summary{flex-wrap:wrap}.fold-readouts{flex-basis:100%;order:5;margin:0 0 2px 22px;font-size:11.5px;gap:2px 10px}
+  #app .clinical-now{padding:0 10px}
+}
+@media print{.history-actions,.drop-overlay,.chart-context-menu,.chart-hover-readout{display:none!important}}
+/* Near the top of the chart the ⋯ menu opens downward so the card never clips it. */
+.point-toolbar.menu-down .point-toolbar-menu{top:calc(100% + 6px)!important;bottom:auto!important}
+@media screen and (max-width:760px){#app .point-toolbar-menu{max-height:40dvh}}
+
+/* Direct dragging: before/after near the pointer; occupied hours remain reviewable. */
+.drag-readout.point-drag-card,.point-drop-choice{position:fixed;z-index:100;display:block;max-width:calc(100vw - 24px);margin:0;padding:12px 14px;transform:none;border:1px solid var(--brand);border-radius:12px;background:var(--surface);color:var(--ink);box-shadow:var(--shadow-2);font-size:12px;line-height:1.55}
+.point-drag-card{pointer-events:none}.point-drag-card.occupied{border-color:var(--warning-ink)}.point-drag-card.invalid{border-color:var(--line-strong)}
+.drag-card-heading{display:flex;align-items:center;gap:7px}.drag-card-heading>svg{width:16px;height:16px;flex:none;color:var(--brand)}.drag-card-heading>strong{font-size:12px;font-weight:700}.drag-card-heading>small{margin-left:auto;font-size:10px;color:var(--muted)}
+.drag-card-values{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:10px;margin-top:9px}.drag-card-values>div{display:flex;flex-direction:column;gap:1px}.drag-card-values small{font-size:9px;color:var(--muted)}.drag-card-values b{font:600 16px/1.5 var(--mono)}.drag-card-values span{font-size:12px;font-variant-numeric:tabular-nums}.drag-card-values>svg{width:16px;height:16px;color:var(--muted)}.drag-card-target{color:var(--brand)}.occupied .drag-card-target{color:var(--warning-ink)}
+.point-drag-card>p{margin:9px 0 0;padding-top:7px;border-top:1px solid var(--line);font-size:10px;color:var(--muted)}.point-drag-card.occupied>p{color:var(--warning-ink)}
+.partograph .drag-guide{stroke-width:1;stroke-dasharray:3 4;opacity:.5;vector-effect:non-scaling-stroke}.partograph .point-drag-ghost>circle,.partograph .point-drag-ghost>line{vector-effect:non-scaling-stroke}
+.point-drop-choice{pointer-events:auto;border-color:var(--warning-ink)}.point-drop-choice>p{margin:9px 0;font-size:11px}.point-drop-choice>small{display:block;font-size:10px;color:var(--muted)}.point-drop-choice>.error{font-size:11px;color:var(--error-ink)}.drop-swap-preview{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:10px;padding:10px 0;margin-bottom:7px;border-block:1px solid var(--line)}.drop-swap-preview>span{display:flex;flex-direction:column;gap:2px;font:11px var(--mono);color:var(--muted)}.drop-swap-preview b{font:600 13px/1.6 var(--mono);color:var(--ink)}.drop-swap-preview>svg{width:17px;height:17px;color:var(--warning-ink)}.drop-choice-actions{display:flex;gap:7px;margin-top:12px}.drop-choice-actions>.btn{min-height:44px;font-size:11px;flex:1;padding:8px}
+.point-drop-choice{max-height:calc(100dvh - 24px);overflow:auto}
+@media print{.point-drag-card,.point-drop-choice{display:none!important}}
+
+/* Bedside recording: the form stays beside the chart, without a modal tool panel. */
+/* One direct tool: the destination decides whether a click chooses or adds. */
+#app .case-card:has(.chart-interaction-bar){overflow:clip}
+.chart-interaction-bar{position:sticky;top:var(--bar-height);z-index:9;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 16px;padding:8px 12px;border-bottom:1px solid var(--line);background:var(--surface)}
+.progress-field-picker{display:flex;gap:4px;flex:none}
+#app .progress-field-picker>button{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:8px 12px;border:1px solid var(--line);border-radius:var(--r-s);background:var(--surface);color:var(--muted);font-size:12px;font-weight:600}
+#app .progress-field-picker>button.active{color:var(--brand);background:var(--brand-tint);border-color:var(--brand)}
+.progress-field-picker svg{width:16px;height:16px}
+.chart-interaction-bar>p{display:flex;flex-wrap:wrap;gap:4px 12px;margin:0;font-size:11px;color:var(--muted)}
+.chart-interaction-bar>p>span{white-space:nowrap}
+#app .toolbox .data-mode-picker{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+.point-add-preview{pointer-events:none}
+#app .chart-zoom-pill>button{min-width:44px;min-height:44px}
+@media(max-width:760px){.chart-interaction-bar{gap:6px;padding:8px}.chart-interaction-bar>p{font-size:10px;gap:4px 10px}.progress-field-picker{flex:1}#app .progress-field-picker>button{flex:1;font-size:11px}.chart-interaction-bar>p{flex-basis:100%;justify-content:center}.clinical-section:has(.bedside-entry.expanded) .chart-interaction-bar{display:none}}
+@media print{.chart-interaction-bar,.point-add-preview{display:none!important}}
+.clinical-live-workspace{min-width:0}
+.clinical-live-workspace.with-bedside{display:grid;grid-template-columns:clamp(310px,25vw,370px) minmax(0,1fr);gap:16px;align-items:start}
+.clinical-live-workspace>.clinical-chart-card{grid-column:2;grid-row:1;min-width:0}
+.clinical-live-workspace>.clinical-care{grid-column:1/-1}
+.bedside-entry{display:flex;flex-direction:column;grid-column:1;grid-row:1;position:sticky;top:84px;min-width:0;max-height:calc(100dvh - 104px);overflow:hidden;border:1px solid var(--line);border-radius:var(--r-m);background:var(--surface)}
+.bedside-toggle{display:flex;flex-shrink:0;align-items:center;gap:10px;width:100%;min-height:56px;padding:9px 12px;border:0;border-bottom:1px solid var(--line);background:var(--brand-tint);color:var(--brand);text-align:left;cursor:pointer}.bedside-toggle>svg{width:20px;height:20px;flex:none}.bedside-toggle>svg:last-child{margin-left:auto;width:16px;height:16px}.bedside-toggle>span{min-width:0}.bedside-toggle strong,.bedside-toggle small{display:block}.bedside-toggle strong{font-size:12px}.bedside-toggle small{font-size:10px;color:var(--muted);margin-top:2px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+#app .bedside-entry .quick-entry{display:flex;flex-direction:column;min-height:0;max-height:calc(100dvh - 160px);gap:0;margin:0;padding:0;border:0;border-radius:0;background:var(--surface)}
+.bedside-entry-body{display:flex;flex-direction:column;gap:14px;min-height:0;padding:18px;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--line-strong) transparent}
+.bedside-entry .quick-heading{display:none;align-items:start;justify-content:space-between;gap:8px;margin:0}
+.bedside-entry .quick-heading h4{display:flex;align-items:center;gap:7px;font-size:clamp(13px,1vw,15px);line-height:1.5;margin:0 0 4px}
+.bedside-entry .quick-heading h4>svg{width:17px;height:17px;color:var(--brand)}
+.bedside-entry .quick-heading .small{display:block;font-size:11px;overflow-wrap:anywhere}
+.bedside-live{display:inline-flex;align-items:center;gap:5px;flex:none;padding-top:3px;font-size:9px;color:var(--brand)}
+.bedside-live>span{width:5px;height:5px;border-radius:50%;background:currentColor}
+.bedside-time{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:8px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.bedside-time-actions{display:flex;gap:4px}.bedside-time-actions>.btn{min-width:44px;padding:8px;font-size:10px}
+#app .bedside-entry .field{min-width:0;font-size:11px;gap:5px}
+#app .bedside-entry :is(input:not([type=checkbox]),select){width:100%;min-height:46px;padding:9px 10px;font-size:16px;font-variant-numeric:tabular-nums;scroll-margin:12px;caret-color:var(--brand)}
+#app .bedside-entry input::placeholder{font-size:12px;color:var(--muted);opacity:1}
+#app .bedside-entry :is(button,input,select):focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+#app .bedside-entry .quick-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:start}
+#app .bedside-entry .field-changed :is(input,select){border-color:var(--brand);background:var(--brand-tint)}
+#app .bedside-entry .quick-entry-actions:has(.record-next){position:static;flex-shrink:0;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;margin:0;padding:12px 18px;z-index:3;background:var(--surface);border-top:1px solid var(--line)}
+#app .bedside-entry .quick-entry-actions>.form-state{grid-column:1/-1;grid-row:1;font-size:11px;color:var(--muted)}
+#app .bedside-entry .quick-entry-actions>.btn{grid-column:auto;grid-row:2;min-height:48px;font-size:12px;white-space:normal}
+#app .bedside-entry .quick-entry-actions>.record-next{font-size:11px;padding-inline:8px;gap:5px;white-space:nowrap}
+.bedside-entry .clinical-extra-groups{margin:0;border-top:0}.bedside-entry .clinical-extra-groups summary{min-height:48px;font-size:11px}.bedside-entry .clinical-extra-groups summary>small{font-size:9px}
+.bedside-entry .clinical-extra-fields{padding-bottom:12px}.bedside-entry .draft-note{margin:0;font-size:11px}.bedside-entry .draft-note .text-btn{min-height:44px}
+.bedside-storage{display:flex;flex-direction:column;gap:2px}.bedside-storage>.check-field{min-height:44px;font-size:11px}.bedside-storage>span{font-size:10px;color:var(--muted)}
+.bedside-secondary{display:flex;align-items:center;justify-content:space-between;gap:8px}.bedside-secondary>span{font-size:9px;color:var(--muted)}.bedside-secondary>.text-btn{min-height:44px;font-size:11px}.bedside-secondary svg{width:15px;height:15px}
+.bedside-entry .hint{margin:0;font-size:10px;line-height:1.7}
+@media(min-width:761px) and (max-width:1100px){
+  .clinical-live-workspace.with-bedside{grid-template-columns:300px minmax(0,1fr);gap:10px}
+  .bedside-entry-body{padding:12px;gap:10px}.bedside-live{display:none}
+  .bedside-time{grid-template-columns:minmax(0,1fr)}.bedside-time-actions>.btn:nth-child(2){flex:1}
+}
+@media(max-width:760px){
+  .clinical-live-workspace.with-bedside{display:block;padding-bottom:0}
+  #app .bedside-entry{position:relative;inset:auto;z-index:auto;max-height:none;margin-bottom:12px;overflow:hidden;border-radius:12px;background:var(--surface);box-shadow:var(--shadow-1)}
+  .bedside-toggle{display:flex;align-items:center;gap:10px;width:100%;min-height:56px;padding:9px 12px;border:0;background:var(--brand-tint);color:var(--brand);text-align:left}
+  .bedside-toggle>svg{width:20px;height:20px;flex:none}.bedside-toggle>svg:last-child{margin-left:auto;width:16px;height:16px}
+  .bedside-toggle>span{min-width:0}.bedside-toggle strong,.bedside-toggle small{display:block}.bedside-toggle strong{font-size:12px}.bedside-toggle small{font-size:10px;color:var(--muted);margin-top:2px}
+  .bedside-toggle small{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+  #app .bedside-entry .quick-entry{display:none;padding:0;max-height:none;overflow:visible}
+  .bedside-entry-body{padding:12px;gap:10px;scroll-padding:12px;overflow:visible}
+  #app .bedside-entry.expanded .quick-entry{display:flex}
+  .bedside-entry .quick-heading{display:none}.bedside-time{grid-template-columns:minmax(0,1fr) auto;padding-bottom:10px}
+  #app .bedside-entry .quick-fields{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 8px}
+  #app .bedside-entry .field{font-size:10px}.bedside-entry .quick-time-field{font-size:11px!important}
+  #app .bedside-entry .quick-entry-actions:has(.record-next){position:static;margin:0;padding:8px 12px 12px}
+  #app .bedside-entry .quick-entry-actions>.btn{min-height:48px;font-size:12px}
+  .clinical-live-workspace.with-bedside .clinical-monitor-head{display:none}
+  .clinical-live-workspace.with-bedside .clinical-monitor-actions{width:auto;margin-left:auto}
+}
+@media(max-width:359px){
+  #app .bedside-entry .quick-fields{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #app .bedside-entry .quick-entry-actions>.btn{font-size:11px;padding-inline:8px;gap:6px;white-space:nowrap}
+  .bedside-time{grid-template-columns:minmax(0,1fr)}.bedside-time-actions>.btn:nth-child(2){flex:1}
+}
+@media(max-width:760px) and (max-height:550px){
+  .bedside-toggle{min-height:44px;padding-block:5px}.bedside-toggle small{display:none}
+  #app .bedside-entry .quick-entry-actions{padding-block:6px}.bedside-entry .form-state{display:none}
+  #app:has(.bedside-entry.expanded) .toast{bottom:auto;top:8px;max-height:72px}
+}
+@media print{
+  .bedside-entry{display:none!important}.clinical-live-workspace.with-bedside{display:block;padding:0}
+}
+/* Moment navigation and quick-entry refinements, kept out of exported SVG. */
+.chart-moment-tools{--moment-gap:4px;--moment-last:112px;display:grid;grid-template-columns:44px minmax(0,1fr) 44px var(--moment-last);align-items:start;gap:var(--moment-gap);padding:8px 12px;border-bottom:1px solid var(--line);background:var(--surface);color:var(--ink);container-type:inline-size;container-name:moment-tools}
+.chart-moment-tools>.icon-btn,.chart-moment-tools>.btn{position:relative;z-index:1;min-width:44px;min-height:44px}.chart-moment-tools>.icon-btn:first-child{grid-column:1;grid-row:1}.chart-moment-tools>.icon-btn:nth-child(3){grid-column:3;grid-row:1}.chart-moment-tools>.moment-latest{grid-column:4;grid-row:1;width:var(--moment-last);white-space:nowrap}
+.chart-moment-tools .moment-browser{display:block;grid-column:1/-1;grid-row:1;min-width:0}.moment-browser>summary{min-height:44px;min-width:0;margin-inline:calc(44px + var(--moment-gap)) calc(44px + var(--moment-last) + 2 * var(--moment-gap));display:flex;align-items:center;gap:8px;cursor:pointer;padding:0 10px;border:1px solid var(--line);border-radius:9px;list-style:none;background:var(--surface)}
+.moment-browser>summary::-webkit-details-marker{display:none}.moment-browser>summary>span{color:var(--muted);font-size:11px}.moment-browser>summary>svg:last-child{margin-left:auto}
+.moment-browser-body{padding:16px 2px 4px;display:grid;grid-template-columns:minmax(240px,320px) minmax(0,1fr);gap:16px 24px;min-width:0}.moment-navigation-fields{display:grid;align-content:start;gap:16px;min-width:0}.moment-jump{display:flex;align-items:flex-end;gap:8px}.moment-jump .field{flex:1;min-width:0}.moment-jump button{min-height:44px;flex-shrink:0}.moment-values{min-width:0;display:grid;align-content:start;gap:10px}.moment-panel-footer{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:8px;border-top:1px solid var(--line);font-size:11px;color:var(--muted);background:var(--surface)}.moment-panel-footer .btn{min-height:44px;flex-shrink:0}
+.moment-selectors{display:grid;gap:12px}.moment-browser .field{min-width:0;margin:0;font-size:12px}.moment-browser input,.moment-browser select{min-height:44px;width:100%;font-size:16px}.moment-navigation-fields .hint{font-size:12px;line-height:1.6;margin:0}
+.moment-snapshot-title{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.moment-snapshot-title>.field{min-width:min(200px,100%)}.moment-snapshot-title>strong{font-size:13px}
+.moment-snapshot{max-height:clamp(220px,34dvh,320px);overflow:auto;border:1px solid var(--line);border-radius:8px;scrollbar-width:thin;scrollbar-color:var(--line-strong) transparent}.moment-snapshot table,.quick-review table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:13px}.moment-snapshot th,.moment-snapshot td,.quick-review th,.quick-review td{padding:6px 8px;text-align:left;border-bottom:1px solid var(--line);overflow-wrap:anywhere;vertical-align:middle}.moment-snapshot thead th{position:sticky;top:0;background:var(--surface);z-index:1}.moment-snapshot th small{display:block;color:var(--muted);font-size:10px;font-weight:400}.moment-snapshot-clock,.snapshot-number{white-space:nowrap}.moment-snapshot tbody th{font-weight:500}.moment-snapshot td>button{display:flex;justify-content:space-between;align-items:center;gap:6px;width:100%;min-height:44px;padding:6px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);font:inherit;cursor:pointer}.moment-snapshot td>button>span{min-width:0}.moment-snapshot td>button svg{width:14px;flex-shrink:0}
+.quick-group-jumps{display:flex;gap:4px;flex-wrap:wrap;padding:4px 0 10px}.quick-group-jumps button{flex:1;min-width:44px;min-height:44px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--ink);font:inherit;font-size:11px;font-weight:600;cursor:pointer;padding:5px}
+.quick-previous{font-size:11px;line-height:1.5;color:var(--muted);font-weight:500;overflow-wrap:anywhere}.quick-previous>span{display:block;font-size:10px;font-weight:400}.quick-revert.text-btn{min-height:44px;width:100%;padding:3px;justify-content:center;font-size:11px;gap:4px}.quick-revert svg{width:13px;flex-shrink:0}.quick-fields .field,.clinical-extra-fields .field{align-content:start}
+.quick-review{border:1px solid var(--line);border-radius:8px;margin:12px 0;overflow:hidden}.quick-review>summary{cursor:pointer;min-height:44px;padding:8px;display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px}.quick-review th{font-weight:500}.quick-review td:last-child{font-weight:650}.record-step-label{margin:12px 0}.record-step-label select{min-height:44px}.draft-note .batch-quick{min-height:44px;width:100%}.draft-note .text-btn{min-height:44px;white-space:normal;text-align:left}.command-recent{display:inline-block;margin-left:8px;font-style:normal;font-size:10px;font-weight:500;color:var(--muted)}
+.chart-scroll.panning .partograph,.chart-scroll.panning [data-point-hit]{cursor:grab!important}.chart-scroll.panning.dragging .partograph{cursor:grabbing!important}
+.moment-browser>summary:focus-visible,.quick-group-jumps button:focus-visible,.moment-snapshot button:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+@container moment-tools (max-width:700px){.moment-browser-body{grid-template-columns:minmax(0,1fr);max-height:min(560px,60dvh);overflow:auto;overscroll-behavior:contain;padding:14px 2px 0;gap:16px;scroll-padding:12px}.moment-selectors{grid-template-columns:1fr 1fr;gap:10px}.moment-snapshot{max-height:none}.moment-panel-footer{position:sticky;bottom:0;padding:8px 2px;z-index:2}.moment-snapshot-title>.field{min-width:160px}}
+@media print{.chart-moment-tools{display:none!important}}
+.bedside-entry-body>.quick-review{flex-shrink:0}
+.quick-group-jumps{position:sticky;top:0;z-index:2;background:var(--surface);box-shadow:0 5px 8px -7px var(--muted)}
+#app .clinical-chart-card:has(.chart-moment-tools) .clinical-moment>:not(.clinical-now){display:none}
+#app .clinical-chart-card:has(.chart-moment-tools) .clinical-moment{flex:0 0 auto}
+#app .clinical-chart-card:has(.chart-moment-tools) .clinical-moment-count{flex:1}
+#app .clinical-chart-card:has(.chart-moment-tools) .clinical-monitor-actions{width:auto}
+@media(max-width:600px){.chart-moment-tools{--moment-gap:3px;--moment-last:78px;padding:6px}.moment-browser>summary{gap:5px;padding:0 7px}.moment-latest.btn{font-size:11px;padding:7px;gap:4px}.moment-latest svg{display:none}.moment-selectors{grid-template-columns:1fr}.moment-snapshot-title{align-items:flex-start}.moment-snapshot-title .field{width:100%}.moment-snapshot th,.moment-snapshot td{padding:5px}.moment-snapshot table{font-size:12px}.moment-snapshot td>button{padding:5px;gap:2px}.quick-review table{font-size:10px}.quick-review td,.quick-review th{padding:5px}}
+@media(max-width:360px){.moment-browser>summary>span,.moment-browser>summary>svg:first-child{display:none}.moment-browser>summary{gap:3px}.moment-latest.btn{padding-inline:6px}}
+@media(min-width:761px){.clinical-live-workspace.with-bedside:not(.bedside-expanded){grid-template-columns:minmax(0,1fr)}.clinical-live-workspace.with-bedside:not(.bedside-expanded)>.clinical-chart-card{grid-column:1}.bedside-entry:not(.expanded){display:none}}
+.clinical-draft-count{font-size:10px;font-weight:500;opacity:.9;white-space:nowrap}
+.point-toolbar:not(.menu-down) .point-toolbar-menu{top:auto!important;bottom:calc(100% + 6px)!important}
+#app .bedside-entry .quick-entry-actions>.form-state{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}.quick-undo.text-btn{min-height:44px;font-size:11px;padding:4px 0;white-space:nowrap}
+@media(max-width:600px){.moment-selectors{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:end}.moment-navigation-fields>.hint{display:none}.moment-snapshot-title .field{width:auto;flex:0 1 180px}}
+@media(max-width:760px) and (max-height:550px){#app .bedside-entry .quick-entry-actions>.form-state{display:none}}
+
+/* Primary measurements stay available after choosing tracking. */
+#app .clinical-overview>.clinical-admin:not([open]){display:none}
+.bedside-origin{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:8px}
+.quick-options{border-top:1px solid var(--line)}.quick-options>summary,.editor-brief>summary{display:flex;align-items:center;gap:8px;min-height:44px;cursor:pointer;font-size:12px;font-weight:600;list-style:none}
+.quick-options>summary>svg:last-child,.editor-brief>summary>svg:last-child{margin-left:auto}.quick-options[open]>summary>svg:last-child,.editor-brief[open]>summary>svg:last-child{transform:rotate(180deg)}
+.quick-options .bedside-storage,.quick-options .bedside-secondary{margin-bottom:12px}.quick-options>summary::-webkit-details-marker,.editor-brief>summary::-webkit-details-marker{display:none}
+.editor-brief{border-block:1px solid var(--line);margin-bottom:14px}.editor-brief textarea{min-height:160px;resize:vertical}.editor-brief .editor-meta{grid-template-columns:minmax(0,1fr)}
+.exam-workspace.editing-data .data-tools .data-undo{display:none}
+
+/* Choose the task before showing its tools. */
+#app[v-cloak] .start-screen{display:none}
+.start-screen{min-height:100svh;display:flex;flex-direction:column;padding:28px clamp(20px,6vw,88px);color:var(--ink);background:var(--canvas)}
+.start-header{display:flex;align-items:center;justify-content:space-between;gap:20px}.start-header>.text-btn{min-height:44px;font-size:12px}
+.start-brand{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:500}.start-brand>svg{width:34px;height:34px;padding:6px;border-radius:10px;color:var(--surface);background:var(--brand)}.start-brand b{color:var(--brand);font-weight:700}
+.start-content{width:min(920px,100%);margin:auto; padding:64px 0}.start-content h1{font-size:clamp(28px,3vw,38px);font-weight:700;letter-spacing:-1px;line-height:1.25;margin:0 0 12px}.start-content h1:focus{outline:none}
+.start-description{font-size:14px;color:var(--muted);margin:0 0 32px;line-height:1.6}
+.start-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.exam-start-choices{grid-template-columns:repeat(3,minmax(0,1fr))}
+.start-card{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:10px;min-width:0;min-height:224px;padding:26px;border:1px solid var(--line);border-radius:16px;background:var(--surface);color:var(--ink);text-align:left;box-shadow:var(--shadow-1)}
+.start-card:hover{border-color:var(--brand);background:var(--surface-raised)}.start-card:focus-visible{outline:2px solid var(--brand);outline-offset:4px}.start-card>strong{font-size:20px;line-height:1.35;letter-spacing:-.3px}.start-card>span:not(.start-card-icon){font-size:13px;line-height:1.6;color:var(--muted);max-width:28ch}.start-card>svg:last-child{position:absolute;right:24px;top:30px;width:18px;height:18px;color:var(--muted)}
+.start-card-icon{display:grid;place-items:center;width:48px;height:48px;margin-bottom:12px;border-radius:12px;background:var(--brand-soft);color:var(--brand)}.start-card-icon>svg{width:25px;height:25px}.start-card-icon.clinical{background:var(--surface-raised)}
+.start-back{min-height:44px;margin:0 0 20px;padding:0;font-size:12px}.start-resume{display:flex;align-items:center;gap:14px;width:100%;margin-top:20px;padding:16px 20px;min-height:72px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);text-align:left}
+.start-resume>span{display:grid;gap:3px;min-width:0}.start-resume strong{font-size:13px;font-weight:600}.start-resume small{font-size:12px;color:var(--muted);overflow-wrap:anywhere}.start-resume>svg{width:18px;height:18px;flex-shrink:0}.start-resume>svg:last-child{margin-left:auto}
+.start-file-row{display:flex;justify-content:center;margin-top:20px}.start-file-row .text-btn{min-height:44px;font-size:12px;padding:8px 12px;color:var(--muted)}.start-footer{font-size:11px;color:var(--muted);text-align:center}
+
+/* One workspace header; the grouped palette replaces the permanent dock. */
+#app main.studio-workspace{padding-bottom:32px}
+#app .session-toolbar{display:flex!important;flex-wrap:nowrap!important;align-items:center;gap:12px;min-height:66px;padding:8px 0!important}
+#app .session-toolbar::after{display:none}.workspace-home.icon-btn{display:grid;place-items:center;flex:none;width:44px;height:44px;border:0;border-radius:10px;background:var(--brand-soft);color:var(--brand)}.workspace-home>svg{width:24px;height:24px}
+#app .session-name{flex:1;min-width:0;max-width:460px;display:block!important}#app .session-name>summary{min-height:44px}#app .session-name strong{max-width:none}
+#app .session-actions{margin-left:auto;gap:8px;flex-shrink:0}#app .session-actions .quick-export{white-space:nowrap}
+.tool-groups{position:relative}.tool-groups>summary{list-style:none;min-height:44px;gap:8px;font-size:12px;cursor:pointer}.tool-groups>summary::-webkit-details-marker{display:none}.tool-groups[open]>summary{border-color:var(--brand);background:var(--brand-soft);color:var(--brand)}
+.tool-palette{position:absolute;right:0;top:calc(100% + 10px);width:min(600px,calc(100vw - 32px));max-height:calc(100dvh - 110px);overflow:auto;overscroll-behavior:contain;display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:20px;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:var(--shadow-2);z-index:100}
+.tool-palette>section{min-width:0}.tool-palette>section:first-child{grid-row:1/3}.tool-palette h3,.menu-section-label{font-size:11px;font-weight:650;color:var(--muted);margin:0 0 8px;padding:0 8px}
+#app .tool-palette button{display:flex;align-items:flex-start;gap:10px;width:100%;min-width:0;min-height:48px;padding:12px 8px;border:0;border-radius:8px;background:transparent;color:var(--ink);text-align:left;cursor:pointer}
+#app .tool-palette button:hover,#app .tool-palette button.active{background:var(--brand-soft)}.tool-palette button>svg{flex:none;width:18px;height:18px;margin-top:1px;color:var(--brand)}.tool-palette button>span{display:grid;gap:4px;min-width:0}.tool-palette strong{font-size:12px;line-height:1.5;font-weight:650}.tool-palette small{font-size:11px;line-height:1.55;color:var(--muted)}
+.tool-palette>footer{grid-column:1/-1;display:flex;gap:8px;border-top:1px solid var(--line);padding-top:8px}#app .tool-palette>footer>button{align-items:center;font-size:11px;width:auto;flex:1}
+#app .workspace-menu .mobile-preferences-action,#app .workspace-menu .mobile-theme-action,#app .workspace-menu .menu-guide,#app .workspace-menu .menu-search{display:flex!important}
+.workspace-menu .menu-section-label{margin:10px 0 4px;padding:0 10px}
+#app .studio-workspace[data-dock] .workbench{grid-template-columns:minmax(0,1fr)}
+#app .studio-workspace[data-dock] .workbench.inspector-open{grid-template-columns:minmax(0,1fr) min(var(--inspector-width,340px),calc(100vw - 390px))}
+#app .studio-workspace[data-panel=overlay] .workbench.inspector-open{grid-template-columns:minmax(0,1fr)}
+#app .studio-workspace[data-panel=overlay] .inspector-shell{right:28px}
+.clinical-live-workspace.with-bedside .clinical-monitor-head,.clinical-live-workspace.bedside-expanded .chart-moment-tools,.clinical-live-workspace.bedside-expanded .chart-interaction-bar,.exam-workspace.editing-data .chart-moment-tools,.chart-zoom-pill{display:none!important}
+@media(min-width:761px) and (max-width:1100px){.tool-palette{position:fixed;top:76px;left:auto;right:12px;width:min(600px,calc(100vw - 24px))}}
+@media(max-width:760px){
+  .start-screen{padding:20px}.start-content{padding:40px 0}.start-choices,.exam-start-choices{grid-template-columns:minmax(0,1fr);gap:12px}.start-card{min-height:172px;padding:22px}.start-card-icon{width:40px;height:40px;margin-bottom:4px}.start-card>strong{font-size:19px}.start-card>span:not(.start-card-icon){max-width:none}.start-description{font-size:13px;margin-bottom:24px}.start-content h1{font-size:28px}.start-resume{padding:14px}
+  #app .session-toolbar{display:grid!important;grid-template-columns:44px minmax(0,1fr) auto;gap:6px 8px;padding:8px 0!important}#app .workspace-home{grid-column:1;grid-row:1}#app .session-actions{grid-column:2/4;grid-row:1;justify-self:end;gap:6px}#app .session-name{grid-column:1/3;grid-row:2;width:100%;max-width:none;order:0}#app .history-actions{grid-column:3;grid-row:2;order:0}#app .session-name:not(:has(+.history-actions:not([style*="display: none"]))){grid-column:1/-1}#app .session-actions .quick-export{width:auto!important;min-width:76px;padding-inline:10px;font-size:11px}#app .session-actions .quick-export>svg{display:none}#app .session-actions .quick-export>span{display:inline!important}
+  .tool-groups>summary{padding:8px 10px}.tool-groups>summary>svg:last-child{display:none}.tool-palette{position:fixed;top:72px;left:12px;right:12px;width:auto;max-height:calc(100dvh - 100px);gap:12px;padding:16px}.tool-palette small{font-size:11px}#app .tool-palette button{padding:10px 6px}.tool-palette>footer{flex-wrap:wrap}
+  #app .studio-workspace .toolbox.mobile-open{bottom:max(12px,env(safe-area-inset-bottom));max-height:calc(100dvh - 128px)}.mobile-tools-toggle.btn{bottom:12px}.mobile-tools-close{bottom:14px}
+}
+@media(max-width:360px){.start-screen{padding:16px}.start-header>.text-btn{font-size:11px}.start-brand{font-size:15px}.tool-palette{grid-template-columns:minmax(0,1fr);gap:12px}.tool-palette>section:first-child{grid-row:auto}.tool-palette>footer{grid-column:1}}
+@media print{.start-screen,.tool-groups{display:none!important}}

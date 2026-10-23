@@ -282,7 +282,20 @@ ok(!edited.observations[0].headMarker&&edited.observations[1].headMarker.color==
 ok(edited.observations[1].fhr===144&&edited.observations[1].ivFluids==='Giữ nguyên dịch','Moving onto another series merges without replacing other values');
 edited=changeChartPoint(pointCase,{field:'cervix',time:1,value:5});
 ok(edited.observations[1].cervix===5&&edited.observations[1].fhr===144,'Adding fills only the chosen empty field');
+edited=changeChartPoint(pointCase,{field:'fhr',fromTime:0,fromValue:140,time:2,value:145,swap:true,targetValue:150});
+ok(edited.observations.find(o=>o.time===0).fhr===150&&edited.observations.find(o=>o.time===2).fhr===145,'An explicit swap preserves the displaced point and applies the dragged value');
+ok(edited.observations.find(o=>o.time===2).cervix===6&&edited.observations.find(o=>o.time===0).medication==='Giữ nguyên ghi chú','Swapping a measurement preserves all other fields');
+const twoHeads=core.validateCase({...pointCase,observations:pointCase.observations.map(o=>o.time===2?{...o,headMarker:{angle:45,size:12,color:'#2469ab'}}:o)});
+edited=changeChartPoint(twoHeads,{field:'descent',fromTime:0,fromValue:4,time:2,value:2,swap:true,targetValue:3});
+ok(edited.observations.find(o=>o.time===0).headMarker.angle===45&&edited.observations.find(o=>o.time===2).headMarker.angle===225,'A descent swap carries each head drawing to its new hour');
+ok(edited.observations.find(o=>o.time===0).descent===3&&edited.observations.find(o=>o.time===2).descent===2,'Descent swap keeps the displaced measurement');
+const unmarkedSource=core.validateCase({...twoHeads,observations:twoHeads.observations.map(o=>o.time===0?{...o,headMarker:undefined}:o)});
+edited=changeChartPoint(unmarkedSource,{field:'descent',fromTime:0,fromValue:4,time:2,value:2,swap:true,targetValue:3});
+ok(!edited.observations.find(o=>o.time===2).headMarker&&edited.observations.find(o=>o.time===0).headMarker.angle===45,'An unmarked descent never inherits the destination head drawing');
 for(const change of [
+ {field:'fhr',fromTime:0,fromValue:140,time:2,value:145,swap:true,targetValue:149},
+ {field:'fhr',fromTime:0,fromValue:140,time:2,value:145,swap:true},
+ {field:'fhr',time:2,value:145,swap:true,targetValue:150},
  {field:'cervix',fromTime:0,time:2,value:5},
  {field:'fhr',time:0,value:130},
  {field:'cervix',fromTime:0,fromValue:7,time:1,value:5},

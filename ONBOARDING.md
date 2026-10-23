@@ -1,5 +1,12 @@
 # Hướng dẫn sử dụng trong ứng dụng
 
+Kéo điểm hiện mặc định tự do: trái/phải đổi thời điểm, lên/xuống đổi giá trị; không cần giữ Shift. Cấu hình khóa chiều cũ được chuyển một lần sang tự do. Nếu cần giữ giờ hoặc giữ giá trị, chọn khóa tương ứng tại **Nhập / Sửa → Khi kéo điểm**; lựa chọn mới được ghi nhớ. Mỗi lần kéo có thể hoàn tác bằng Ctrl Z.
+
+- Khi kéo, thẻ cạnh con trỏ hiển thị **giờ và giá trị trước → sau**, kèm đường dóng. Dữ liệu được lưu khi thả.
+- Nếu giờ đích đã có cùng thông số, chọn **Đổi chỗ hai điểm** hoặc **Hủy**. Điểm ở giờ đích chuyển về giờ cũ; các thông số khác giữ nguyên. Hình kiểu thế đi cùng điểm độ xuống.
+- Khi phóng to, kéo sát mép để tự cuộn; thả hoặc nhấn Esc sẽ dừng. Trên điện thoại, giữ điểm để kéo dài mà không bị chuyển sang cuộn trang.
+- `verify-drag.cjs` kiểm tra thẻ số liệu, đổi chỗ, hoàn tác/làm lại, cuộn sát mép và thao tác cảm ứng thật qua Chrome.
+
 - [x] Thêm trung tâm hướng dẫn gồm 7 nhóm cho người mới, tìm kiếm và tiến độ trên thiết bị.
 - [x] Thêm chỉ dẫn theo vị trí thật trên giao diện, trước/sau, thử ngay và mở lại.
 - [x] Giữ dữ liệu và bản nháp; khôi phục giao diện khi đóng hướng dẫn.
@@ -54,3 +61,23 @@ Kết quả cuối: `verify.cjs` đạt **795 checks**. Sáu bộ browser `verif
 - Số bước và mã hướng dẫn giữ nguyên (39 bước).
 - **Chọn chế độ** nhắc vị trí ô **Quy chuẩn** ngay trên sản đồ.
 - Xuất & lưu: bước **Xem trước** được thay bằng **Gửi để kiểm tra** (thẻ JSON kiểm tra trong Xuất đề); vẫn 5 bước.
+
+## Đồng bộ với đợt nâng cấp 8 (22/10/2026)
+
+- **Bắt đầu › Chọn để chỉnh** (trước là Bấm để sửa): chọn điểm, ô hoặc nhãn hàng; bảng bên hiện đúng phần cần chỉnh.
+- **Sửa sản đồ › Đổi số đo**: kéo điểm, gõ số khi đang chọn điểm, hoặc nhấp đúp vào lưới trống để thêm điểm.
+- **Sửa sản đồ › Hoàn tác**: chỉ vào nhóm ↶ ↷ cạnh tên ca; Ctrl Z / Ctrl Y áp dụng cho mọi công cụ.
+- **Sửa sản đồ › Mũi tên chú thích**: chuột phải tại giờ cần ghi → Thêm mũi tên; bấm thẻ trên sản đồ để sửa.
+- Máy tính bảng và điện thoại mở Hướng dẫn, Tùy biến không gian và Tìm thao tác từ menu ⋯ trên thanh trên cùng.
+- Số bước và mã hướng dẫn giữ nguyên (39 bước); mỗi mô tả vẫn tối đa 15 từ.
+
+## AI từ ý tưởng, bản nháp hoặc đề có sẵn
+
+- **Từ ý tưởng** là lựa chọn mặc định: ghi một câu hoặc vài gạch đầu dòng. AI tự phát triển đề bài, diễn biến và JSON cho **1–12 ca**; phải nêu rõ phần dữ liệu giả định đã bổ sung.
+- **Bổ sung bản nháp** giữ các dữ kiện đã có và bổ sung giả định ở phần còn thiếu. Prompt yêu cầu phân biệt dữ kiện gốc với phần bổ sung.
+- **Có đề bài đầy đủ** chuyển nguyên dữ kiện sang JSON; số đo còn thiếu được để trống. Đổi chế độ giữ nội dung đang nhập.
+- Chọn ChatGPT, Gemini hoặc Claude, bấm **Sao chép & mở AI** ở cuối hộp thoại, rồi dán prompt vào công cụ AI. Chỉ chuyển sang trang AI sau khi sao chép thành công; nếu clipboard lỗi, prompt mở sẵn để sao chép thủ công. Ứng dụng chưa gọi AI trực tiếp.
+- Gợi ý chọn nhanh nối thêm vào nội dung, có thể hoàn tác. Prompt dùng đúng quy chuẩn đang chọn trên ứng dụng.
+- Bước 2 cho xem cả đề bài và sản đồ, dựng tất cả ca hoặc chỉ ca đang xem. Dán, mở tệp và định dạng có **Hoàn tác nhập**; định dạng bản kiểm tra giữ quy chuẩn và thiết kế của người gửi. Quay lại từ AI không tự ghi đè phản hồi đang có.
+- Tùy chọn tự lưu trên thiết bị lưu cả nội dung, chế độ và số ca; mặc định tắt.
+- Chạy `node verify-ai.cjs` để kiểm tra ba luồng, clipboard, mở tab AI, bản nháp, hoàn tác, chọn ca và bố cục responsive; cần module Playwright như các bộ kiểm tra browser khác. Lượt kiểm tra dùng phản hồi JSON giả lập, không gọi mô hình AI thật.
