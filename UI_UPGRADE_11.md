@@ -18,6 +18,13 @@ Mục tiêu: người mới (kể cả học sinh) nhìn là hiểu cần làm g
 - Trên điện thoại: ẩn Trợ giúp (vẫn có trong ⋯) để nút đủ to; thanh tự ẩn khi đang gõ để nhường chỗ cho bàn phím; không hiện khi Tập trung sản đồ hoặc in.
 - Menu **Công cụ** cũ vẫn giữ để hướng dẫn từng bước hiện có tiếp tục chỉ đúng chỗ.
 
+## Vòng 3 — Sản đồ trống có chỉ dẫn 3 bước
+
+- Khi ca chưa có số đo nào, phía trên sản đồ hiện thẻ **Sản đồ đang trống · bắt đầu trong 3 bước**: ① Chọn mốc giờ ② Gõ số đo ③ Bấm ghi. Kèm mẹo bấm thẳng vào lưới.
+- Nút làm ngay: **Ghi số đo đầu tiên**, **Lập bằng AI**; Soạn đề có thêm **Mở ca mẫu**.
+- Thẻ tự biến mất khi đã ghi số đo đầu tiên; không hiện khi Tập trung, khi xuất hoặc in.
+- Sửa thanh trên cùng trên máy tính: trải hết chiều ngang, không còn dải trống bên trái do thanh công cụ dọc.
+
 ## Kiểm chứng
 
 - `verify.cjs`: 812 kiểm tra đạt.

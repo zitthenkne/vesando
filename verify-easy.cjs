@@ -16,6 +16,11 @@ const server=http.createServer(async(req,res)=>{const file=files[new URL(req.url
       const page=await browser.newPage({viewport}),errors=[];page.setDefaultTimeout(12000);page.on('pageerror',e=>errors.push(e.message));
       await page.goto(url);await page.waitForSelector('#app:not([v-cloak])');
       await page.getByText('Theo dõi chuyển dạ',{exact:true}).first().click();
+      // Empty chart shows the three-step start card; it leaves once a value is recorded.
+      const start=page.locator('.chart-empty-start');assert.equal(await start.count(),1);
+      await start.getByRole('button',{name:'Ghi số đo đầu tiên'}).click();
+      await page.fill('#quick-cervix','4');await page.getByRole('button',{name:'Ghi nhận',exact:true}).first().click();
+      await page.waitForFunction(()=>!document.querySelector('.chart-empty-start'));
       const band=key=>page.locator('label.field:has(#quick-'+key+') .quick-range');
       assert.match(await band('fhr').textContent(),/^Ngưỡng 120–160$/);
       assert.equal(await band('cervix').count(),0,'Cervix has no fixed band');
