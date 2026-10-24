@@ -1,5 +1,5 @@
 // Browser checks: set PLAYWRIGHT_MODULE and, if needed, CHROME_EXECUTABLE.
-// Reference bands beside quick entry: neutral when empty, green inside, red outside; follow the chosen standard.
+// Đợt 11: reference bands beside quick entry (neutral/green/red, follow the standard) and the always-visible tool dock.
 const assert=require('node:assert/strict');
 const fs=require('node:fs/promises');
 const http=require('node:http');
@@ -27,8 +27,26 @@ const server=http.createServer(async(req,res)=>{const file=files[new URL(req.url
       await page.evaluate(()=>{document.querySelector('#app')._vnode.component.setupState.standard='lcg'});
       await page.fill('#quick-fhr','159');assert.match(await band('fhr').textContent(),/Trong ngưỡng 110–159/);
       await page.fill('#quick-fhr','160');assert.match(await band('fhr').getAttribute('class'),/\balert\b/);
+      // Dock: one tap opens the main jobs; tapping the active one returns to the chart.
+      await page.evaluate(()=>document.activeElement?.blur());const dock=page.locator('.quick-dock');assert.ok(await dock.isVisible());
+      const box=await dock.boundingBox();
+      if(viewport.width>1100)assert.ok(box.x<20&&box.height>box.width,'Desktop dock is a left rail');
+      else assert.ok(box.y+box.height>=viewport.height-1&&box.width>=viewport.width-1,'Phone dock is a bottom bar');
+      await page.locator('#quick-fhr').focus();
+      if(viewport.width<=1100)assert.equal(await dock.isVisible(),false,'Dock yields to the on-screen keyboard');
+      await page.locator('#quick-fhr').blur();
+      await page.goto(url);await page.waitForSelector('#app:not([v-cloak])');
+      await page.getByText('Soạn đề',{exact:true}).first().click();await page.getByText('Viết đề mới',{exact:true}).first().click();
+      if(viewport.width<=1100)await page.locator('.close-toolbox-button').first().click();
+      await page.evaluate(()=>document.activeElement?.blur());const design=page.locator('.quick-dock button.dock-design');await design.click();
+      assert.equal(await design.getAttribute('aria-pressed'),'true');
+      const state=()=>page.evaluate(()=>document.querySelector('#app')._vnode.component.setupState.toolTab);
+      assert.equal(await state(),'design');
+      if(viewport.width<=1100)await page.locator('.close-toolbox-button').first().click();else await design.click();
+      assert.equal(await state(),'overview');
+      assert.equal(await page.locator('.quick-dock button.dock-ai').count(),1,'Exam dock offers AI');
       assert.deepEqual(errors,[]);await page.close();
     }
-    console.log('PASS: quick entry reference bands');
+    console.log('PASS: reference bands and tool dock');
   }finally{await browser.close();server.close()}
 })().catch(e=>{console.error(e);process.exit(1)});

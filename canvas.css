@@ -321,3 +321,23 @@ svg.partograph [data-label-section]:hover{fill:color-mix(in srgb,var(--brand) 7%
 .quick-range.alert{color:var(--error-ink)}
 #app .field:has(.quick-range.alert) input{border-color:var(--error-ink)!important;background:var(--error-bg);box-shadow:inset 3px 0 var(--error-ink)}
 #app .field:has(.quick-range.ok) input{border-color:var(--success-ink)!important;box-shadow:inset 3px 0 var(--success-ink)}
+/* Main tool dock (Canva-style): left floating rail on wide screens, bottom tab bar on narrow screens. */
+.quick-dock{position:fixed;z-index:30;display:flex;gap:4px;padding:6px;background:var(--surface-raised,var(--surface));border:1px solid var(--line);box-shadow:0 8px 24px rgba(15,40,50,.12)}
+.quick-dock button{white-space:nowrap;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:0;border-radius:10px;background:transparent;color:var(--muted);font-size:11px;font-weight:700;line-height:1.1;min-width:64px;min-height:56px;padding:6px 4px}
+.quick-dock button svg{width:21px;height:21px}
+.quick-dock button:hover{background:var(--brand-tint);color:var(--brand-strong)}
+.quick-dock button.active{background:var(--brand);color:#fff}
+[data-theme=dark] .quick-dock button.active{color:#062521}
+@media(min-width:1101px){
+  .quick-dock{left:12px;top:50%;transform:translateY(-50%);flex-direction:column;border-radius:16px}
+  .studio-workspace:has(>.quick-dock){padding-left:92px}
+}
+@media(max-width:1100px){
+  .quick-dock{left:0;right:0;bottom:0;justify-content:space-around;border-width:1px 0 0;border-radius:16px 16px 0 0;padding:4px 4px calc(4px + env(safe-area-inset-bottom))}
+  .quick-dock button{flex:1;min-width:0;min-height:52px;font-size:10.5px}
+  .studio-workspace:has(>.quick-dock){padding-bottom:76px}
+  .quick-dock .dock-help{display:none}
+  /* Give the on-screen keyboard the room while typing. */
+  .studio-workspace:has(:is(input,textarea,select):focus)>.quick-dock{display:none}
+}
+@media print{.quick-dock{display:none!important}}

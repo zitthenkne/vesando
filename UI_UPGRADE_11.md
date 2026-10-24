@@ -10,8 +10,16 @@ Mục tiêu: người mới (kể cả học sinh) nhìn là hiểu cần làm g
 - Đây là ngưỡng đối chiếu của mẫu, không thay cho đánh giá lâm sàng (ghi trong chú thích khi rê chuột).
 - Độ mở CTC và đầu trên vệ không có ngưỡng cố định nên không hiện đèn.
 
+## Vòng 2 — Thanh công cụ luôn hiện (kiểu Canva)
+
+- Máy tính (> 1100 px): thanh dọc nổi bên trái sản đồ, nút lớn có biểu tượng kèm chữ. Điện thoại/máy tính bảng: thanh dưới đáy màn hình.
+- Soạn đề: **Nhập · AI · Trình bày · Kiểm tra · Lưu · Trợ giúp**. Theo dõi: **Ghi số · Bảng · Sản phụ · Đọc · Trình bày · Lưu · Trợ giúp**.
+- Một chạm mở đúng công cụ; nút đang mở tô màu; chạm lại để quay về sản đồ.
+- Trên điện thoại: ẩn Trợ giúp (vẫn có trong ⋯) để nút đủ to; thanh tự ẩn khi đang gõ để nhường chỗ cho bàn phím; không hiện khi Tập trung sản đồ hoặc in.
+- Menu **Công cụ** cũ vẫn giữ để hướng dẫn từng bước hiện có tiếp tục chỉ đúng chỗ.
+
 ## Kiểm chứng
 
 - `verify.cjs`: 812 kiểm tra đạt.
-- `verify-ranges.cjs` (mới): đèn ngưỡng trên desktop và điện thoại, đổi quy chuẩn LCG, không lỗi runtime.
+- `verify-easy.cjs` (mới): đèn ngưỡng và thanh công cụ trên desktop và điện thoại, đổi quy chuẩn LCG, ẩn khi gõ, bật/tắt công cụ, không lỗi runtime.
 - Ghi chú: phần lớn bộ kiểm tra trình duyệt cũ (`verify-ui.cjs`, `verify-bedside.cjs`, …) đã hỏng từ trước đợt này vì chưa đi qua màn hình chọn "Bạn muốn làm gì?". Đã xác nhận cùng lỗi trên mã gốc.
