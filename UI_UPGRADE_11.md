@@ -46,6 +46,10 @@ Mục tiêu: người mới (kể cả học sinh) nhìn là hiểu cần làm g
 - Rà giao diện tối cho thanh công cụ, đèn ngưỡng, thẻ chỉ dẫn: đủ tương phản, không cần sửa.
 - Màn hình bắt đầu (lần đầu, chưa có phiên lưu) có lối vào **Mới dùng lần đầu? Xem hướng dẫn từng bước**.
 
+## Vòng 8 — Đèn ngưỡng chỉ hướng
+
+- Khi ngoài ngưỡng, dòng chữ nói rõ **Cao hơn ngưỡng** hoặc **Thấp hơn ngưỡng** (ví dụ tim thai 172 → "Cao hơn ngưỡng 120–160"; 100 → "Thấp hơn ngưỡng").
+
 ## Kiểm chứng
 
 - `verify.cjs`: 812 kiểm tra đạt.

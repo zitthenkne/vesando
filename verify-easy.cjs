@@ -24,7 +24,8 @@ const server=http.createServer(async(req,res)=>{const file=files[new URL(req.url
       const band=key=>page.locator('label.field:has(#quick-'+key+') .quick-range');
       assert.match(await band('fhr').textContent(),/^Ngưỡng 120–160$/);
       assert.equal(await band('cervix').count(),0,'Cervix has no fixed band');
-      await page.fill('#quick-fhr','172');assert.match(await band('fhr').getAttribute('class'),/\balert\b/);assert.match(await band('fhr').textContent(),/Ngoài ngưỡng/);
+      await page.fill('#quick-fhr','172');assert.match(await band('fhr').getAttribute('class'),/\balert\b/);assert.match(await band('fhr').textContent(),/Cao hơn ngưỡng 120–160/);
+      await page.fill('#quick-fhr','100');assert.match(await band('fhr').textContent(),/Thấp hơn ngưỡng/);
       await page.fill('#quick-fhr','140');assert.match(await band('fhr').getAttribute('class'),/\bok\b/);
       await page.fill('#quick-contractions','6');assert.match(await band('contractions').getAttribute('class'),/\balert\b/);
       await page.fill('#quick-pulse','88');assert.match(await band('pulse').getAttribute('class'),/\bok\b/);
