@@ -343,6 +343,11 @@ svg.partograph [data-label-section]:hover{fill:color-mix(in srgb,var(--brand) 7%
   /* Give the on-screen keyboard the room while typing. */
   .studio-workspace:has(:is(input,textarea,select):focus)>.quick-dock{display:none}
 }
+/* Tablets: a floating, centred pill instead of a full-width bar. */
+@media(min-width:761px) and (max-width:1100px){
+  .quick-dock{left:50%;right:auto;bottom:calc(12px + env(safe-area-inset-bottom));transform:translateX(-50%);width:min(620px,calc(100% - 24px));border-width:1px;border-radius:18px;padding:4px}
+  .studio-workspace:has(>.quick-dock){padding-bottom:88px}
+}
 @media print{.quick-dock{display:none!important}}
 /* Empty chart: a friendly three-step start card with direct actions. */
 .chart-empty-start{box-sizing:border-box;max-width:calc(100% - 32px);display:flex;align-items:center;gap:16px;margin:12px 16px;padding:14px 16px;border:1px dashed var(--brand);border-radius:14px;background:var(--brand-tint);color:var(--ink)}
