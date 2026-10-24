@@ -314,3 +314,10 @@ svg.partograph [data-label-section]:hover{fill:color-mix(in srgb,var(--brand) 7%
 }
 @media(max-width:360px){.start-screen{padding:16px}.start-header>.text-btn{font-size:11px}.start-brand{font-size:15px}.tool-palette{grid-template-columns:minmax(0,1fr);gap:12px}.tool-palette>section:first-child{grid-row:auto}.tool-palette>footer{grid-column:1}}
 @media print{.start-screen,.tool-groups{display:none!important}}
+/* Quick entry reference band: grey until a value is typed, then green (in band) or red (outside). */
+.quick-range{display:flex;align-items:center;gap:5px;font-size:11px;line-height:1.4;font-weight:600;color:var(--muted);margin-top:4px}
+.quick-range>i{width:8px;height:8px;border-radius:50%;flex:none;background:currentColor;opacity:.55}
+.quick-range.ok{color:var(--success-ink)}.quick-range.ok>i,.quick-range.alert>i{opacity:1}
+.quick-range.alert{color:var(--error-ink)}
+#app .field:has(.quick-range.alert) input{border-color:var(--error-ink)!important;background:var(--error-bg);box-shadow:inset 3px 0 var(--error-ink)}
+#app .field:has(.quick-range.ok) input{border-color:var(--success-ink)!important;box-shadow:inset 3px 0 var(--success-ink)}
