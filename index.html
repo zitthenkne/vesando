@@ -57,7 +57,7 @@
         <button type="button" class="start-card" @click="startExamTask('sample')"><span class="start-card-icon"><app-icon name="library-big"></app-icon></span><strong>Dùng ca mẫu</strong><span>Mở một tình huống có sẵn để chỉnh sửa.</span><app-icon name="arrow-right"></app-icon></button>
       </div>
       <button v-if="workspaceEntered||deviceHasSaved" type="button" class="start-resume" @click="beginWorkspace(mode)"><app-icon name="history"></app-icon><span><strong>Tiếp tục phiên đang mở</strong><small>{{mode==='clinical'?'Theo dõi':'Soạn đề'}} · {{activeCase.title}}</small></span><app-icon name="arrow-right"></app-icon></button>
-      <div class="start-file-row"><button type="button" class="text-btn" @click="startFile.click()"><app-icon name="folder-open"></app-icon>Mở tệp đã lưu</button><input ref="startFile" type="file" accept=".json,application/json" hidden @change="openWorkspaceFile"></div>
+      <div class="start-file-row"><button v-if="!workspaceEntered&&!deviceHasSaved" type="button" class="text-btn start-first-time" @click="openLearning"><app-icon name="graduation-cap"></app-icon>Mới dùng lần đầu? Xem hướng dẫn từng bước</button><button type="button" class="text-btn" @click="startFile.click()"><app-icon name="folder-open"></app-icon>Mở tệp đã lưu</button><input ref="startFile" type="file" accept=".json,application/json" hidden @change="openWorkspaceFile"></div>
       <p v-if="deviceError" class="error" role="alert">{{deviceError}}</p>
     </div>
     <footer class="start-footer">Việt Thanh · Y23C · 17</footer>

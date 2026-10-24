@@ -41,6 +41,11 @@ Mục tiêu: người mới (kể cả học sinh) nhìn là hiểu cần làm g
 - 761–1100 px: thanh công cụ thành dạng viên nổi ở giữa đáy màn hình (tối đa 620 px), bo tròn như Canva; không trải hết chiều ngang khiến nút cách xa nhau.
 - Đã đo ở 320 / 768 / 1024 / 1180 px: không cuộn ngang.
 
+## Vòng 7 — Giao diện tối và người mới
+
+- Rà giao diện tối cho thanh công cụ, đèn ngưỡng, thẻ chỉ dẫn: đủ tương phản, không cần sửa.
+- Màn hình bắt đầu (lần đầu, chưa có phiên lưu) có lối vào **Mới dùng lần đầu? Xem hướng dẫn từng bước**.
+
 ## Kiểm chứng
 
 - `verify.cjs`: 812 kiểm tra đạt.
