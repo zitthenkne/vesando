@@ -373,3 +373,5 @@ svg.partograph [data-label-section]:hover{fill:color-mix(in srgb,var(--brand) 7%
 .exam-reading li svg{width:16px;height:16px;flex:none;margin-top:2px}
 .exam-reading li small{display:block;margin-top:2px;opacity:.8;font-size:10.5px}
 .reading-ok{display:flex;align-items:center;gap:6px;color:var(--success-ink);font-size:12px;margin:0}
+/* Quick entry labels: full words, readable size and contrast. */
+#app .quick-fields>.field{font-size:12px;font-weight:600;color:var(--ink)}

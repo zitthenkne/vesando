@@ -31,6 +31,11 @@ Mục tiêu: người mới (kể cả học sinh) nhìn là hiểu cần làm g
 - Ca chưa có số đo: không hiện câu "chưa có dấu hiệu vượt ngưỡng" để tránh trấn an sai.
 - Sửa lỗi điện thoại: nút nổi "mở lại bảng công cụ" và nút đóng bị thanh công cụ dưới đáy che; nay nằm phía trên thanh.
 
+## Vòng 5 — Nhãn nhập rõ nghĩa
+
+- Nhãn Nhập nhanh dùng chữ đầy đủ thay viết tắt: **Độ mở cổ tử cung · cm**, **Đầu thai còn trên vệ · /5**, **Số cơn co / 10 phút**, **Mỗi cơn co dài · giây**; chữ to và đậm hơn (12 px, màu chữ chính).
+- Thử bỏ qua màn hình bắt đầu để chạy lại bộ kiểm tra cũ: vẫn hỏng vì các bộ này tìm giao diện đã bị bỏ (`.tool-tabs`, nút chọn chế độ "Theo dõi", "Vị trí công cụ"…). Cần viết lại riêng; không thay đổi mã ứng dụng cho việc này.
+
 ## Kiểm chứng
 
 - `verify.cjs`: 812 kiểm tra đạt.
