@@ -50,6 +50,16 @@ const server=http.createServer(async(req,res)=>{const file=files[new URL(req.url
       if(viewport.width<=1100)await page.locator('.close-toolbox-button').first().click();else await design.click();
       assert.equal(await state(),'overview');
       assert.equal(await page.locator('.quick-dock button.dock-ai').count(),1,'Exam dock offers AI');
+      // Exam review reads the chart: empty case gives no false reassurance; a sample shows sourced findings.
+      if(viewport.width<=1100)await page.locator('.close-toolbox-button').first().click().catch(()=>{});
+      await page.locator('.quick-dock button.dock-review').click();
+      assert.equal(await page.locator('.exam-reading .reading-ok').count(),0,'No reassurance without data');
+      await page.evaluate(async()=>{const st=document.querySelector('#app')._vnode.component.setupState;st.libraryOpen=true;st.toolTab='data';st.inputsOpen=true});
+      await page.getByText('Tim thai giảm · cơn co nhiều').first().click();
+      if(viewport.width<=1100)await page.locator('.close-toolbox-button').first().click().catch(()=>{});
+      await page.locator('.quick-dock button.dock-review').click();
+      const reading=page.locator('.exam-reading');assert.match(await reading.getAttribute('class'),/\bcritical\b/);
+      assert.ok(await reading.locator('li.critical').count()>=1);assert.match(await reading.textContent(),/Nguồn:/);
       assert.deepEqual(errors,[]);await page.close();
     }
     console.log('PASS: reference bands and tool dock');

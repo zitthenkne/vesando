@@ -25,6 +25,12 @@ Mục tiêu: người mới (kể cả học sinh) nhìn là hiểu cần làm g
 - Thẻ tự biến mất khi đã ghi số đo đầu tiên; không hiện khi Tập trung, khi xuất hoặc in.
 - Sửa thanh trên cùng trên máy tính: trải hết chiều ngang, không còn dải trống bên trái do thanh công cụ dọc.
 
+## Vòng 4 — Kiểm tra biết "đọc" sản đồ
+
+- Bảng **Kiểm tra** (Soạn đề) có mục **Sản đồ đang cho thấy**: kết luận chung (chấm xanh/cam/đỏ), từng dấu hiệu theo giờ với màu mức độ và **nguồn** (UMP 2020, WHO LCG…). Dùng cùng bộ quy tắc với Theo dõi, đổi theo quy chuẩn đang chọn.
+- Ca chưa có số đo: không hiện câu "chưa có dấu hiệu vượt ngưỡng" để tránh trấn an sai.
+- Sửa lỗi điện thoại: nút nổi "mở lại bảng công cụ" và nút đóng bị thanh công cụ dưới đáy che; nay nằm phía trên thanh.
+
 ## Kiểm chứng
 
 - `verify.cjs`: 812 kiểm tra đạt.

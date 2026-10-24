@@ -338,6 +338,8 @@ svg.partograph [data-label-section]:hover{fill:color-mix(in srgb,var(--brand) 7%
   .quick-dock button{flex:1;min-width:0;min-height:52px;font-size:10.5px}
   .studio-workspace:has(>.quick-dock){padding-bottom:76px}
   .quick-dock .dock-help{display:none}
+  /* Floating "reopen panel" pill and its close button sit above the dock. */
+  #app:has(.quick-dock) .mobile-tools-toggle.btn,#app:has(.quick-dock) .mobile-tools-close{bottom:calc(78px + env(safe-area-inset-bottom))}
   /* Give the on-screen keyboard the room while typing. */
   .studio-workspace:has(:is(input,textarea,select):focus)>.quick-dock{display:none}
 }
@@ -356,3 +358,18 @@ svg.partograph [data-label-section]:hover{fill:color-mix(in srgb,var(--brand) 7%
 .chart-empty-actions .btn{min-height:44px;display:inline-flex;align-items:center;gap:6px}
 @media(max-width:760px){.chart-empty-start{flex-direction:column;align-items:stretch;margin:10px;max-width:calc(100% - 20px)}.chart-empty-icon{display:none}.chart-empty-start ol{flex-direction:column}.chart-empty-actions{margin-left:0}.chart-empty-actions .btn{flex:1;justify-content:center}}
 @media print{.chart-empty-start{display:none!important}}
+/* Exam review: what the chart currently shows, colour-coded by level, with source. */
+.exam-reading{margin:14px 0;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.exam-reading .inspector-label{margin-top:0}
+.reading-title{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;margin:4px 0 8px;font-size:13px}
+.reading-title strong{flex:1;min-width:0}
+.reading-title small{flex-basis:100%;padding-left:18px;color:var(--muted);font-size:11px}
+.reading-dot{width:10px;height:10px;border-radius:50%;background:var(--success-ink)}
+.exam-reading.warn .reading-dot{background:#d97706}.exam-reading.critical .reading-dot{background:var(--error-ink)}
+.exam-reading.critical{border-color:var(--error-ink)}
+.exam-reading ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.exam-reading li{display:flex;gap:8px;padding:8px;border-radius:8px;background:var(--warning-bg);color:var(--warning-ink);font-size:12px;line-height:1.5}
+.exam-reading li.critical{background:var(--error-bg);color:var(--error-ink)}
+.exam-reading li svg{width:16px;height:16px;flex:none;margin-top:2px}
+.exam-reading li small{display:block;margin-top:2px;opacity:.8;font-size:10.5px}
+.reading-ok{display:flex;align-items:center;gap:6px;color:var(--success-ink);font-size:12px;margin:0}
