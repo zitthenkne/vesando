@@ -38,7 +38,7 @@ Mục tiêu: người mới (kể cả học sinh) nhìn là hiểu cần làm g
 
 ## Vòng 6 — Máy tính bảng
 
-- 761–1100 px: thanh công cụ thành viên thuốc nổi ở giữa đáy màn hình (tối đa 620 px), bo tròn như Canva; không trải hết chiều ngang khiến nút cách xa nhau.
+- 761–1100 px: thanh công cụ thành dạng viên nổi ở giữa đáy màn hình (tối đa 620 px), bo tròn như Canva; không trải hết chiều ngang khiến nút cách xa nhau.
 - Đã đo ở 320 / 768 / 1024 / 1180 px: không cuộn ngang.
 
 ## Kiểm chứng
