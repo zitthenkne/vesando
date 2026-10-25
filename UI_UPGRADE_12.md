@@ -258,6 +258,14 @@ Thứ tự mới trong **Xuất ảnh hoặc PDF**: ① Nội dung bản xuất 
 4. **Thiết lập trang PDF và lối tắt Word / In A4 / Slide chuyển xuống sau phần Định dạng**, cạnh nơi chúng có tác dụng.
 5. **Bỏ dòng giải thích SVG/PNG/PDF lặp lại** — mỗi ô định dạng đã ghi công dụng.
 
+## Vòng 31 — Bảng Trình bày gọn hơn, công tắc thống nhất
+
+1. **Mọi ô tích trong Trình bày đổi thành công tắc gạt** (cùng kiểu với bảng xuất): nhãn bên trái, công tắc bên phải, mỗi dòng một lựa chọn — đọc lướt nhanh hơn.
+2. **Bỏ khối "Quy chuẩn" trong Mẫu có sẵn** — chỉ nhắc lại ô Quy chuẩn đã có ngay trên sản đồ.
+3. **Hai nhóm nút "Màu lâm sàng / Đơn sắc in ấn" và "Tất cả tầng / Bản rút gọn" gộp thành hai công tắc** "Đen trắng" và "Bản rút gọn", mỗi công tắc có một dòng mô tả tác dụng.
+4. **Thanh "Lưu mặc định" chỉ hiện nút khi có thay đổi chưa lưu**; khi đã lưu chỉ còn một dòng trạng thái nhỏ.
+5. Công tắc "Đen trắng" trong Trình bày và trong Nội dung bản xuất là cùng một thiết lập — đổi ở đâu cũng đồng bộ.
+
 ## Kiểm chứng
 
 - `verify.cjs` (812), `verify-easy.cjs` (thêm: 7 mẫu có hình thu nhỏ, mở đúng mẫu, nhận định mẹ/pha tiềm thời trên từng mẫu), `verify-library.cjs`, `verify-studio-plus.cjs` đạt; `git diff --check` sạch.
