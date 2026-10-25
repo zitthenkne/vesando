@@ -22,6 +22,13 @@ const server=http.createServer(async(req,res)=>{const file=files[new URL(req.url
       assert.equal(await page.evaluate(()=>document.querySelector('#app')._vnode.component.setupState.activeCase.title),'Tăng huyết áp trong chuyển dạ');
       // Maternal findings are read under the default historical chart too, with a source.
       assert.deepEqual(await page.evaluate(()=>{const st=document.querySelector('#app')._vnode.component.setupState;return st.presetList.map(c=>assessment(c,'who1993').checks.map(x=>x.code).filter(k=>/^(maternal|prolonged)/.test(k)))}),[[],['maternal-pulse'],[],['prolonged-latent'],['maternal-fever','maternal-pulse'],['maternal-bp'],[]]);
+      // Exam pack: the question sheet carries the chart and narrative; the answer key adds sourced findings per moment on its own page.
+      const pack=await page.evaluate(()=>{const st=document.querySelector('#app')._vnode.component.setupState;return {key:st.examPackHTML(st.activeCase,true),sheet:st.examPackHTML(st.activeCase,false)}});
+      assert.match(pack.sheet,/<svg[^>]*viewBox/);assert.match(pack.sheet,/Tình huống/);assert.doesNotMatch(pack.sheet,/Đáp án gợi ý/);
+      assert.match(pack.key,/class="key"/);assert.match(pack.key,/ISSHP 2021/);assert.equal((pack.key.match(/<tr><td>/g)||[]).length,5,'One row per recorded moment');
+      await page.locator('.creation-rail > button',{hasText:'Xuất tệp'}).click();
+      const [file]=await Promise.all([page.waitForEvent('download'),page.getByRole('button',{name:'Tải tệp HTML'}).click()]);assert.equal(file.suggestedFilename(),'de-CASE-006-dap-an.html');
+      await page.getByRole('button',{name:'In đề + đáp án'}).click();await page.waitForSelector('iframe.print-frame',{state:'attached'});
       await page.goto(url);await page.waitForSelector('#app:not([v-cloak])');
       await page.locator('.home-launch.clinical-launch').click();await page.waitForSelector('#quick-cervix');
       // Empty chart shows the three-step start card; it leaves once a value is recorded.

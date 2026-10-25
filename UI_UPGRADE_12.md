@@ -64,6 +64,12 @@ Dành cho giảng dạy trên lớp: người học đọc sản đồ đúng nh
 - Áp dụng cho cả Soạn đề và Theo dõi. Chỉ ảnh hưởng hình đang hiển thị; dữ liệu ca, bản xuất và lịch sử không thay đổi. Đóng trình chiếu hoặc tắt nút thì sản đồ hiện đầy đủ.
 - Gợi ý dùng: bật che dữ liệu → dừng ở từng mốc để người học nhận định → sang mốc kế để đối chiếu.
 
+## Vòng 8 — Đề & đáp án gợi ý
+
+- **Lưu / Xuất → Đề & đáp án** (Soạn đề): **In đề + đáp án**, **In đề**, **Tải tệp HTML**. Bản in khổ A4; "In" mở hộp thoại in của trình duyệt (có thể chọn Lưu thành PDF).
+- Trang đề: tên tình huống, thông tin sản phụ, quy chuẩn, sản đồ (vector) và phần Tình huống / Yêu cầu.
+- Trang đáp án (in sang trang riêng): kết luận chung; bảng diễn biến theo mốc (CTC, đầu, tim thai, cơn co, mạch, HA, nhiệt độ, ối) và các dấu hiệu tại mốc đó kèm nguồn — chỉ dùng dữ liệu đã biết đến mốc; mục Lưu ý khi đọc. Có câu ghi chú: nhận định tự động, giảng viên rà soát trước khi sử dụng.
+
 ## Kiểm chứng
 
 - `verify.cjs` (812), `verify-easy.cjs` (thêm: 7 mẫu có hình thu nhỏ, mở đúng mẫu, nhận định mẹ/pha tiềm thời trên từng mẫu), `verify-library.cjs`, `verify-studio-plus.cjs` đạt; `git diff --check` sạch.

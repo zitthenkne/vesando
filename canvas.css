@@ -517,3 +517,8 @@ body{caret-color:var(--brand)}#app :is(.btn,.text-btn,.home-nav-button,.home-sid
 @media(prefers-reduced-motion:reduce){.template-card{transition:none}.template-card:hover{transform:none}}
 #app .presenter-reveal.active{background:var(--brand);color:#fff;border-color:var(--brand)}
 [data-theme=dark] #app .presenter-reveal.active{color:#062521}
+.exam-pack{margin:6px 0 14px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.exam-pack .inspector-label{margin-top:0}
+.exam-pack-actions{display:flex;flex-wrap:wrap;gap:8px}
+.exam-pack-actions .btn{min-height:42px;display:inline-flex;align-items:center;gap:6px}
+.exam-pack-actions .btn.primary{flex:1 1 100%;justify-content:center}
