@@ -799,11 +799,11 @@ const app=createApp({
     function resetSection(){design.value.sectionHeights[contextSection.value.id]=1;designPreset.value='custom'}
     function resizeChartSection(change){if(!RESIZE_SECTIONS.some(g=>g.id===change.id))return;selectedSection.value=change.id;sizeScope.value='section';setSectionHeight(change.height)}
     function leavePointTools(){if(dataMode.value==='add'||dataMode.value==='manual'&&!draftDirty.value&&!(mode.value==='clinical'&&pendingQuickTimes.value.length))dataMode.value='drag';if(!dataToolsRef.value?.pointDirty)dataPoint.value=null;for(const chart of [...(Array.isArray(examCharts.value)?examCharts.value:[]),clinicalChart.value])chart?.dismissPoint()}
-    function closeToolbox(){leavePointTools();inputsOpen.value=false;toolTab.value='overview';Vue.nextTick(()=>document.querySelector('.tool-groups > summary')?.focus({preventScroll:true}))}
+    function closeToolbox(){leavePointTools();inputsOpen.value=false;toolTab.value='overview';Vue.nextTick(()=>(document.querySelector('.quick-dock button')||document.querySelector('.tool-groups > summary'))?.focus({preventScroll:true}))}
     // Phone sheet: drag the heading down to dismiss, like a native bottom sheet.
     function sheetDrag(event){if(!sheetOpen.value||event.button>0||event.target.closest('button,a,input,select'))return;const sheet=event.currentTarget.closest('.toolbox'),start=event.clientY;let dy=0;const move=e=>{dy=Math.max(0,e.clientY-start);sheet.style.transition='none';sheet.style.transform=dy?'translateY('+dy+'px)':''},done=()=>{removeEventListener('pointermove',move);removeEventListener('pointerup',done);removeEventListener('pointercancel',done);sheet.style.transition=sheet.style.transform='';if(dy>90)closeToolbox()};addEventListener('pointermove',move);addEventListener('pointerup',done);addEventListener('pointercancel',done)}
     function toggleTool(id){if(toolTab.value===id&&!focusMode.value&&(!mobile.value||inputsOpen.value))closeToolbox();else selectTool(id)}
-    function toggleFocus(){leavePointTools();focusMode.value=!focusMode.value;inputsOpen.value=false;Vue.nextTick(()=>document.querySelector(focusMode.value?'.focus-return':'.tool-groups > summary')?.focus())}
+    function toggleFocus(){leavePointTools();focusMode.value=!focusMode.value;inputsOpen.value=false;Vue.nextTick(()=>document.querySelector(focusMode.value?'.focus-return':'.quick-dock button, .tool-groups > summary')?.focus())}
     function toggleTheme(){theme.value=theme.value==='dark'?'light':'dark'}
     function openCommands(){inputsOpen.value=false;commandOpen.value=true}
     async function commitDraft(){if(mode.value==='clinical'){saveQuick();return}selectTool('data');await Vue.nextTick();document.querySelector('.editor')?.requestSubmit()}

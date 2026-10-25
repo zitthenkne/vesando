@@ -389,3 +389,5 @@ svg.partograph [data-label-section]:hover{fill:color-mix(in srgb,var(--brand) 7%
   .chart-frame>.chart-interaction-bar>p{display:none}
   .chart-frame>.chart-interaction-bar+.chart-viewbar{grid-column:2}
 }
+/* The dock replaces the header "Công cụ" menu; the menu still appears when a guide opens it. */
+#app:has(.quick-dock) .tool-groups:not([open]){display:none}

@@ -6,6 +6,11 @@
 - Khi cuộn, nhóm CTC / Đầu trên vệ vẫn bám ở trên như một thẻ nhỏ bo góc.
 - Màn hình hẹp giữ bố cục cũ (đủ chỗ cho nút lớn).
 
+## Vòng 2 — Một chỗ cho công cụ
+
+- Bỏ nút **Công cụ** trên thanh trên cùng khi đã có thanh công cụ (trùng chức năng). Menu vẫn bật lên khi hướng dẫn cần chỉ vào mục AI.
+- Hướng dẫn **Mở công cụ** chỉ vào thanh công cụ mới. Đóng bảng công cụ hoặc thoát Tập trung trả focus về thanh công cụ.
+
 ## Kiểm chứng
 
 - `verify.cjs`, `verify-easy.cjs` đạt.

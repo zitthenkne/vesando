@@ -58,7 +58,7 @@ function registerEnhancements(app){
       {title:'Chọn để chỉnh',body:'Chọn điểm, ô hoặc nhãn hàng; bảng bên hiện đúng phần cần chỉnh.',target:'.workarea'},
       {title:'Chọn chế độ',body:'Trang bắt đầu: chọn Soạn đề hoặc Theo dõi. Bản đang làm được giữ.',target:'.workspace-home'},
       {title:'Quản lý ca',body:'Chọn tên ca để tạo mới, mở thư viện hoặc nhân bản.',target:'.case-menu > summary, .workspace-menu > summary'},
-      {title:'Mở công cụ',body:'Mở Công cụ, chọn nhóm Dữ liệu, Trình bày hoặc Kiểm tra.',target:'.tool-groups > summary'},
+      {title:'Mở công cụ',body:'Thanh công cụ bên trái (điện thoại: dưới đáy) mở Nhập, Trình bày, Kiểm tra.',target:'.quick-dock'},
       {title:'Lập sản đồ bằng AI',body:'Ý tưởng hoặc đề có sẵn → AI → dán JSON → sản đồ.',target:'.ai-tool-entry'},
       {title:'Ghi nhanh',body:'Chọn mốc, nhập số đo rồi lưu.',target:'.bedside-entry .quick-fields, .chart-record-menu > summary'},
       {title:'Xuất sản đồ',body:'Chọn PNG, SVG hoặc PDF rồi tải.',target:'.quick-export'}
