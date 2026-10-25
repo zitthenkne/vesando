@@ -61,6 +61,16 @@ const server=http.createServer(async(req,res)=>{const file=files[new URL(req.url
       await page.locator('.quick-dock button.dock-review').click();
       const reading=page.locator('.exam-reading');assert.match(await reading.getAttribute('class'),/\bcritical\b/);
       assert.ok(await reading.locator('li.critical').count()>=1);assert.match(await reading.textContent(),/Nguồn:/);
+      // Presenter steps through moments; captions show readings and sourced findings at that time; Esc closes.
+      if(viewport.width<=1100)await page.locator('.close-toolbox-button').first().click().catch(()=>{});
+      await page.locator('.quick-dock button.dock-present').click();
+      const presenter=page.locator('.presenter');await presenter.waitFor();
+      await presenter.press('Space');assert.match(await presenter.locator('.presenter-progress').textContent(),/Mốc 1 \/ 8/);
+      for(let k=0;k<7;k++)await presenter.press('ArrowRight');
+      assert.match(await presenter.locator('.presenter-progress').textContent(),/11:30.*Mốc 8 \/ 8/);
+      assert.ok(await presenter.locator('.presenter-chips span.alert').count()>=1);assert.match(await presenter.textContent(),/Nguồn:/);
+      assert.equal(await page.evaluate(()=>document.querySelector('#app')._vnode.component.setupState.viewTime),3.5,'Chart follows the presenter');
+      await presenter.press('Escape');assert.equal(await presenter.count(),0);
       assert.deepEqual(errors,[]);await page.close();
     }
     console.log('PASS: reference bands and tool dock');

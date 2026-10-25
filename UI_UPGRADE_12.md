@@ -23,6 +23,13 @@ Nguyên tắc học từ Canva: công cụ mở ra **ngay cạnh** nút đã b�
 - Tay nắm kéo giãn chuyển sang mép phải của bảng; kéo sang phải hoặc phím → để rộng thêm.
 - Chế độ bảng nổi (overlay) và điện thoại giữ nguyên.
 
+## Vòng 5 — ▶ Diễn biến (trình chiếu kiểu Canva Present)
+
+- Nút **Diễn biến** trên thanh công cụ (cả Soạn đề và Theo dõi) phát lần lượt từng mốc có số đo, mỗi 2,6 giây; sản đồ nhảy theo đúng mốc.
+- Thẻ chú thích ở mỗi mốc: kết luận chung, chip số đo (đỏ nếu ngoài ngưỡng), dấu hiệu **mới xuất hiện tại mốc đó** kèm nguồn. Mỗi mốc chỉ đọc dữ liệu **đã biết đến thời điểm đó** — đúng cách đọc sản đồ thực tế, không "nhìn trước".
+- Điều khiển: ⏮ ▶/⏸ ⏭, thanh tiến độ; bàn phím Space / ← → / Esc. Máy tính: thẻ nổi góc phải dưới, không che giữa sản đồ; điện thoại: trên thanh công cụ.
+- Dùng để giảng dạy (trình chiếu một ca) hoặc tự rà lại diễn biến trước khi xuất đề.
+
 ## Kiểm chứng
 
 - `verify.cjs`, `verify-easy.cjs` đạt.
