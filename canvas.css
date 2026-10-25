@@ -700,3 +700,6 @@ body{caret-color:var(--brand)}#app :is(.btn,.text-btn,.home-nav-button,.home-sid
 .menu-item-text{display:flex;flex-direction:column;text-align:left;gap:1px}
 .menu-item-text small{font-size:11px;color:var(--muted);font-weight:400}
 .clinic-bar .steps-pill{margin:0}
+
+/* Vòng 25 — sản đồ trống chỉ giữ một lời gọi hành động */
+.chart-empty-start + .chart-frame .chart-record-menu{display:none}

@@ -190,6 +190,16 @@ Phản hồi: giao diện có quá nhiều nút cùng lúc, gây quá tải th�
 4. **Chế độ Lâm sàng ẩn "Lịch đánh giá cổ tử cung"** vì đã có nút Lịch đo; chế độ Học tập giữ nguyên để giải thích.
 5. **Bố cục điện thoại**: thanh công cụ dưới đáy nằm trên các lớp khác, không bị che.
 
+## Vòng 25 — Mỗi màn hình một lời gọi hành động
+
+1. **Dải thời gian chỉ xuất hiện khi có từ 2 mốc trở lên** — trước đó không có gì để lướt.
+2. **Khung "Sản đồ chưa có số đo" chỉ còn một nút chính**: Ghi số đo đầu tiên. Lập bằng AI vẫn ở thanh trái (Trợ lý AI).
+3. **Ẩn menu "Ghi nhanh" và dòng "Mốc đang chọn" khi sản đồ còn trống** — khung trống đã chỉ đường; hai mục này hiện lại sau số đo đầu tiên.
+4. **Bỏ tiêu đề và nút ✕ lặp lại trong "Soạn nội dung đề"** — bảng Nhập / Sửa đã có tiêu đề và nút Đóng.
+5. **Trang chủ**: bỏ lối tắt "Bắt đầu từ ca mẫu" (các mẫu nằm ngay bên dưới); nút "Mở tệp JSON" ở thanh trên chuyển thành liên kết nhẹ "Mở tệp đã lưu (.json)" cạnh "Soạn từ ý tưởng với AI".
+
+`verify-library.cjs`, `verify-studio-plus.cjs`: mở ca mẫu bằng thẻ mẫu đầu tiên thay cho lối tắt đã bỏ (cùng nội dung CASE-001).
+
 ## Kiểm chứng
 
 - `verify.cjs` (812), `verify-easy.cjs` (thêm: 7 mẫu có hình thu nhỏ, mở đúng mẫu, nhận định mẹ/pha tiềm thời trên từng mẫu), `verify-library.cjs`, `verify-studio-plus.cjs` đạt; `git diff --check` sạch.
