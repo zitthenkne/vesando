@@ -182,6 +182,14 @@ Phản hồi: giao diện có quá nhiều nút cùng lúc, gây quá tải th�
 
 `verify-studio-plus.cjs`: ba lần mở Lớp & nét / Bàn dữ liệu / Phiên bản từ thanh công cụ cũ được đổi sang mở qua menu ⋯ (nội dung kiểm tra giữ nguyên).
 
+## Vòng 24 — Tinh gọn tiếp
+
+1. **Thanh công cụ trái bỏ "Sản đồ" và "Tùy chỉnh".** Sản đồ luôn hiển thị ở giữa nên không cần nút riêng; tùy chỉnh đã có trong menu ⋯. Trên điện thoại còn 6 nút một hàng.
+2. **Dải thời gian chỉ còn nút phát và thanh kéo.** Bỏ dòng giá trị và ghi chú lặp lại; ô tốc độ chỉ xuất hiện khi đang phát.
+3. **Khung trống của Soạn đề bỏ nút "Mở ca mẫu"** — mẫu đã có trong thư viện và mục Mẫu.
+4. **Chế độ Lâm sàng ẩn "Lịch đánh giá cổ tử cung"** vì đã có nút Lịch đo; chế độ Học tập giữ nguyên để giải thích.
+5. **Bố cục điện thoại**: thanh công cụ dưới đáy nằm trên các lớp khác, không bị che.
+
 ## Kiểm chứng
 
 - `verify.cjs` (812), `verify-easy.cjs` (thêm: 7 mẫu có hình thu nhỏ, mở đúng mẫu, nhận định mẹ/pha tiềm thời trên từng mẫu), `verify-library.cjs`, `verify-studio-plus.cjs` đạt; `git diff --check` sạch.

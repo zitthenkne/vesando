@@ -494,7 +494,7 @@ body{caret-color:var(--brand)}#app :is(.btn,.text-btn,.home-nav-button,.home-sid
 .demo-cell-editor{display:flex;align-items:flex-end;gap:10px;margin:12px 0}.demo-cell-editor>.field{flex:1;min-width:0}.demo-cell-editor .btn{min-height:44px;font-size:11px;flex-shrink:0}
 /* Phones: the bottom rail holds seven primary tools (incl. Diễn biến) on one row. */
 @media(max-width:760px){
-  .creation-rail{grid-template-columns:repeat(7,minmax(0,1fr));z-index:20}
+  .creation-rail{grid-template-columns:repeat(6,minmax(0,1fr));z-index:20}
   #app .creation-rail>.rail-spacer,#app .creation-rail>.rail-spacer~button{display:none}
   #app .creation-rail>button{font-size:8.5px;white-space:nowrap}
   .chart-empty-actions{flex-direction:column}
