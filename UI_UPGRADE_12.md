@@ -11,6 +11,10 @@
 - Bỏ nút **Công cụ** trên thanh trên cùng khi đã có thanh công cụ (trùng chức năng). Menu vẫn bật lên khi hướng dẫn cần chỉ vào mục AI.
 - Hướng dẫn **Mở công cụ** chỉ vào thanh công cụ mới. Đóng bảng công cụ hoặc thoát Tập trung trả focus về thanh công cụ.
 
+## Vòng 3 — Điện thoại: sản đồ lên cao hơn
+
+- ≤ 760 px: Quy chuẩn, Ghi nhanh (chỉ biểu tượng) và Thu phóng nằm chung một hàng; ẩn dòng gợi ý "Ô trống: thêm…" (vẫn có trong Hướng dẫn). Sản đồ bắt đầu cao hơn khoảng 75 px.
+
 ## Kiểm chứng
 
 - `verify.cjs`, `verify-easy.cjs` đạt.

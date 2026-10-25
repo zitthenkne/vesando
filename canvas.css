@@ -391,3 +391,10 @@ svg.partograph [data-label-section]:hover{fill:color-mix(in srgb,var(--brand) 7%
 }
 /* The dock replaces the header "Công cụ" menu; the menu still appears when a guide opens it. */
 #app:has(.quick-dock) .tool-groups:not([open]){display:none}
+/* Phones: one row for standard + quick record + view, hints moved off-screen; the chart starts higher. */
+@media(max-width:760px){
+  #app .chart-viewbar{flex-wrap:nowrap;gap:8px}
+  #app .chart-viewbar .standard-picker{flex:1 1 auto;min-width:0;width:auto}
+  #app .chart-viewbar .chart-record-menu>summary{font-size:0;gap:2px}
+  #app .chart-interaction-bar>p{display:none}
+}
