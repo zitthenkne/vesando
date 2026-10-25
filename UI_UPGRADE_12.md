@@ -248,6 +248,16 @@ Theo đề nghị: phần xuất cần điều chỉnh linh hoạt, có nhiều 
 
 `verify-easy.cjs` thêm: lưu bộ "Đề giữa kỳ", chuyển chế độ khác rồi áp lại bộ đã lưu, lưu đúng vào bộ nhớ trình duyệt, đề & đáp án không có ghi chú đọc phiếu, xóa bộ, về mặc định.
 
+## Vòng 30 — Bảng xuất theo đúng thứ tự thao tác
+
+Thứ tự mới trong **Xuất ảnh hoặc PDF**: ① Nội dung bản xuất → ② Định dạng & kích thước → Tải / Sao chép ảnh.
+
+1. **Đánh số bước ① ②** ngay trên hai nhóm, đi từ "xuất cái gì" tới "xuất dạng gì".
+2. **Bỏ khối giới thiệu "04 / Xuất tài liệu · Bản xuất của bạn"** — tiêu đề mục đã đủ nghĩa.
+3. **Kích thước pixel gộp vào ô Độ phân giải** (dòng nhỏ "W × H px · 300 DPI"); **ô Độ phân giải ẩn khi chọn SVG** vì SVG không phụ thuộc độ phân giải.
+4. **Thiết lập trang PDF và lối tắt Word / In A4 / Slide chuyển xuống sau phần Định dạng**, cạnh nơi chúng có tác dụng.
+5. **Bỏ dòng giải thích SVG/PNG/PDF lặp lại** — mỗi ô định dạng đã ghi công dụng.
+
 ## Kiểm chứng
 
 - `verify.cjs` (812), `verify-easy.cjs` (thêm: 7 mẫu có hình thu nhỏ, mở đúng mẫu, nhận định mẹ/pha tiềm thời trên từng mẫu), `verify-library.cjs`, `verify-studio-plus.cjs` đạt; `git diff --check` sạch.

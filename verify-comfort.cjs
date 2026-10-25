@@ -62,7 +62,7 @@ const mutate=(p,title)=>p.evaluate(title=>{document.querySelector('#app')._vnode
     await page.waitForTimeout(700);assert.equal(await saved(page),null,'Patient workspace is not written without opt-in');
     await page.evaluate(()=>document.querySelector('#app')._vnode.component.setupState.selectedMoment=2);const before=await state(page);
     await page.locator('.quick-export').click();assert.equal(await page.locator('.device-storage').getAttribute('open'),'');
-    assert.equal(await page.locator('.export-stamp').isVisible(),false);assert.equal(await page.locator('.share-options').getAttribute('open'),null);
+    assert.equal(await page.locator('.share-options').getAttribute('open'),null);
     await page.getByRole('button',{name:'Lưu ngay trên máy',exact:true}).click();assert.equal((await state(page)).current,true);
     const first=JSON.parse(await saved(page));assert.equal(first.kind,'partograph-workspace');assert.equal(first.content.cases.length,2);assert.equal(first.content.quickDrafts['2'].fhr,'14');assert.equal(first.view.activeCaseIndex,1);
     await page.reload();await ready(page);await page.waitForFunction(()=>document.querySelector('#app')._vnode.component.setupState.activeCaseIndex===1);

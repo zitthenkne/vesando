@@ -766,3 +766,10 @@ body{caret-color:var(--brand)}#app :is(.btn,.text-btn,.home-nav-button,.home-sid
 .export-parts-foot{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;padding-bottom:8px}
 .export-parts-foot .hint{margin:4px 0 0}
 .export-parts-foot .text-btn{flex:none;font-size:12px}
+
+/* Vòng 30 — bảng xuất theo thứ tự: nội dung → định dạng → tải */
+.export-step{display:inline-grid;place-items:center;width:18px;height:18px;margin-right:7px;border-radius:50%;background:var(--brand);color:#fff;font-size:10.5px;font-weight:800;letter-spacing:0}
+.export-content .inspector-label{justify-content:flex-start}
+.export-content .export-mode-now{margin-left:auto}
+.export-format-label{display:flex;align-items:center;margin-top:14px}
+.export-size{display:block;margin-top:4px;font-size:11px;color:var(--muted);font-weight:500}
