@@ -140,6 +140,12 @@ Công tắc **Cảnh báo: Học tập | Lâm sàng** ở đầu thẻ sản đ�
 - Mỗi đường có biểu tượng bút cạnh tên (đậm lên khi rê chuột/focus) để thấy rõ có thể chỉnh.
 - Bốn công tắc hiển thị (Vùng nguy cơ, Vạch nhóm hàng, Đường dóng sự kiện, Chú giải trong bản xuất) hiện mô tả ngay dưới tên thay vì chỉ trong tooltip.
 
+## Vòng 19 — Danh sách ghi chú sự kiện
+
+- Mỗi ghi chú trong danh sách có **số thứ tự cùng màu** với thẻ đánh số trên sản đồ, nên dễ đối chiếu danh sách ↔ hình.
+- Khung nhập có tiêu đề rõ: **Thêm ghi chú mới** hoặc **Sửa ghi chú số N**.
+- Câu nhắc lỗi gọn: "Nhập nội dung ghi chú."; nhãn đọc màn hình đổi từ "mũi tên" sang "ghi chú".
+
 ## Kiểm chứng
 
 - `verify.cjs` (812), `verify-easy.cjs` (thêm: 7 mẫu có hình thu nhỏ, mở đúng mẫu, nhận định mẹ/pha tiềm thời trên từng mẫu), `verify-library.cjs`, `verify-studio-plus.cjs` đạt; `git diff --check` sạch.
