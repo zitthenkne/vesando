@@ -109,6 +109,13 @@ Công tắc **Cảnh báo: Học tập | Lâm sàng** ở đầu thẻ sản đ�
 - Băng báo động gọn hơn: bỏ phần ngoặc trùng, chỉ giữ "(ngưỡng …)".
 - Sửa kiểu chữ tiêu đề băng báo động về cùng phông giao diện.
 
+## Vòng 14 — Lịch đo (chế độ Lâm sàng)
+
+- Dải **Lịch đo** ở đầu thẻ sản đồ: Tim thai, Cơn co, Mạch, Nhiệt độ, Huyết áp, Khám CTC — mỗi ô ghi giờ đến hạn.
+- Khoảng cách đo theo quy chuẩn: WHO 1993 / Modified — tim thai, cơn co, mạch mỗi 30 phút; nhiệt độ 2 giờ; huyết áp, khám CTC 4 giờ (WHO 1994, hướng dẫn sử dụng sản đồ). LCG — mạch, nhiệt độ, huyết áp 4 giờ.
+- Mốc so sánh là thời điểm muộn hơn giữa lần ghi cuối và đồng hồ thực (khi ngày/giờ bắt đầu của hồ sơ khớp hôm nay). Quá hạn: ô màu cam, ghi "Quá hạn N phút"; còn dưới 15 phút: viền cam; chưa đo: viền nét đứt.
+- Bấm một ô: chuyển tới mốc kế tiếp và đặt con trỏ vào đúng ô nhập của thông số đó.
+
 ## Kiểm chứng
 
 - `verify.cjs` (812), `verify-easy.cjs` (thêm: 7 mẫu có hình thu nhỏ, mở đúng mẫu, nhận định mẹ/pha tiềm thời trên từng mẫu), `verify-library.cjs`, `verify-studio-plus.cjs` đạt; `git diff --check` sạch.

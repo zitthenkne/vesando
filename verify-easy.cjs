@@ -124,6 +124,14 @@ const server=http.createServer(async(req,res)=>{const file=files[new URL(req.url
       await presenter.press('Escape');assert.equal(await presenter.count(),0);
       assert.deepEqual(errors,[]);await page.close();
     }
+    // Measurement schedule against a fixed clock: 13:10 with FHR last at 12:00 (every 30 min) is 40 minutes overdue; a chip opens the entry.
+    {const page=await browser.newPage({viewport:{width:1440,height:900}});await page.clock.install({time:new Date('2026-10-25T13:10:00')});
+      await page.goto(url);await page.waitForSelector('#app:not([v-cloak])');await page.locator('.home-launch.clinical-launch').click();await page.waitForSelector('#quick-cervix');
+      await page.getByRole('radio',{name:'Lâm sàng'}).click();
+      await page.evaluate(()=>{const st=document.querySelector('#app')._vnode.component.setupState;st.clinical={...st.clinical,patient:{...st.clinical.patient,date:'2026-10-25',startTime:'08:00'},observations:JSON.parse(JSON.stringify(st.presetList[0].observations.slice(0,9)))}});
+      const chip=page.locator('.measure-chip',{hasText:'Tim thai'});assert.match(await chip.getAttribute('class'),/\boverdue\b/);assert.match(await chip.textContent(),/Quá hạn 40 phút · 12:30/);
+      assert.match(await page.locator('.measure-chip',{hasText:'Khám CTC'}).textContent(),/Đến hạn 16:00/);
+      await chip.click();assert.equal(await page.evaluate(()=>document.activeElement.id),'quick-fhr');await page.close()}
     console.log('PASS: reference bands, empty-chart start, rail/panel order, clinical reading and presenter');
   }finally{await browser.close();server.close()}
 })().catch(e=>{console.error(e);process.exit(1)});
