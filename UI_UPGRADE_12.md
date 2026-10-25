@@ -238,6 +238,16 @@ Theo đề nghị: phần xuất cần điều chỉnh linh hoạt, có nhiều 
 
 `verify-easy.cjs` thêm: chế độ Đề thi ẩn ghi chú & có tình huống; Đầy đủ khôi phục; tắt vùng Nhiệt độ làm mất hàng trên hình và nhãn thành "Tùy chỉnh"; công tắc Đen trắng; Đầy đủ đưa về màu.
 
+## Vòng 29 — Xuất tệp: bộ tùy chọn riêng, áp cho đề & đáp án
+
+1. **Lưu bộ tùy chọn riêng**: trong "Bật / tắt từng phần", đặt tên (vd. "Đề giữa kỳ") → **Lưu bộ**. Bộ đã lưu thành một ô chế độ (viền đứt) cạnh 5 chế độ có sẵn, bấm để áp lại; nút ✕ trên ô để xóa. Tối đa 4 bộ, lưu trên trình duyệt này.
+2. **Dòng tóm tắt dưới các chế độ** cho biết bản xuất sẽ gồm gì, vd. "3 vùng · chú giải · không ghi chú · đen trắng".
+3. **Gói "In đề + đáp án" theo Nội dung bản xuất**: hình trong đề dùng cùng vùng, chú giải, đen trắng; khi bật ẩn danh thì phần thông tin đầu đề bỏ họ tên và mã. Hình trong đề **không bao giờ kèm ghi chú nhận định** (tránh lộ đáp án) và không in đề bài hai lần.
+4. **"Về mặc định"** đưa mọi công tắc và cách chọn vùng về như ban đầu.
+5. **"Ký hiệu ối" chuyển vào nhóm Bật / tắt từng phần** — bớt một mục rời trong bảng xuất.
+
+`verify-easy.cjs` thêm: lưu bộ "Đề giữa kỳ", chuyển chế độ khác rồi áp lại bộ đã lưu, lưu đúng vào bộ nhớ trình duyệt, đề & đáp án không có ghi chú đọc phiếu, xóa bộ, về mặc định.
+
 ## Kiểm chứng
 
 - `verify.cjs` (812), `verify-easy.cjs` (thêm: 7 mẫu có hình thu nhỏ, mở đúng mẫu, nhận định mẹ/pha tiềm thời trên từng mẫu), `verify-library.cjs`, `verify-studio-plus.cjs` đạt; `git diff --check` sạch.

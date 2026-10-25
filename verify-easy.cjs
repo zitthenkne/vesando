@@ -40,6 +40,13 @@ const server=http.createServer(async(req,res)=>{const file=files[new URL(req.url
       assert.equal(await page.locator('.export-mode-now').innerText(),'Tùy chỉnh');assert.doesNotMatch(await svgText(),/NHIỆT ĐỘ/);
       await page.locator('.export-parts .switch-row',{hasText:'Đen trắng'}).locator('input').check();assert.equal(await page.evaluate(()=>document.querySelector('#app')._vnode.component.setupState.mono),true);
       await page.getByRole('radio',{name:/Đầy đủ/}).click();assert.equal(await page.evaluate(()=>document.querySelector('#app')._vnode.component.setupState.mono),false);assert.match(await svgText(),/NHIỆT ĐỘ/);
+      // Saved export set: name it, switch away, re-apply it from its chip; the exam sheet chart never carries the reading notes.
+      await page.getByRole('switch',{name:'Vùng Nước tiểu'}).click();await page.getByLabel('Tên bộ tùy chọn xuất').fill('Đề giữa kỳ');await page.getByRole('button',{name:'Lưu bộ'}).click();
+      assert.equal(await page.locator('.export-mode-now').innerText(),'Đề giữa kỳ');await page.getByRole('radio',{name:/Đầy đủ/}).click();assert.match(await svgText(),/NƯỚC TIỂU/i);
+      await page.getByRole('radio',{name:/Đề giữa kỳ/}).click();assert.equal(await page.locator('.export-mode-now').innerText(),'Đề giữa kỳ');assert.match(await page.locator('.export-summary').innerText(),/vùng/);
+      assert.equal(JSON.parse(await page.evaluate(()=>localStorage.getItem('partograph-export-presets'))).length,1);
+      assert.doesNotMatch(await page.evaluate(()=>{const st=document.querySelector('#app')._vnode.component.setupState;return st.examPackHTML(st.activeCase,true)}),/GHI CHÚ ĐỌC PHIẾU/);
+      await page.getByRole('button',{name:'Xóa bộ Đề giữa kỳ'}).click();assert.equal(await page.locator('.export-modes button.saved').count(),0);await page.getByRole('button',{name:'Về mặc định'}).click();
       await page.getByRole('button',{name:'In đề + đáp án'}).click();await page.waitForSelector('iframe.print-frame',{state:'attached'});
       await page.goto(url);await page.waitForSelector('#app:not([v-cloak])');
       await page.locator('.home-launch.clinical-launch').click();await page.waitForSelector('#quick-cervix');
