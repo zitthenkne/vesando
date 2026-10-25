@@ -381,3 +381,11 @@ svg.partograph [data-label-section]:hover{fill:color-mix(in srgb,var(--brand) 7%
 /* Quick entry labels: full words, readable size and contrast. */
 #app .quick-fields>.field{font-size:12px;font-weight:600;color:var(--ink)}
 .start-file-row{flex-wrap:wrap;gap:8px 20px}
+/* Wide screens: series picker and view controls share one row above the chart. */
+@media(min-width:1101px){
+  .chart-frame{display:grid;grid-template-columns:auto minmax(0,1fr)}
+  .chart-frame>*{grid-column:1/-1}
+  .chart-frame>.chart-interaction-bar{grid-column:1;border-bottom:1px solid var(--line);border-right:1px solid var(--line);border-bottom-right-radius:12px;background:var(--surface)}
+  .chart-frame>.chart-interaction-bar>p{display:none}
+  .chart-frame>.chart-interaction-bar+.chart-viewbar{grid-column:2}
+}
