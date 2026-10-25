@@ -786,3 +786,8 @@ body{caret-color:var(--brand)}#app :is(.btn,.text-btn,.home-nav-button,.home-sid
 .settings .setting-switches label.switch-row{display:flex!important;align-items:center;justify-content:space-between;gap:12px;margin:0!important;padding:4px 0!important;text-transform:none!important;letter-spacing:0!important;font-size:12.5px!important;font-weight:600!important;color:var(--ink)!important;min-height:44px}
 .settings .setting-switches label.switch-row span{display:block}
 .design-savebar.saved{padding-top:8px;padding-bottom:8px}
+
+/* Vòng 32 — gom trạng thái theo dõi vào một hàng; thanh dưới sản đồ không xuống dòng */
+#app .clinical-overview>.clinic-tools{align-self:center;justify-self:end;margin:0 0 0 auto;border:0;background:none;box-shadow:none}
+#app .clinical-overview>.measure-pill{align-self:center}
+@media(min-width:761px){.dossier-bar{flex-wrap:nowrap!important}.dossier-summary{min-width:0;flex:1 1 auto;overflow:hidden}.dossier-fold{flex:none}}

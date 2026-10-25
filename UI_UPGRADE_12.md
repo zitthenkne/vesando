@@ -266,6 +266,14 @@ Thứ tự mới trong **Xuất ảnh hoặc PDF**: ① Nội dung bản xuất 
 4. **Thanh "Lưu mặc định" chỉ hiện nút khi có thay đổi chưa lưu**; khi đã lưu chỉ còn một dòng trạng thái nhỏ.
 5. Công tắc "Đen trắng" trong Trình bày và trong Nội dung bản xuất là cùng một thiết lập — đổi ở đâu cũng đồng bộ.
 
+## Vòng 32 — Theo dõi: mọi trạng thái trên một hàng
+
+1. **Công tắc cảnh báo Học tập / Lâm sàng chuyển lên hàng trạng thái** (cạnh "Cần đánh giá sớm" và "Đánh giá kế tiếp"), bỏ một hàng riêng phía trên sản đồ.
+2. **Nút "Lịch đo · n quá hạn" (chế độ Lâm sàng) cũng nằm trên hàng trạng thái**, thay vào chỗ "Đánh giá kế tiếp" của chế độ Học tập.
+3. **Hàng phụ dưới hàng trạng thái chỉ còn xuất hiện khi có Nhật ký cảnh báo** (chế độ Lâm sàng, đã có cảnh báo được ghi).
+4. **Thanh dưới sản đồ bỏ ô nhận định trùng lặp** khi đang theo dõi và có dấu hiệu cần chú ý — ô đó đã hiện ở đầu trang.
+5. **Thanh dưới sản đồ giữ trên một dòng ở màn hình lớn** (trước đây nút thu gọn bị rơi xuống dòng riêng); màn hình nhỏ vẫn xếp dòng như cũ.
+
 ## Kiểm chứng
 
 - `verify.cjs` (812), `verify-easy.cjs` (thêm: 7 mẫu có hình thu nhỏ, mở đúng mẫu, nhận định mẹ/pha tiềm thời trên từng mẫu), `verify-library.cjs`, `verify-studio-plus.cjs` đạt; `git diff --check` sạch.
