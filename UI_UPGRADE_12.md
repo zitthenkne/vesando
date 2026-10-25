@@ -38,6 +38,24 @@ Nguyên tắc học từ Canva: công cụ mở ra **ngay cạnh** nút đã b�
 - Điện thoại: thanh dưới đáy giữ 7 nút trên một hàng (ẩn Tập trung, Tùy chỉnh — có trong menu ⋯); thanh nằm trên lớp nút CTC / Đầu trên vệ.
 - Câu chữ: chuyển sang giọng trung tính, phù hợp người dùng là giảng viên (ví dụ "Nhận định theo quy chuẩn", "Có thể bấm trực tiếp vào ô trống…", "Thời gian mỗi cơn co · giây").
 
+## Vòng 6 — Kho "Mẫu tình huống" và bổ sung quy tắc nhận định
+
+Học từ mục **Mẫu** của Canva: bắt đầu từ một mẫu có sẵn, nhìn thấy trước kết quả, một lần bấm là mở.
+
+- Trang chủ có dải **Mẫu tình huống**: mỗi thẻ có hình thu nhỏ vẽ trực tiếp từ dữ liệu ca, nhãn chủ đề và mô tả ngắn; bấm để mở thành đề mới, chỉnh sửa được.
+- Thêm 4 ca mẫu (tổng 7):
+  - **Pha tiềm thời kéo dài** — CTC 1 → 2 cm sau 8 giờ, cơn co thưa.
+  - **Sốt · ối vỡ lâu** — nhiệt độ 37,4 → 38,4 °C, mạch mẹ 92 → 112, tim thai nền 150 → 168.
+  - **Tăng huyết áp · đạm niệu** — HA 150/100 → 165/110 mmHg, đạm niệu ++ → +++, nước tiểu giảm.
+  - **Tăng co bằng oxytocin** — cơn co 2/10′ không tiến triển, oxytocin 10 IU/L tăng 8 → 16 giọt/phút, CTC 5 → 9 cm.
+- Mỗi ca có phần **Yêu cầu** viết theo dạng câu hỏi tình huống, không khẳng định chẩn đoán thay người học.
+- **Bổ sung quy tắc nhận định cho mô hình WHO 1993 / Modified** (trước đây chỉ có ở LCG):
+  - Huyết áp ≥ 140/90 mmHg (≥ 160/110: mức khẩn), kèm đạm niệu nếu có — *ISSHP 2021*.
+  - Nhiệt độ ≥ 38 °C — *ACOG CO 712*.
+  - Mạch mẹ > 100 lần/phút.
+  - Pha tiềm thời ≥ 8 giờ chưa đạt mốc hoạt động — *WHO 1994, hướng dẫn sử dụng sản đồ*.
+  Áp dụng cho cả Soạn đề (Kiểm tra, Diễn biến) và Theo dõi.
+
 ## Kiểm chứng
 
-- `verify.cjs` (812), `verify-easy.cjs`, `verify-library.cjs`, `verify-studio-plus.cjs` đạt; `git diff --check` sạch.
+- `verify.cjs` (812), `verify-easy.cjs` (thêm: 7 mẫu có hình thu nhỏ, mở đúng mẫu, nhận định mẹ/pha tiềm thời trên từng mẫu), `verify-library.cjs`, `verify-studio-plus.cjs` đạt; `git diff --check` sạch.

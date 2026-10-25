@@ -102,6 +102,14 @@ function assessment(c,standard){
   if(o.contractions!==null&&o.contractions>5)add('frequent-contractions','Ghi nhận '+o.contractions+' cơn/10 phút: cần đánh giá cơn co và tim thai; tần số không cho biết cường độ hoặc trương lực nền.','critical','WHO LCG · >5 cơn/10 phút; UMP 2020 tr. 38');
   if(!lc&&(o.fluid==='B'||o.fluid.startsWith('M')))add('fluid','Nước ối '+(o.fluid==='B'?'lẫn máu':'có phân su')+': đối chiếu tình trạng thai, không kết luận suy thai chỉ từ màu ối.','warn','UMP 2020 · Handout tr. 35; đánh giá mẹ–thai');
   if(!lc&&o.moulding==='+++')add('moulding','Uốn khuôn +++: đánh giá ngôi, kiểu thế, độ xuống và khung chậu. Không dùng riêng dấu hiệu này để khẳng định CPD.','warn','UMP 2020 · lưu đồ trái/phải báo động');
+  if(!lc){
+    // Maternal vital signs and latent phase for the historical charts (LCG has its own ALERT column below).
+    if(o.systolic!==null&&o.diastolic!==null&&(o.systolic>=140||o.diastolic>=90)){const severe=o.systolic>=160||o.diastolic>=110;add('maternal-bp','Huyết áp '+o.systolic+'/'+o.diastolic+' mmHg'+(severe?' (≥ 160/110)':' (≥ 140/90)')+(['++','+++','++++'].includes(o.protein)?', đạm niệu '+o.protein:'')+': cần đánh giá tăng huyết áp trong thai kỳ và các dấu hiệu nặng.',severe?'critical':'warn','ISSHP 2021 · ngưỡng huyết áp')}
+    if(o.temperature!==null&&o.temperature>=38)add('maternal-fever','Nhiệt độ '+String(o.temperature).replace('.',',')+' °C: cần tìm nguyên nhân sốt trong chuyển dạ, kể cả nhiễm trùng ối; đối chiếu mạch mẹ và tim thai.','warn','ACOG CO 712 · sốt trong chuyển dạ');
+    if(o.pulse!==null&&o.pulse>100)add('maternal-pulse','Mạch mẹ '+o.pulse+' lần/phút (> 100): cần đối chiếu nhiệt độ, mất máu, đau và tình trạng mất nước.','warn','Ngưỡng nhịp nhanh người lớn');
+    const firstCervix=dil[0];
+    if(firstCervix&&last&&last.cervix<spec.active&&last.time-firstCervix.time>=8)add('prolonged-latent','Độ mở CTC chưa đạt '+spec.active+' cm sau '+(last.time-firstCervix.time)+' giờ theo dõi: pha tiềm thời kéo dài theo mô hình (tối đa 8 giờ).','warn','WHO 1994 · Hướng dẫn sử dụng sản đồ',last.time);
+  }
   if(lc){
     const labels={contractions:'Tần số cơn co ≤2/10 phút',duration:'Thời gian cơn co <20 hoặc >60 giây',fluid:'Nước ối M+++ hoặc lẫn máu',deceleration:'Nhịp giảm muộn',position:'Kiểu thế sau / ngang',caput:'Bướu huyết thanh +++',moulding:'Uốn khuôn +++',pulse:'Mạch mẹ <60 hoặc ≥120 lần/phút',systolic:'HA tâm thu <80 hoặc ≥140 mmHg',diastolic:'HA tâm trương ≥90 mmHg',temperature:'Nhiệt độ <35 hoặc ≥37,5 °C',protein:'Đạm niệu ≥++',acetone:'Acetone ≥++',companion:'Chưa có người đồng hành',painRelief:'Chưa được giảm đau',oralFluid:'Chưa uống dịch',posture:'Đang nằm ngửa'};
     for(const [key,label] of Object.entries(labels))if(lcgAlert(key,o[key])&&!(key==='contractions'&&o[key]>5))add('lcg-'+key,label+' — đạt tiêu chí đối chiếu LCG.', ['deceleration','systolic','diastolic'].includes(key)?'critical':'warn');

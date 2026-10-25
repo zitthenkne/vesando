@@ -15,6 +15,14 @@ const server=http.createServer(async(req,res)=>{const file=files[new URL(req.url
     for(const viewport of [{width:1440,height:900},{width:390,height:844}]){
       const page=await browser.newPage({viewport}),errors=[];page.setDefaultTimeout(12000);page.on('pageerror',e=>errors.push(e.message));
       await page.goto(url);await page.waitForSelector('#app:not([v-cloak])');
+      // Template gallery: every preset has a rendered thumbnail and opens as a new editable exam case.
+      assert.equal(await page.locator('.template-card').count(),7);
+      assert.equal(await page.locator('.template-card img[src^="data:image/svg+xml"]').count(),7);
+      await page.locator('.template-card',{hasText:'Tăng huyết áp · đạm niệu'}).click();
+      assert.equal(await page.evaluate(()=>document.querySelector('#app')._vnode.component.setupState.activeCase.title),'Tăng huyết áp trong chuyển dạ');
+      // Maternal findings are read under the default historical chart too, with a source.
+      assert.deepEqual(await page.evaluate(()=>{const st=document.querySelector('#app')._vnode.component.setupState;return st.presetList.map(c=>assessment(c,'who1993').checks.map(x=>x.code).filter(k=>/^(maternal|prolonged)/.test(k)))}),[[],['maternal-pulse'],[],['prolonged-latent'],['maternal-fever','maternal-pulse'],['maternal-bp'],[]]);
+      await page.goto(url);await page.waitForSelector('#app:not([v-cloak])');
       await page.locator('.home-launch.clinical-launch').click();await page.waitForSelector('#quick-cervix');
       // Empty chart shows the three-step start card; it leaves once a value is recorded.
       const start=page.locator('.chart-empty-start');assert.equal(await start.count(),1);
