@@ -25,11 +25,19 @@ Nguyên tắc học từ Canva: công cụ mở ra **ngay cạnh** nút đã b�
 
 ## Vòng 5 — ▶ Diễn biến (trình chiếu kiểu Canva Present)
 
-- Nút **Diễn biến** trên thanh công cụ (cả Soạn đề và Theo dõi) phát lần lượt từng mốc có số đo, mỗi 2,6 giây; sản đồ nhảy theo đúng mốc.
+- Nút **Diễn biến** trên thanh công cụ dọc (cả Soạn đề và Theo dõi) phát lần lượt từng mốc có số đo, mỗi 2,6 giây; sản đồ nhảy theo đúng mốc.
 - Thẻ chú thích ở mỗi mốc: kết luận chung, chip số đo (đỏ nếu ngoài ngưỡng), dấu hiệu **mới xuất hiện tại mốc đó** kèm nguồn. Mỗi mốc chỉ đọc dữ liệu **đã biết đến thời điểm đó** — đúng cách đọc sản đồ thực tế, không "nhìn trước".
 - Điều khiển: ⏮ ▶/⏸ ⏭, thanh tiến độ; bàn phím Space / ← → / Esc. Máy tính: thẻ nổi góc phải dưới, không che giữa sản đồ; điện thoại: trên thanh công cụ.
 - Dùng để giảng dạy (trình chiếu một ca) hoặc tự rà lại diễn biến trước khi xuất đề.
 
+## Gộp với đợt 10 trên `main`
+
+- Lấy cấu trúc của đợt 10 làm chuẩn: thư viện sản phẩm ở trang đầu, thanh công cụ dọc `creation-rail`, thanh sáng tạo và dải thời gian.
+- Bỏ thanh công cụ riêng của đợt 11 (trùng chức năng với `creation-rail`). Nút **Diễn biến** được đặt vào `creation-rail`.
+- Giữ các phần không trùng: đèn ngưỡng, khung hướng dẫn khi sản đồ chưa có số đo, nhận định theo quy chuẩn trong Kiểm tra, nhãn nhập đầy đủ, bảng công cụ mở bên trái, gộp hàng điều khiển.
+- Điện thoại: thanh dưới đáy giữ 7 nút trên một hàng (ẩn Tập trung, Tùy chỉnh — có trong menu ⋯); thanh nằm trên lớp nút CTC / Đầu trên vệ.
+- Câu chữ: chuyển sang giọng trung tính, phù hợp người dùng là giảng viên (ví dụ "Nhận định theo quy chuẩn", "Có thể bấm trực tiếp vào ô trống…", "Thời gian mỗi cơn co · giây").
+
 ## Kiểm chứng
 
-- `verify.cjs`, `verify-easy.cjs` đạt.
+- `verify.cjs` (812), `verify-easy.cjs`, `verify-library.cjs`, `verify-studio-plus.cjs` đạt; `git diff --check` sạch.

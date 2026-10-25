@@ -12,6 +12,8 @@ Mục tiêu: người mới (kể cả học sinh) nhìn là hiểu cần làm g
 
 ## Vòng 2 — Thanh công cụ luôn hiện (kiểu Canva)
 
+> Đã thay bằng thanh `creation-rail` của đợt 10 khi gộp vào `main` (xem `UI_UPGRADE_12.md`).
+
 - Máy tính (> 1100 px): thanh dọc nổi bên trái sản đồ, nút lớn có biểu tượng kèm chữ. Điện thoại/máy tính bảng: thanh dưới đáy màn hình.
 - Soạn đề: **Nhập · AI · Trình bày · Kiểm tra · Lưu · Trợ giúp**. Theo dõi: **Ghi số · Bảng · Sản phụ · Đọc · Trình bày · Lưu · Trợ giúp**.
 - Một chạm mở đúng công cụ; nút đang mở tô màu; chạm lại để quay về sản đồ.

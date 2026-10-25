@@ -1,5 +1,5 @@
 // Browser checks: set PLAYWRIGHT_MODULE and, if needed, CHROME_EXECUTABLE.
-// Đợt 11: reference bands beside quick entry (neutral/green/red, follow the standard) and the always-visible tool dock.
+// Đợt 11–12: reference bands, empty-chart start card, rail → panel → canvas order, exam clinical reading and the presenter.
 const assert=require('node:assert/strict');
 const fs=require('node:fs/promises');
 const http=require('node:http');
@@ -15,7 +15,7 @@ const server=http.createServer(async(req,res)=>{const file=files[new URL(req.url
     for(const viewport of [{width:1440,height:900},{width:390,height:844}]){
       const page=await browser.newPage({viewport}),errors=[];page.setDefaultTimeout(12000);page.on('pageerror',e=>errors.push(e.message));
       await page.goto(url);await page.waitForSelector('#app:not([v-cloak])');
-      await page.getByText('Theo dõi chuyển dạ',{exact:true}).first().click();
+      await page.locator('.home-launch.clinical-launch').click();await page.waitForSelector('#quick-cervix');
       // Empty chart shows the three-step start card; it leaves once a value is recorded.
       const start=page.locator('.chart-empty-start');assert.equal(await start.count(),1);
       await start.getByRole('button',{name:'Ghi số đo đầu tiên'}).click();
@@ -33,37 +33,33 @@ const server=http.createServer(async(req,res)=>{const file=files[new URL(req.url
       await page.evaluate(()=>{document.querySelector('#app')._vnode.component.setupState.standard='lcg'});
       await page.fill('#quick-fhr','159');assert.match(await band('fhr').textContent(),/Trong ngưỡng 110–159/);
       await page.fill('#quick-fhr','160');assert.match(await band('fhr').getAttribute('class'),/\balert\b/);
-      // Dock: one tap opens the main jobs; tapping the active one returns to the chart.
-      await page.evaluate(()=>document.activeElement?.blur());const dock=page.locator('.quick-dock');assert.ok(await dock.isVisible());
-      const box=await dock.boundingBox();
-      if(viewport.width>1100)assert.ok(box.x<20&&box.height>box.width,'Desktop dock is a left rail');
-      else assert.ok(box.y+box.height>=viewport.height-1&&box.width>=viewport.width-1,'Phone dock is a bottom bar');
-      await page.locator('#quick-fhr').focus();
-      if(viewport.width<=1100)assert.equal(await dock.isVisible(),false,'Dock yields to the on-screen keyboard');
-      await page.locator('#quick-fhr').blur();
-      await page.goto(url);await page.waitForSelector('#app:not([v-cloak])');
-      await page.getByText('Soạn đề',{exact:true}).first().click();await page.getByText('Viết đề mới',{exact:true}).first().click();
-      if(viewport.width<=1100)await page.locator('.close-toolbox-button').first().click();
-      await page.evaluate(()=>document.activeElement?.blur());const design=page.locator('.quick-dock button.dock-design');await design.click();
-      assert.equal(await design.getAttribute('aria-pressed'),'true');
+      // Wide screens: rail → panel → canvas, left to right (Canva order); the panel resizer grows to the right.
+      const rail=name=>page.locator('.creation-rail > button',{hasText:name}).first();
       const state=()=>page.evaluate(()=>document.querySelector('#app')._vnode.component.setupState.toolTab);
-      assert.equal(await state(),'design');
-      if(viewport.width<=1100)await page.locator('.close-toolbox-button').first().click();else await design.click();
-      assert.equal(await state(),'overview');
-      assert.equal(await page.locator('.quick-dock button.dock-ai').count(),1,'Exam dock offers AI');
-      // Exam review reads the chart: empty case gives no false reassurance; a sample shows sourced findings.
+      await page.goto(url);await page.waitForSelector('#app:not([v-cloak])');
+      await page.locator('.home-launch.exam-launch').click();await page.waitForSelector('.creation-rail');
       if(viewport.width<=1100)await page.locator('.close-toolbox-button').first().click().catch(()=>{});
-      await page.locator('.quick-dock button.dock-review').click();
+      await rail('Trình bày').click();assert.equal(await state(),'design');
+      if(viewport.width>1100){
+        const panel=await page.locator('.inspector-shell').boundingBox(),work=await page.locator('.workbench>.workarea').boundingBox(),railBox=await page.locator('.creation-rail').boundingBox();
+        assert.ok(railBox.x<panel.x&&panel.x+panel.width<=work.x+1,'Rail, panel, canvas in order');
+        const handle=await page.locator('.panel-resizer').boundingBox();
+        await page.mouse.move(handle.x+handle.width/2,handle.y+40);await page.mouse.down();await page.mouse.move(handle.x+60,handle.y+40,{steps:4});await page.mouse.up();
+        assert.ok((await page.locator('.inspector-shell').boundingBox()).width>panel.width+40,'Dragging right widens a left panel');
+      }
+      await page.locator('.close-toolbox-button').first().click();assert.equal(await state(),'overview');
+      // Exam review reads the chart: empty case gives no false reassurance; a sample shows sourced findings.
+      await rail('Kiểm tra').click();
       assert.equal(await page.locator('.exam-reading .reading-ok').count(),0,'No reassurance without data');
       await page.evaluate(async()=>{const st=document.querySelector('#app')._vnode.component.setupState;st.libraryOpen=true;st.toolTab='data';st.inputsOpen=true});
       await page.getByText('Tim thai giảm · cơn co nhiều').first().click();
       if(viewport.width<=1100)await page.locator('.close-toolbox-button').first().click().catch(()=>{});
-      await page.locator('.quick-dock button.dock-review').click();
+      await rail('Kiểm tra').click();
       const reading=page.locator('.exam-reading');assert.match(await reading.getAttribute('class'),/\bcritical\b/);
       assert.ok(await reading.locator('li.critical').count()>=1);assert.match(await reading.textContent(),/Nguồn:/);
       // Presenter steps through moments; captions show readings and sourced findings at that time; Esc closes.
       if(viewport.width<=1100)await page.locator('.close-toolbox-button').first().click().catch(()=>{});
-      await page.locator('.quick-dock button.dock-present').click();
+      await rail('Diễn biến').click();
       const presenter=page.locator('.presenter');await presenter.waitFor();
       await presenter.press('Space');assert.match(await presenter.locator('.presenter-progress').textContent(),/Mốc 1 \/ 8/);
       for(let k=0;k<7;k++)await presenter.press('ArrowRight');
@@ -73,6 +69,6 @@ const server=http.createServer(async(req,res)=>{const file=files[new URL(req.url
       await presenter.press('Escape');assert.equal(await presenter.count(),0);
       assert.deepEqual(errors,[]);await page.close();
     }
-    console.log('PASS: reference bands and tool dock');
+    console.log('PASS: reference bands, empty-chart start, rail/panel order, clinical reading and presenter');
   }finally{await browser.close();server.close()}
 })().catch(e=>{console.error(e);process.exit(1)});
