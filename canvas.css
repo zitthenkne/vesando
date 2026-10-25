@@ -632,3 +632,16 @@ body{caret-color:var(--brand)}#app :is(.btn,.text-btn,.home-nav-button,.home-sid
 #app .event-list li>button{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;align-items:center;gap:10px;text-align:left}
 #app .event-list li>button>span:nth-child(3){text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .creative-essentials>.creative-comfort{padding-inline:13px}
+#app .template-heading h2{font-family:inherit;font-size:18px;font-weight:800;letter-spacing:0}
+/* Quick entry groups: frequent checks first, vaginal examination second. */
+.quick-fields>.quick-group-label{grid-column:1/-1;margin:6px 0 -2px;font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
+.quick-fields>.quick-group-label:not(:first-child){margin-top:12px;padding-top:10px;border-top:1px dashed var(--line)}
+.origin-summary{display:flex;align-items:center;gap:8px;width:100%;min-height:40px;margin:4px 0 8px;padding:6px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font-size:12px;text-align:left}
+.origin-summary svg{width:16px;height:16px;color:var(--muted)}
+.origin-summary small{margin-left:auto;color:var(--brand);font-weight:700}
+.bedside-origin .origin-done{align-self:end}
+/* Patient info in the order it is collected: admission first, labour findings later. */
+.clinical-info-step{margin:0 0 8px;font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
+.clinical-info-later{margin-top:12px;border-top:1px dashed var(--line);padding-top:8px}
+.clinical-info-later>summary{cursor:pointer;font-size:12px;font-weight:700;color:var(--ink);padding:6px 0;min-height:36px;display:flex;align-items:center}
+.clinical-info-later>.clinical-info{margin-top:8px}

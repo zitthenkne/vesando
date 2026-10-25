@@ -152,6 +152,15 @@ Công tắc **Cảnh báo: Học tập | Lâm sàng** ở đầu thẻ sản đ�
 - Mỗi nút có chú thích khi rê chuột: Lớp & nét (ẩn/hiện vùng, khóa đường, đổi màu và nét nhiều đường), Bàn dữ liệu (dời/xóa theo khoảng giờ, dán bảng Excel, xuất CSV), Phiên bản (lưu bản có tên, so sánh, khôi phục).
 - Nút biểu tượng mặt trời đổi thành nút có chữ **Hiển thị** (sắc thái nền và cỡ chữ giao diện).
 
+## Vòng 21 — Sắp theo trình tự thao tác thật
+
+1. **Nhập nhanh theo nhịp theo dõi tại giường**: nhóm **Theo dõi thường xuyên** (tim thai, số cơn co, mỗi cơn kéo dài, mạch mẹ) đứng trước; nhóm **Khám trong** (độ mở CTC, đầu còn trên vệ) đứng sau. Thứ tự Enter/Tab đi theo đúng trình tự này.
+2. **Ngày và giờ bắt đầu chỉ nhập một lần**: sau khi có số đo, hai ô thu lại thành dòng "Bắt đầu theo dõi 08:00 · ngày …" với nút Sửa; bấm Xong để thu lại.
+3. **Thông tin sản phụ theo thời điểm thu thập**: **Khi tiếp nhận** (họ tên, mã, para, tuổi thai, khởi phát, thời điểm vỡ ối, nguy cơ) hiện sẵn; **Trong quá trình theo dõi** (ngôi, kiểu thế, bắt đầu rặn) gọn trong mục mở rộng.
+4. **Trang chủ giọng trung tính**: "Bắt đầu làm việc", "Soạn đề sản đồ hoặc lập hồ sơ theo dõi chuyển dạ.", "Chưa có sản phẩm", "Các đề và hồ sơ đã tạo sẽ hiển thị tại đây.", chân trang "Biên soạn và theo dõi sản đồ chuyển dạ."
+5. **Kiểu chữ tiêu đề kho mẫu** đồng bộ với các tiêu đề khác; nhãn "Mỗi cơn kéo dài · giây" ngắn hơn, không xuống dòng; thẻ chỉ dẫn liệt kê theo thứ tự mới (tim thai, cơn co, CTC).
+6. **Kiểm tra toàn vẹn giao diện**: `verify-easy.cjs` báo lỗi nếu trên trang còn chữ `{{…}}` chưa biên dịch (đã bắt được một lỗi thẻ thừa trong quá trình làm vòng này), và kiểm tra thứ tự ô nhập, nhóm, thu gọn ngày/giờ.
+
 ## Kiểm chứng
 
 - `verify.cjs` (812), `verify-easy.cjs` (thêm: 7 mẫu có hình thu nhỏ, mở đúng mẫu, nhận định mẹ/pha tiềm thời trên từng mẫu), `verify-library.cjs`, `verify-studio-plus.cjs` đạt; `git diff --check` sạch.

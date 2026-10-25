@@ -34,11 +34,19 @@ const server=http.createServer(async(req,res)=>{const file=files[new URL(req.url
       await page.getByRole('button',{name:'In đề + đáp án'}).click();await page.waitForSelector('iframe.print-frame',{state:'attached'});
       await page.goto(url);await page.waitForSelector('#app:not([v-cloak])');
       await page.locator('.home-launch.clinical-launch').click();await page.waitForSelector('#quick-cervix');
+      // Template integrity: a broken tag leaves raw mustaches on screen (caught once in the patient panel).
+      assert.equal(await page.evaluate(()=>document.body.innerText.includes('{{')),false,'No uncompiled template text');
+      assert.equal(await page.locator('.home-launch').count(),0);
+      // Quick entry follows the bedside routine: frequent checks first, vaginal examination second; origin collapses after the first record.
+      assert.deepEqual(await page.locator('.quick-fields input').evaluateAll(n=>n.map(i=>i.id)),['quick-fhr','quick-contractions','quick-duration','quick-pulse','quick-cervix','quick-descent']);
+      assert.deepEqual(await page.locator('.quick-group-label').allInnerTexts(),['THEO DÕI THƯỜNG XUYÊN','KHÁM TRONG']);
       // Empty chart shows the three-step start card; it leaves once a value is recorded.
       const start=page.locator('.chart-empty-start');assert.equal(await start.count(),1);
       await start.getByRole('button',{name:'Ghi số đo đầu tiên'}).click();
       await page.fill('#quick-cervix','4');await page.getByRole('button',{name:'Ghi nhận',exact:true}).first().click();
       await page.waitForFunction(()=>!document.querySelector('.chart-empty-start'));
+      assert.equal(await page.locator('#quick-date').count(),0,'Start date/time collapses once data exists');
+      await page.locator('.origin-summary').click();assert.equal(await page.locator('#quick-date').count(),1);await page.locator('.origin-done').click();
       // Clinical alert mode: a normal value raises nothing; a new out-of-range value tints the screen, names it and rings the point.
       await page.getByRole('radio',{name:'Lâm sàng'}).click();
       await page.evaluate(()=>{document.querySelector('#app')._vnode.component.setupState.selectedTime=1});
