@@ -210,6 +210,17 @@ Phản hồi: giao diện có quá nhiều nút cùng lúc, gây quá tải th�
 
 `verify-studio-plus.cjs`: bật Tập trung trước khi kiểm tra lướt/phát thời gian. `verify-easy.cjs`: đọc nội dung nút bước bằng `textContent` (chữ bị ẩn trên màn hình hẹp).
 
+## Vòng 27 — Thanh tiêu đề còn 3 thành phần, bảng bên gom mục phụ
+
+1. **Bỏ nút (?) trên thanh tiêu đề**; **Hướng dẫn** nằm trong menu ⋯ → Trợ giúp (thay mục "Hướng dẫn sử dụng" cũ, mở cùng nội dung với nút (?) trước đây). Thanh tiêu đề còn: tên sản phẩm · Bước x/5 · Lưu / Xuất · ⋯.
+2. **Menu ⋯ sắp lại theo mục đích**: Công cụ nâng cao (Lớp & nét, Bàn dữ liệu, Phiên bản) · Không gian (Hiển thị, Tùy biến, Sáng/Tối) · Trợ giúp.
+3. **Bảng Kiểm tra**: "Các mục đã có" thu thành một dòng kèm tỉ lệ (vd. 6/6), bấm mới mở danh sách.
+4. **Bảng Kiểm tra**: bỏ nút "Quay lại dữ liệu" (đã có Dữ liệu ở thanh trái và "Chỉnh dữ liệu" trên sản đồ); còn một nút chính **Xem bản xuất**.
+5. **Bảng Lưu / Xuất**: "Câu hỏi trắc nghiệm bằng AI" thu gọn, bấm mới mở phần giải thích và nút sao chép prompt.
+6. **Sửa lỗi điện thoại**: menu ⋯ trước đây tràn ra ngoài cạnh phải màn hình; nay nằm gọn trong khung, cuộn được khi dài.
+
+`verify-studio-plus.cjs`: mở Hướng dẫn qua menu ⋯ (máy tính và cảm ứng).
+
 ## Kiểm chứng
 
 - `verify.cjs` (812), `verify-easy.cjs` (thêm: 7 mẫu có hình thu nhỏ, mở đúng mẫu, nhận định mẹ/pha tiềm thời trên từng mẫu), `verify-library.cjs`, `verify-studio-plus.cjs` đạt; `git diff --check` sạch.

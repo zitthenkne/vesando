@@ -695,7 +695,6 @@ body{caret-color:var(--brand)}#app :is(.btn,.text-btn,.home-nav-button,.home-sid
 .measure-pill>.measure-schedule{position:absolute;z-index:25;top:calc(100% + 6px);left:0;width:min(560px,90vw);margin:0;padding:10px;background:var(--surface-raised,var(--surface));border:1px solid var(--line);border-radius:14px;box-shadow:0 14px 34px rgba(15,40,50,.16)}
 .chart-empty-start strong+small{display:block;margin-top:4px;font-size:12px;color:var(--muted)}
 .chart-empty-start{padding:10px 14px}
-.header-help{flex:none}
 .menu-studio{align-items:flex-start!important}
 .menu-item-text{display:flex;flex-direction:column;text-align:left;gap:1px}
 .menu-item-text small{font-size:11px;color:var(--muted);font-weight:400}
@@ -712,3 +711,13 @@ body{caret-color:var(--brand)}#app :is(.btn,.text-btn,.home-nav-button,.home-sid
 .session-toolbar .header-steps>summary{min-height:36px}
 @media(max-width:760px){.session-toolbar .header-steps .steps-now{display:none}}
 .moment-latest.icon-btn{flex:none}
+
+/* Vòng 27 — mục phụ thu vào nhóm mở khi cần */
+.readiness-fold,.question-prompt{border-top:1px solid var(--line);padding-top:4px}
+.readiness-fold>summary,details.question-prompt>summary{list-style:none;display:flex;align-items:center;gap:8px;min-height:40px;cursor:pointer}
+.readiness-fold>summary::-webkit-details-marker,details.question-prompt>summary::-webkit-details-marker{display:none}
+.readiness-fold>summary .inspector-label,details.question-prompt>summary .inspector-label{margin:0;flex:1}
+.readiness-fold>summary b{font-size:12px;color:var(--brand)}
+.readiness-fold>summary svg,details.question-prompt>summary svg{width:14px;height:14px;color:var(--muted);transition:transform .2s}
+.readiness-fold[open]>summary svg,details.question-prompt[open]>summary svg{transform:rotate(180deg)}
+@media(max-width:760px){.workspace-menu>:not(summary){position:fixed!important;left:12px!important;right:12px!important;top:76px!important;width:auto!important;max-width:none!important;max-height:calc(100vh - 170px);overflow:auto;z-index:60!important}}
