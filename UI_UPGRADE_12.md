@@ -146,6 +146,12 @@ Công tắc **Cảnh báo: Học tập | Lâm sàng** ở đầu thẻ sản đ�
 - Khung nhập có tiêu đề rõ: **Thêm ghi chú mới** hoặc **Sửa ghi chú số N**.
 - Câu nhắc lỗi gọn: "Nhập nội dung ghi chú."; nhãn đọc màn hình đổi từ "mũi tên" sang "ghi chú".
 
+## Vòng 20 — Thanh công cụ phía trên sản đồ tự giải thích
+
+- Bỏ nhãn "Mới" đã cũ ở **Lớp & nét**.
+- Mỗi nút có chú thích khi rê chuột: Lớp & nét (ẩn/hiện vùng, khóa đường, đổi màu và nét nhiều đường), Bàn dữ liệu (dời/xóa theo khoảng giờ, dán bảng Excel, xuất CSV), Phiên bản (lưu bản có tên, so sánh, khôi phục).
+- Nút biểu tượng mặt trời đổi thành nút có chữ **Hiển thị** (sắc thái nền và cỡ chữ giao diện).
+
 ## Kiểm chứng
 
 - `verify.cjs` (812), `verify-easy.cjs` (thêm: 7 mẫu có hình thu nhỏ, mở đúng mẫu, nhận định mẹ/pha tiềm thời trên từng mẫu), `verify-library.cjs`, `verify-studio-plus.cjs` đạt; `git diff --check` sạch.

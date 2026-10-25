@@ -631,3 +631,4 @@ body{caret-color:var(--brand)}#app :is(.btn,.text-btn,.home-nav-button,.home-sid
 .event-form-title{margin:0 0 6px;font-size:13px;font-weight:700;color:var(--ink)}
 #app .event-list li>button{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;align-items:center;gap:10px;text-align:left}
 #app .event-list li>button>span:nth-child(3){text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.creative-essentials>.creative-comfort{padding-inline:13px}
