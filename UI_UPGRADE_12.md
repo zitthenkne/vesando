@@ -221,6 +221,23 @@ Phản hồi: giao diện có quá nhiều nút cùng lúc, gây quá tải th�
 
 `verify-studio-plus.cjs`: mở Hướng dẫn qua menu ⋯ (máy tính và cảm ứng).
 
+## Vòng 28 — Xuất tệp linh hoạt: chế độ xuất và bật/tắt từng phần
+
+Theo đề nghị: phần xuất cần điều chỉnh linh hoạt, có nhiều chế độ và bật/tắt được từng phần. Tất cả nằm trong **Lưu / Xuất → Xuất ảnh hoặc PDF → Nội dung bản xuất**; sản đồ bên cạnh cập nhật ngay.
+
+1. **5 chế độ xuất một chạm** (có nhãn chế độ đang dùng; tự chuyển sang "Tùy chỉnh" khi đổi lẻ một phần):
+   - **Đầy đủ** — mọi vùng, chú giải, ghi chú đọc phiếu.
+   - **Chỉ tiến triển** — tim thai, CTC & đầu trên vệ, cơn co; bỏ ghi chú.
+   - **Đề thi** — kèm đề bài/tình huống, không kèm ghi chú & nhận định (tránh lộ đáp án).
+   - **In đen trắng** — đủ vùng, nét đen trắng.
+   - **Trình chiếu** — gọn theo dữ liệu, ghi số cạnh điểm, bỏ lưới phụ.
+2. **Bật / tắt từng phần trên phiếu** (11 công tắc, thu gọn sẵn, hiện số phần đang bật): tiêu đề ca, họ tên & mã bệnh nhân, đề bài, chú giải, ghi chú đọc phiếu & nhận định, giờ thực, đường dóng sự kiện, ghi số cạnh điểm, dải tim thai bình thường, lưới phụ, đen trắng.
+3. **Bật / tắt từng vùng sản đồ**: chọn "Tự gọn theo dữ liệu", "Đầy đủ các vùng" hoặc "Tự chọn từng vùng"; bấm công tắc một vùng sẽ tự chuyển sang tự chọn. Vùng CTC & đầu trên vệ luôn có.
+4. **Tùy chọn mới "Ghi chú đọc phiếu & nhận định"** trong bản vẽ (mặc định bật; lưu cùng thiết kế) — trước đây luôn in.
+5. Ba ô "Kèm đề bài / Kèm chú giải / Đen trắng để in" rời rạc được gộp vào nhóm trên; công tắc dạng gạt, vùng chạm ≥ 38 px.
+
+`verify-easy.cjs` thêm: chế độ Đề thi ẩn ghi chú & có tình huống; Đầy đủ khôi phục; tắt vùng Nhiệt độ làm mất hàng trên hình và nhãn thành "Tùy chỉnh"; công tắc Đen trắng; Đầy đủ đưa về màu.
+
 ## Kiểm chứng
 
 - `verify.cjs` (812), `verify-easy.cjs` (thêm: 7 mẫu có hình thu nhỏ, mở đúng mẫu, nhận định mẹ/pha tiềm thời trên từng mẫu), `verify-library.cjs`, `verify-studio-plus.cjs` đạt; `git diff --check` sạch.

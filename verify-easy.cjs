@@ -31,6 +31,15 @@ const server=http.createServer(async(req,res)=>{const file=files[new URL(req.url
       assert.match(qp,/soạn 5 câu hỏi trắc nghiệm/);assert.equal((qp.match(/^- \d\d:\d\d:/gm)||[]).length,5);assert.match(qp,/ISSHP 2021/);assert.match(qp,/chỉ dùng dữ liệu bên dưới/);
       await page.locator('.creation-rail > button',{hasText:'Xuất tệp'}).click();
       const [file]=await Promise.all([page.waitForEvent('download'),page.getByRole('button',{name:'Tải tệp HTML'}).click()]);assert.equal(file.suggestedFilename(),'de-CASE-006-dap-an.html');
+      // Export modes and per-part switches: one click sets a preset; any switch turns it into a custom mix, reflected in the drawn chart.
+      const svgText=()=>page.evaluate(()=>[...document.querySelectorAll('.chart-frame svg')].filter(e=>e.getBoundingClientRect().width>300).map(e=>e.outerHTML).sort((a,b)=>b.length-a.length)[0]);
+      await page.getByRole('radio',{name:/Đề thi/}).click();assert.equal(await page.locator('.export-mode-now').innerText(),'Đề thi');
+      let svg=await svgText();assert.doesNotMatch(svg,/GHI CHÚ ĐỌC PHIẾU/);assert.match(svg,/TÌNH HUỐNG LÂM SÀNG/);
+      await page.getByRole('radio',{name:/Đầy đủ/}).click();svg=await svgText();assert.match(svg,/GHI CHÚ ĐỌC PHIẾU/);assert.match(svg,/NHIỆT ĐỘ/);
+      await page.locator('.export-parts > summary').click();await page.getByRole('switch',{name:'Vùng Nhiệt độ'}).click();
+      assert.equal(await page.locator('.export-mode-now').innerText(),'Tùy chỉnh');assert.doesNotMatch(await svgText(),/NHIỆT ĐỘ/);
+      await page.locator('.export-parts .switch-row',{hasText:'Đen trắng'}).locator('input').check();assert.equal(await page.evaluate(()=>document.querySelector('#app')._vnode.component.setupState.mono),true);
+      await page.getByRole('radio',{name:/Đầy đủ/}).click();assert.equal(await page.evaluate(()=>document.querySelector('#app')._vnode.component.setupState.mono),false);assert.match(await svgText(),/NHIỆT ĐỘ/);
       await page.getByRole('button',{name:'In đề + đáp án'}).click();await page.waitForSelector('iframe.print-frame',{state:'attached'});
       await page.goto(url);await page.waitForSelector('#app:not([v-cloak])');
       await page.locator('.home-launch.clinical-launch').click();await page.waitForSelector('#quick-cervix');
