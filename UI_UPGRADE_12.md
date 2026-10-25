@@ -116,6 +116,11 @@ Công tắc **Cảnh báo: Học tập | Lâm sàng** ở đầu thẻ sản đ�
 - Mốc so sánh là thời điểm muộn hơn giữa lần ghi cuối và đồng hồ thực (khi ngày/giờ bắt đầu của hồ sơ khớp hôm nay). Quá hạn: ô màu cam, ghi "Quá hạn N phút"; còn dưới 15 phút: viền cam; chưa đo: viền nét đứt.
 - Bấm một ô: chuyển tới mốc kế tiếp và đặt con trỏ vào đúng ô nhập của thông số đó.
 
+## Vòng 15 — Bản bàn giao ca
+
+- Nút **Bàn giao** cạnh công tắc chế độ cảnh báo (Theo dõi): in một trang A4 gồm thông tin sản phụ, quy chuẩn, giờ in; nhận định hiện tại và các dấu hiệu kèm nguồn; số đo gần nhất (kèm giờ đo); lịch đo (quá hạn / đến hạn); cảnh báo đã xem; sản đồ.
+- Dùng chung cơ chế in với Đề & đáp án (hộp thoại in của trình duyệt, có thể lưu PDF). Ghi chú cuối trang: bản tóm tắt tự động, không thay thế hồ sơ bệnh án.
+
 ## Kiểm chứng
 
 - `verify.cjs` (812), `verify-easy.cjs` (thêm: 7 mẫu có hình thu nhỏ, mở đúng mẫu, nhận định mẹ/pha tiềm thời trên từng mẫu), `verify-library.cjs`, `verify-studio-plus.cjs` đạt; `git diff --check` sạch.

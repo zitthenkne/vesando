@@ -595,3 +595,8 @@ body{caret-color:var(--brand)}#app :is(.btn,.text-btn,.home-nav-button,.home-sid
 @keyframes measure-due{50%{box-shadow:0 0 0 4px rgba(217,119,6,.18)}}
 @media(prefers-reduced-motion:reduce){.measure-chip.overdue{animation:none}}
 @media print{.measure-schedule{display:none!important}}
+.clinic-tools{display:flex;justify-content:flex-end;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 12px 0}
+.clinic-tools .alert-mode-switch{margin:0}
+.handover-btn{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);font-size:12px;font-weight:700}
+.handover-btn svg{width:16px;height:16px}
+.handover-btn:hover{border-color:var(--brand);color:var(--brand)}
