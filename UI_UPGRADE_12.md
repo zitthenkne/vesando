@@ -169,6 +169,19 @@ Công tắc **Cảnh báo: Học tập | Lâm sàng** ở đầu thẻ sản đ�
 4. **Thông tin sản phụ đưa lên ngay sau Nội dung đề bài** trong bảng Nhập / Sửa, tự mở khi soạn đề mới (trước đây nằm cuối, sau mọi ô số liệu).
 5. **Câu chữ khung hướng dẫn theo đúng chế độ**: Soạn đề ghi "Bấm Lưu thay đổi…", Theo dõi ghi "Bấm Ghi nhận…" — khớp nút thật.
 
+## Vòng 23 — Tinh gọn: chỉ hiện thứ cần nhất, phần còn lại gom nhóm
+
+Phản hồi: giao diện có quá nhiều nút cùng lúc, gây quá tải thị giác. Nguyên tắc từ vòng này: thao tác thường dùng hiện sẵn; thao tác ít dùng gom vào nhóm, mở khi cần.
+
+1. **Bỏ hàng thanh công cụ trên sản đồ.** Lớp & nét, Bàn dữ liệu, Phiên bản, Hiển thị chuyển vào menu **⋯ → Công cụ nâng cao** (mỗi mục có mô tả ngắn). **Hướng dẫn** thành nút biểu tượng (?) trên thanh tiêu đề.
+2. **Các bước soạn đề / Quy trình theo dõi thu thành một nút tròn**: chấm tiến độ + "Bước 2/5 · Số liệu theo mốc"; bấm mới mở danh sách bước.
+3. **Lịch đo thu thành một nút**: "Lịch đo · 3 quá hạn" (màu cam khi có quá hạn) hoặc "đúng lịch"; bấm mới hiện các ô chi tiết.
+4. **Bỏ nút Bàn giao khỏi thanh trên sản đồ** — đã có trong Lưu / Xuất (mục Bàn giao ca) và trong bước cuối của Quy trình theo dõi.
+5. **Khung "Sản đồ chưa có số đo" còn 2 dòng**: tiêu đề + "Chọn mốc giờ → nhập số đo → Ghi nhận / Lưu thay đổi"; giữ các nút hành động.
+6. Quy trình theo dõi (Tiếp nhận → Khám lần đầu → Theo dõi định kỳ → Đọc sản đồ → Bàn giao), dòng **Lần đo tiếp theo** dưới nút Ghi nhận kèm "Chuyển tới mốc này", tự thu gọn Thông tin sản phụ sau lần ghi đầu, và mục **Bàn giao ca** trong Lưu / Xuất.
+
+`verify-studio-plus.cjs`: ba lần mở Lớp & nét / Bàn dữ liệu / Phiên bản từ thanh công cụ cũ được đổi sang mở qua menu ⋯ (nội dung kiểm tra giữ nguyên).
+
 ## Kiểm chứng
 
 - `verify.cjs` (812), `verify-easy.cjs` (thêm: 7 mẫu có hình thu nhỏ, mở đúng mẫu, nhận định mẹ/pha tiềm thời trên từng mẫu), `verify-library.cjs`, `verify-studio-plus.cjs` đạt; `git diff --check` sạch.

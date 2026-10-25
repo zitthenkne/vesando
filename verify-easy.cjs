@@ -91,9 +91,9 @@ const server=http.createServer(async(req,res)=>{const file=files[new URL(req.url
       await page.locator('.home-launch.exam-launch').click();await page.waitForSelector('.creation-rail');
       if(viewport.width<=1100)await page.locator('.close-toolbox-button').first().click().catch(()=>{});
       // Exam steps: a new exam starts at the brief; visiting Kiểm tra marks that step done.
-      assert.match(await page.locator('.exam-steps li.next').innerText(),/Đề bài & sản phụ/);
+      assert.match(await page.locator('.exam-steps > summary').innerText(),/Bước 1\/5 · Đề bài & sản phụ/);
       if(viewport.width<=1100)await page.locator('.close-toolbox-button').first().click().catch(()=>{});
-      await page.locator('.exam-steps button',{hasText:'Kiểm tra'}).click();assert.equal(await state(),'review');
+      await page.locator('.exam-steps > summary').click();await page.locator('.exam-steps button',{hasText:'Kiểm tra'}).click();assert.equal(await state(),'review');
       assert.match(await page.locator('.exam-steps li',{hasText:'Kiểm tra'}).getAttribute('class'),/\bdone\b/);
       if(viewport.width<=1100)await page.locator('.close-toolbox-button').first().click().catch(()=>{});
       assert.equal(await page.evaluate(()=>document.body.innerText.includes('{{')),false);
@@ -144,13 +144,13 @@ const server=http.createServer(async(req,res)=>{const file=files[new URL(req.url
       await page.goto(url);await page.waitForSelector('#app:not([v-cloak])');await page.locator('.home-launch.clinical-launch').click();await page.waitForSelector('#quick-cervix');
       await page.getByRole('radio',{name:'Lâm sàng'}).click();
       await page.evaluate(()=>{const st=document.querySelector('#app')._vnode.component.setupState;st.clinical={...st.clinical,patient:{...st.clinical.patient,date:'2026-10-25',startTime:'08:00'},observations:JSON.parse(JSON.stringify(st.presetList[0].observations.slice(0,9)))}});
-      const chip=page.locator('.measure-chip',{hasText:'Tim thai'});assert.match(await chip.getAttribute('class'),/\boverdue\b/);assert.match(await chip.textContent(),/Quá hạn 40 phút/);assert.match(await chip.getAttribute('title'),/đến hạn 12:30/);
+      assert.match(await page.locator('.measure-pill > summary').innerText(),/Lịch đo · 3 quá hạn/);await page.locator('.measure-pill > summary').click();const chip=page.locator('.measure-chip',{hasText:'Tim thai'});assert.match(await chip.getAttribute('class'),/\boverdue\b/);assert.match(await chip.textContent(),/Quá hạn 40 phút/);assert.match(await chip.getAttribute('title'),/đến hạn 12:30/);
       assert.equal(await page.locator('.alarm-banner').count(),0,'Loading a whole record set does not raise an alarm');
       assert.match(await page.locator('.measure-chip',{hasText:'Khám CTC'}).textContent(),/Đến hạn 16:00/);
       // Shift handover page carries the schedule state, current reading and chart; the button prepares a print frame.
       const handover=await page.evaluate(()=>document.querySelector('#app')._vnode.component.setupState.handoverHTML());
       assert.match(handover,/Bàn giao theo dõi chuyển dạ/);assert.match(handover,/Quá hạn 40 phút \(đến hạn 12:30\)/);assert.match(handover,/<svg[^>]*viewBox/);
-      await page.locator('.handover-btn').click();await page.waitForSelector('iframe.print-frame',{state:'attached'});
+      await page.locator('.clinical-steps > summary').click();await page.locator('.clinical-steps button',{hasText:'Bàn giao'}).click();await page.waitForSelector('iframe.print-frame',{state:'attached'});
       await chip.click();assert.equal(await page.evaluate(()=>document.activeElement.id),'quick-fhr');await page.close()}
     console.log('PASS: reference bands, empty-chart start, rail/panel order, clinical reading and presenter');
   }finally{await browser.close();server.close()}
