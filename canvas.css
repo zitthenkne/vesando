@@ -600,3 +600,11 @@ body{caret-color:var(--brand)}#app :is(.btn,.text-btn,.home-nav-button,.home-sid
 .handover-btn{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);font-size:12px;font-weight:700}
 .handover-btn svg{width:16px;height:16px}
 .handover-btn:hover{border-color:var(--brand);color:var(--brand)}
+/* Clinic bar: schedule on the left, mode switch and handover on the right, log underneath — one band above the chart. */
+.clinic-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:10px 12px 0}
+.clinic-bar .measure-schedule{flex:1 1 420px;margin:0;min-width:0}
+.clinic-bar .clinic-tools{margin:0 0 0 auto;flex:none}
+.clinic-bar .alarm-log{flex:1 1 100%;margin:0;width:auto}
+.clinic-bar{box-sizing:border-box;max-width:calc(100% - 24px);min-width:0}
+.clinic-bar .measure-chip{min-height:40px;padding:4px 9px}
+.clinic-bar .alert-mode-switch>span{display:none}

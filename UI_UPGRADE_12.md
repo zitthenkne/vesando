@@ -121,6 +121,12 @@ Công tắc **Cảnh báo: Học tập | Lâm sàng** ở đầu thẻ sản đ�
 - Nút **Bàn giao** cạnh công tắc chế độ cảnh báo (Theo dõi): in một trang A4 gồm thông tin sản phụ, quy chuẩn, giờ in; nhận định hiện tại và các dấu hiệu kèm nguồn; số đo gần nhất (kèm giờ đo); lịch đo (quá hạn / đến hạn); cảnh báo đã xem; sản đồ.
 - Dùng chung cơ chế in với Đề & đáp án (hộp thoại in của trình duyệt, có thể lưu PDF). Ghi chú cuối trang: bản tóm tắt tự động, không thay thế hồ sơ bệnh án.
 
+## Vòng 16 — Gọn đầu thẻ sản đồ (Theo dõi)
+
+- Lịch đo, công tắc Học tập / Lâm sàng và nút Bàn giao gộp thành **một thanh** phía trên sản đồ; nhật ký cảnh báo xếp ngay dưới khi có. Bớt hai hàng so với trước; không còn bị cắt ở mép phải.
+- Ô Lịch đo gọn hơn: chỉ ghi "Quá hạn N phút"; giờ đến hạn và lần đo gần nhất hiện khi rê chuột.
+- Báo động chỉ phát sinh khi ghi/sửa từng mốc. Nạp nhiều mốc cùng lúc (nhập tệp, khôi phục phiên bản) chỉ cập nhật trạng thái, không bật báo động hàng loạt.
+
 ## Kiểm chứng
 
 - `verify.cjs` (812), `verify-easy.cjs` (thêm: 7 mẫu có hình thu nhỏ, mở đúng mẫu, nhận định mẹ/pha tiềm thời trên từng mẫu), `verify-library.cjs`, `verify-studio-plus.cjs` đạt; `git diff --check` sạch.
