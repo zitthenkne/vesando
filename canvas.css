@@ -645,3 +645,22 @@ body{caret-color:var(--brand)}#app :is(.btn,.text-btn,.home-nav-button,.home-sid
 .clinical-info-later{margin-top:12px;border-top:1px dashed var(--line);padding-top:8px}
 .clinical-info-later>summary{cursor:pointer;font-size:12px;font-weight:700;color:var(--ink);padding:6px 0;min-height:36px;display:flex;align-items:center}
 .clinical-info-later>.clinical-info{margin-top:8px}
+/* Exam authoring steps (Canva-style checklist): what is done, what comes next, one click to each. */
+.exam-steps{display:flex;align-items:center;gap:10px;margin:0 0 12px;padding:8px 10px;border:1px solid var(--line);border-radius:14px;background:var(--surface);overflow-x:auto;scrollbar-width:thin}
+.exam-steps-title{flex:none;font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);padding:0 4px}
+.exam-steps ol{display:flex;gap:6px;margin:0;padding:0;list-style:none;flex:1;min-width:max-content}
+.exam-steps li{flex:1}
+.exam-steps button{display:flex;align-items:center;gap:8px;width:100%;min-height:44px;padding:5px 10px 5px 6px;border:1px solid transparent;border-radius:10px;background:transparent;color:var(--ink);text-align:left}
+.exam-steps button:hover{background:var(--brand-tint)}
+.exam-step-num{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;flex:none;border:1.5px solid var(--line-strong,var(--line));font-size:11px;font-weight:800;color:var(--muted)}
+.exam-step-num svg{width:14px;height:14px}
+.exam-step-text{display:flex;flex-direction:column;line-height:1.25}
+.exam-step-text b{font-size:12px;font-weight:700;white-space:nowrap}
+.exam-step-text small{font-size:10.5px;color:var(--muted)}
+.exam-steps li.done .exam-step-num{background:var(--brand);border-color:var(--brand);color:#fff}
+[data-theme=dark] .exam-steps li.done .exam-step-num{color:#062521}
+.exam-steps li.next button{border-color:var(--brand);background:var(--brand-tint)}
+.exam-steps li.next .exam-step-num{border-color:var(--brand);color:var(--brand)}
+.exam-steps li.next small{color:var(--brand-strong);font-weight:700}
+@media print{.exam-steps{display:none!important}}
+.editor-patient .editor-step-hint{margin-left:6px;font-size:11px;font-weight:500;color:var(--muted)}

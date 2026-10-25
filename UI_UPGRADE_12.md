@@ -161,6 +161,14 @@ Công tắc **Cảnh báo: Học tập | Lâm sàng** ở đầu thẻ sản đ�
 5. **Kiểu chữ tiêu đề kho mẫu** đồng bộ với các tiêu đề khác; nhãn "Mỗi cơn kéo dài · giây" ngắn hơn, không xuống dòng; thẻ chỉ dẫn liệt kê theo thứ tự mới (tim thai, cơn co, CTC).
 6. **Kiểm tra toàn vẹn giao diện**: `verify-easy.cjs` báo lỗi nếu trên trang còn chữ `{{…}}` chưa biên dịch (đã bắt được một lỗi thẻ thừa trong quá trình làm vòng này), và kiểm tra thứ tự ô nhập, nhóm, thu gọn ngày/giờ.
 
+## Vòng 22 — Luồng soạn đề theo thứ tự công việc
+
+1. **Thanh "Các bước soạn đề"** phía trên sản đồ (Soạn đề): ① Đề bài & sản phụ → ② Số liệu theo mốc → ③ Ghi chú sự kiện (tùy chọn) → ④ Kiểm tra → ⑤ Xuất đề & đáp án. Mỗi bước bấm một lần là mở đúng công cụ.
+2. **Trạng thái tự cập nhật**: dấu ✓ khi bước đã có (tên + đề bài; có số đo; có ghi chú; đã mở Kiểm tra; đã in/tải đề hoặc xuất ảnh/PDF).
+3. **Bước tiếp theo được làm nổi** (viền và chữ "Bước tiếp theo"), bỏ qua bước tùy chọn.
+4. **Thông tin sản phụ đưa lên ngay sau Nội dung đề bài** trong bảng Nhập / Sửa, tự mở khi soạn đề mới (trước đây nằm cuối, sau mọi ô số liệu).
+5. **Câu chữ khung hướng dẫn theo đúng chế độ**: Soạn đề ghi "Bấm Lưu thay đổi…", Theo dõi ghi "Bấm Ghi nhận…" — khớp nút thật.
+
 ## Kiểm chứng
 
 - `verify.cjs` (812), `verify-easy.cjs` (thêm: 7 mẫu có hình thu nhỏ, mở đúng mẫu, nhận định mẹ/pha tiềm thời trên từng mẫu), `verify-library.cjs`, `verify-studio-plus.cjs` đạt; `git diff --check` sạch.

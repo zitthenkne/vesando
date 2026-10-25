@@ -90,6 +90,13 @@ const server=http.createServer(async(req,res)=>{const file=files[new URL(req.url
       await page.goto(url);await page.waitForSelector('#app:not([v-cloak])');
       await page.locator('.home-launch.exam-launch').click();await page.waitForSelector('.creation-rail');
       if(viewport.width<=1100)await page.locator('.close-toolbox-button').first().click().catch(()=>{});
+      // Exam steps: a new exam starts at the brief; visiting Kiểm tra marks that step done.
+      assert.match(await page.locator('.exam-steps li.next').innerText(),/Đề bài & sản phụ/);
+      if(viewport.width<=1100)await page.locator('.close-toolbox-button').first().click().catch(()=>{});
+      await page.locator('.exam-steps button',{hasText:'Kiểm tra'}).click();assert.equal(await state(),'review');
+      assert.match(await page.locator('.exam-steps li',{hasText:'Kiểm tra'}).getAttribute('class'),/\bdone\b/);
+      if(viewport.width<=1100)await page.locator('.close-toolbox-button').first().click().catch(()=>{});
+      assert.equal(await page.evaluate(()=>document.body.innerText.includes('{{')),false);
       await rail('Trình bày').click();assert.equal(await state(),'design');
       if(viewport.width>1100){
         const panel=await page.locator('.inspector-shell').boundingBox(),work=await page.locator('.workbench>.workarea').boundingBox(),railBox=await page.locator('.creation-rail').boundingBox();
