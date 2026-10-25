@@ -127,6 +127,13 @@ Công tắc **Cảnh báo: Học tập | Lâm sàng** ở đầu thẻ sản đ�
 - Ô Lịch đo gọn hơn: chỉ ghi "Quá hạn N phút"; giờ đến hạn và lần đo gần nhất hiện khi rê chuột.
 - Báo động chỉ phát sinh khi ghi/sửa từng mốc. Nạp nhiều mốc cùng lúc (nhập tệp, khôi phục phiên bản) chỉ cập nhật trạng thái, không bật báo động hàng loạt.
 
+## Vòng 17 — Ghi chú dễ hiểu hơn, "Học nhanh" → "Hướng dẫn"
+
+- Nút **Học nhanh** đổi thành **Hướng dẫn** (biểu tượng dấu hỏi), cả trên thanh sáng tạo và tab trong bảng; tiêu đề trang: "Hướng dẫn sử dụng · thực hành trên hình minh họa".
+- Thống nhất tên **Ghi chú sự kiện** (trước là "Mũi tên chú thích") ở menu, bảng sửa, chuột phải, hướng dẫn, thông báo lỗi và prompt AI — khớp với hàng **Sự kiện** trên sản đồ.
+- Menu **Ghi nhanh**: dòng đầu "Ghi tại mốc đang chọn trên sản đồ"; mỗi mục có mô tả ngắn (ví dụ Cơn co tử cung — "Số cơn / 10 phút và thời gian mỗi cơn"; Ghi chú sự kiện — "Nhãn đánh số chỉ vào giờ: bấm ối, gây tê, chuyển phòng…").
+- Bảng sửa ghi chú sự kiện không còn bị khuất dưới mép màn hình: trang tự cuộn để thấy đủ nút Lưu / Xóa. Nút phụ ghi rõ "Áp dụng màu và cỡ cho mọi ghi chú".
+
 ## Kiểm chứng
 
 - `verify.cjs` (812), `verify-easy.cjs` (thêm: 7 mẫu có hình thu nhỏ, mở đúng mẫu, nhận định mẹ/pha tiềm thời trên từng mẫu), `verify-library.cjs`, `verify-studio-plus.cjs` đạt; `git diff --check` sạch.

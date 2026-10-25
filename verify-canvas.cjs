@@ -83,9 +83,9 @@ const centre=async loc=>{const b=await loc.boundingBox();return {x:b.x+b.width/2
     await page.waitForFunction(()=>!document.querySelector('.chart-cell-editor'));assert.ok((await state(page)).case.observations.some(o=>o.cervix===7.5));
     await page.keyboard.press('Control+z');
     await page.mouse.click(last.x+60,last.y+40,{button:'right'});await page.waitForSelector('.chart-context-menu');
-    const items=await page.locator('.chart-context-menu [role=menuitem]').allInnerTexts();assert.ok(items.some(t=>t.startsWith('Thêm CTC')));assert.ok(items.some(t=>t.startsWith('Thêm mũi tên chú thích')));assert.ok(items.some(t=>t.startsWith('Trình bày vùng')));
+    const items=await page.locator('.chart-context-menu [role=menuitem]').allInnerTexts();assert.ok(items.some(t=>t.startsWith('Thêm CTC')));assert.ok(items.some(t=>t.startsWith('Thêm ghi chú sự kiện')));assert.ok(items.some(t=>t.startsWith('Trình bày vùng')));
     const events=(await state(page)).case.events.length;
-    await page.locator('.chart-context-menu').getByRole('menuitem',{name:/^Thêm mũi tên chú thích/}).click();await page.waitForSelector('.event-pop');
+    await page.locator('.chart-context-menu').getByRole('menuitem',{name:/^Thêm ghi chú sự kiện/}).click();await page.waitForSelector('.event-pop');
     assert.equal((await state(page)).case.events.length,events+1);await page.keyboard.type('Chọc ối kiểm tra');await page.keyboard.press('Enter');
     await page.waitForFunction(()=>!document.querySelector('.event-pop'));assert.ok((await state(page)).case.events.some(e=>e.label==='Chọc ối kiểm tra'));
     const row=await centre(page.locator('[data-cell-key="contractions"]').nth(18));await page.mouse.click(row.x,row.y,{button:'right'});
