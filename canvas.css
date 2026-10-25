@@ -791,3 +791,10 @@ body{caret-color:var(--brand)}#app :is(.btn,.text-btn,.home-nav-button,.home-sid
 #app .clinical-overview>.clinic-tools{align-self:center;justify-self:end;margin:0 0 0 auto;border:0;background:none;box-shadow:none}
 #app .clinical-overview>.measure-pill{align-self:center}
 @media(min-width:761px){.dossier-bar{flex-wrap:nowrap!important}.dossier-summary{min-width:0;flex:1 1 auto;overflow:hidden}.dossier-fold{flex:none}}
+
+/* Vòng 33 — bảng nhập: bỏ phần nhắc lại, gọn dòng lịch đo */
+.next-due{display:flex!important;align-items:center;flex-wrap:nowrap;gap:8px;padding:8px 12px!important}
+.next-due>span{flex:1;min-width:0}
+.next-due .text-btn{flex:none;display:inline-flex;align-items:center;gap:4px;min-height:32px;padding:0 4px;white-space:nowrap}
+.next-due .text-btn svg{width:13px;height:13px}
+.quick-entry-actions .form-state:empty,.quick-entry-actions .form-state>span:empty{display:none}

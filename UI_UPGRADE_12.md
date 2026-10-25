@@ -274,6 +274,14 @@ Thứ tự mới trong **Xuất ảnh hoặc PDF**: ① Nội dung bản xuất 
 4. **Thanh dưới sản đồ bỏ ô nhận định trùng lặp** khi đang theo dõi và có dấu hiệu cần chú ý — ô đó đã hiện ở đầu trang.
 5. **Thanh dưới sản đồ giữ trên một dòng ở màn hình lớn** (trước đây nút thu gọn bị rơi xuống dòng riêng); màn hình nhỏ vẫn xếp dòng như cũ.
 
+## Vòng 33 — Bảng nhập: bỏ phần nhắc lại
+
+1. **Nhập / Sửa → Trực tiếp: bỏ thẻ minh họa "Thao tác ngay trên sản đồ"** — trùng với dòng hướng dẫn ngay phía trên ("Bấm ô trống để thêm; bấm điểm để chọn; kéo để sửa").
+2. **Bỏ hàng "Lịch sử" (hoàn tác/làm lại) trong bảng** — nút hoàn tác/làm lại đã có trên thanh tiêu đề và phím Ctrl Z.
+3. **Nhập / Sửa → Nhập số: bỏ tiêu đề "Dữ liệu của mốc khám" và nút ✕** — bảng đã có tiêu đề Nhập / Sửa, nút Đóng và thẻ Trực tiếp để quay lại.
+4. **Nhập nhanh (Theo dõi): dòng "Lần đo tiếp theo" thu về một hàng**, nút rút gọn thành "Tới mốc này →".
+5. **Bỏ dòng nhắc cố định "Chỉ nhập những thông số đã đo"** trên nút Ghi nhận; dòng trạng thái chỉ hiện khi có thông báo (chưa ghi / đã cập nhật).
+
 ## Kiểm chứng
 
 - `verify.cjs` (812), `verify-easy.cjs` (thêm: 7 mẫu có hình thu nhỏ, mở đúng mẫu, nhận định mẹ/pha tiềm thời trên từng mẫu), `verify-library.cjs`, `verify-studio-plus.cjs` đạt; `git diff --check` sạch.
