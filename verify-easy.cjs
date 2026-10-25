@@ -48,11 +48,15 @@ const server=http.createServer(async(req,res)=>{const file=files[new URL(req.url
       await page.fill('#quick-fhr','92');await page.getByRole('button',{name:'Ghi nhận',exact:true}).first().click();
       await page.locator('.alarm-banner').waitFor();assert.match(await page.locator('.alarm-banner').textContent(),/Báo động · 09:30.*Tim thai 92/);
       assert.equal(await page.locator('.alarm-tint.critical').count(),1);await page.locator('.alarm-ring').first().waitFor();
+      assert.match(await page.locator('.alarm-banner').textContent(),/ngưỡng 120–160 lần\/phút/);
       await page.getByRole('button',{name:'Đã xem'}).click();assert.equal(await page.locator('.alarm-tint').count(),0);
+      assert.equal(await page.locator('.case-card:visible circle.alert-mark').count(),1,'The abnormal point stays ringed after acknowledgement');
+      assert.match(await page.locator('.alarm-log').textContent(),/Nhật ký cảnh báo.*09:30.*Đã xem \d\d:\d\d/s);
       await page.getByRole('radio',{name:'Học tập'}).click();
       await page.evaluate(()=>{document.querySelector('#app')._vnode.component.setupState.selectedTime=2});
       await page.fill('#quick-fhr','190');await page.getByRole('button',{name:'Ghi nhận',exact:true}).first().click();
       assert.equal(await page.locator('.alarm-banner').count(),0,'Learning mode keeps the explanatory display only');
+      assert.equal(await page.locator('.case-card:visible circle.alert-mark').count(),0,'No persistent rings in learning mode');
       await page.evaluate(()=>{document.querySelector('#app')._vnode.component.setupState.selectedTime=0});
       const band=key=>page.locator('label.field:has(#quick-'+key+') .quick-range');
       assert.match(await band('fhr').textContent(),/^Ngưỡng 120–160$/);

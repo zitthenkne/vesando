@@ -574,3 +574,11 @@ body{caret-color:var(--brand)}#app :is(.btn,.text-btn,.home-nav-button,.home-sid
 @media(prefers-reduced-motion:reduce){.alarm-tint,.alarm-ring{animation:none}}
 @media(max-width:760px){.alarm-banner{flex-wrap:wrap}.alarm-actions{flex-direction:row;width:100%}.alarm-actions .btn{flex:1}}
 @media print{.alarm-tint,.alarm-banner,.alarm-layer{display:none!important}}
+.alarm-log{margin:8px 12px 0 auto;width:min(420px,calc(100% - 24px));border:1px solid var(--line);border-radius:12px;background:var(--surface);font-size:12px}
+.alarm-log summary{display:flex;align-items:center;gap:6px;padding:8px 10px;cursor:pointer;font-weight:700;color:var(--ink)}
+.alarm-log summary svg{width:15px;height:15px}
+.alarm-log summary span{margin-left:auto;padding:0 8px;border-radius:999px;background:var(--error-bg);color:var(--error-ink);font-size:11px}
+.alarm-log ol{list-style:none;margin:0;padding:0 10px 10px;display:grid;gap:6px;max-height:220px;overflow:auto}
+.alarm-log li{display:grid;grid-template-columns:auto 1fr;gap:2px 8px;padding:6px 8px;border-radius:8px;background:var(--warning-bg);color:var(--warning-ink)}
+.alarm-log li.critical{background:var(--error-bg);color:var(--error-ink)}
+.alarm-log li small{grid-column:2;opacity:.75;font-size:10.5px}

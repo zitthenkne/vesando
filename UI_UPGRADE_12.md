@@ -96,6 +96,12 @@ Công tắc **Cảnh báo: Học tập | Lâm sàng** ở đầu thẻ sản đ�
   - **Xem trên sản đồ** cuộn tới điểm; **Đã xem** tắt nhuộm màu và vòng khoanh.
 - Chỉ dấu hiệu mới phát sinh mới kích hoạt; mở hồ sơ, đổi hồ sơ hoặc chuyển chế độ không gây báo động. Không hiện khi in.
 
+## Vòng 12 — Cảnh báo lâm sàng: dấu cố định, ngưỡng, nhật ký
+
+- Chế độ **Lâm sàng**: mọi điểm đang ngoài ngưỡng (tim thai, CTC theo đường báo động/hành động, đầu không xuống tương ứng) có **vòng đỏ mảnh cố định** vẽ trong sản đồ, giữ nguyên sau khi bấm Đã xem; không đi vào bản xuất SVG/PNG/PDF.
+- Băng báo động ghi kèm ngưỡng tham chiếu, ví dụ "Tim thai 92 lần/phút … (ngưỡng 120–160 lần/phút)".
+- **Nhật ký cảnh báo**: mỗi lần bấm Đã xem ghi lại giờ trên sản đồ, nội dung và thời điểm xác nhận (30 mục gần nhất trong phiên).
+
 ## Kiểm chứng
 
 - `verify.cjs` (812), `verify-easy.cjs` (thêm: 7 mẫu có hình thu nhỏ, mở đúng mẫu, nhận định mẹ/pha tiềm thời trên từng mẫu), `verify-library.cjs`, `verify-studio-plus.cjs` đạt; `git diff --check` sạch.
