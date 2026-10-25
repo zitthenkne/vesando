@@ -15,6 +15,14 @@
 
 - ≤ 760 px: Quy chuẩn, Ghi nhanh (chỉ biểu tượng) và Thu phóng nằm chung một hàng; ẩn dòng gợi ý "Ô trống: thêm…" (vẫn có trong Hướng dẫn). Sản đồ bắt đầu cao hơn khoảng 75 px.
 
+## Vòng 4 — Bố cục theo Canva: thanh biểu tượng → bảng → sản đồ
+
+Nguyên tắc học từ Canva: công cụ mở ra **ngay cạnh** nút đã bấm; mắt đi một chiều trái → phải (chọn công cụ → chỉnh → xem kết quả); thanh trên cùng tối giản (tên ca, lưu/xuất).
+
+- Màn hình rộng: bảng công cụ (Nhập / Trình bày / Kiểm tra / Lưu…) mở **bên trái**, sát thanh biểu tượng, sản đồ ở bên phải. Trước đây bảng ở mép phải, cách nút bấm cả màn hình.
+- Tay nắm kéo giãn chuyển sang mép phải của bảng; kéo sang phải hoặc phím → để rộng thêm.
+- Chế độ bảng nổi (overlay) và điện thoại giữ nguyên.
+
 ## Kiểm chứng
 
 - `verify.cjs`, `verify-easy.cjs` đạt.

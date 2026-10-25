@@ -398,3 +398,10 @@ svg.partograph [data-label-section]:hover{fill:color-mix(in srgb,var(--brand) 7%
   #app .chart-viewbar .chart-record-menu>summary{font-size:0;gap:2px}
   #app .chart-interaction-bar>p{display:none}
 }
+/* Canva-style layout on wide screens: rail → panel → canvas, left to right. */
+@media(min-width:1101px){
+  #app#app .studio-workspace:not([data-panel=overlay]) .workbench.inspector-open{grid-template-columns:min(var(--inspector-width,340px),calc(100vw - 520px)) minmax(0,1fr)}
+  #app#app .studio-workspace:not([data-panel=overlay]) .workbench.inspector-open>.inspector-shell{grid-column:1;grid-row:1}
+  #app#app .studio-workspace:not([data-panel=overlay]) .workbench.inspector-open>.workarea{grid-column:2;grid-row:1}
+  #app#app .studio-workspace:not([data-panel=overlay]) .inspector-shell>.panel-resizer{left:auto;right:-8px}
+}
