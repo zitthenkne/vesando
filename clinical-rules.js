@@ -104,7 +104,7 @@ function assessment(c,standard){
   if(!lc&&o.moulding==='+++')add('moulding','Uốn khuôn +++: đánh giá ngôi, kiểu thế, độ xuống và khung chậu. Không dùng riêng dấu hiệu này để khẳng định CPD.','warn','UMP 2020 · lưu đồ trái/phải báo động');
   if(!lc){
     // Maternal vital signs and latent phase for the historical charts (LCG has its own ALERT column below).
-    if(o.systolic!==null&&o.diastolic!==null&&(o.systolic>=140||o.diastolic>=90)){const severe=o.systolic>=160||o.diastolic>=110;add('maternal-bp','Huyết áp '+o.systolic+'/'+o.diastolic+' mmHg'+(severe?' (≥ 160/110)':' (≥ 140/90)')+(['++','+++','++++'].includes(o.protein)?', đạm niệu '+o.protein:'')+': cần đánh giá tăng huyết áp trong thai kỳ và các dấu hiệu nặng.',severe?'critical':'warn','ISSHP 2021 · ngưỡng huyết áp')}
+    if(o.systolic!==null&&o.diastolic!==null&&(o.systolic>=140||o.diastolic>=90)){const severe=o.systolic>=160||o.diastolic>=110;add('maternal-bp','Huyết áp '+o.systolic+'/'+o.diastolic+' mmHg'+(severe?' (mức nặng: tâm thu ≥ 160 hoặc tâm trương ≥ 110)':' (tâm thu ≥ 140 hoặc tâm trương ≥ 90)')+(['++','+++','++++'].includes(o.protein)?', đạm niệu '+o.protein:'')+': cần đánh giá tăng huyết áp trong thai kỳ và các dấu hiệu nặng.',severe?'critical':'warn','ISSHP 2021 · ngưỡng huyết áp')}
     if(o.temperature!==null&&o.temperature>=38)add('maternal-fever','Nhiệt độ '+String(o.temperature).replace('.',',')+' °C: cần tìm nguyên nhân sốt trong chuyển dạ, kể cả nhiễm trùng ối; đối chiếu mạch mẹ và tim thai.','warn','ACOG CO 712 · sốt trong chuyển dạ');
     if(o.pulse!==null&&o.pulse>100)add('maternal-pulse','Mạch mẹ '+o.pulse+' lần/phút (> 100): cần đối chiếu nhiệt độ, mất máu, đau và tình trạng mất nước.','warn','Ngưỡng nhịp nhanh người lớn');
     const firstCervix=dil[0];

@@ -77,6 +77,13 @@ Dành cho giảng dạy trên lớp: người học đọc sản đồ đúng nh
 - Hộp thoại nhận focus khi mở; Esc hoặc nút đóng trả focus về nút đã mở. Màn hình hẹp xếp ba cột thành một.
 - Khi bật che dữ liệu trong Diễn biến, dải **Lướt theo thời gian** cũng chỉ hiện các mốc đến thời điểm đang chiếu.
 
+## Vòng 10 — Prompt tạo câu hỏi trắc nghiệm
+
+- **Lưu / Xuất → Đề & đáp án → Sao chép prompt tạo câu hỏi**: prompt gồm tình huống, thông tin sản phụ, quy chuẩn, số đo theo từng mốc (chú giải ký hiệu ối), dấu hiệu tại mốc kèm nguồn và kết luận theo quy chuẩn.
+- Yêu cầu trong prompt: 5 câu trắc nghiệm 4 lựa chọn, đáp án và giải thích dẫn chiếu dữ liệu; chỉ dùng dữ liệu đã cho, không bổ sung số liệu, không khẳng định chẩn đoán vượt quá dữ liệu; văn phong trung tính, học thuật.
+- Có mục **Xem nội dung prompt** để sao chép thủ công khi trình duyệt chặn clipboard.
+- Câu nhận định huyết áp ghi rõ ngưỡng: tâm thu ≥ 140 hoặc tâm trương ≥ 90; mức nặng: tâm thu ≥ 160 hoặc tâm trương ≥ 110.
+
 ## Kiểm chứng
 
 - `verify.cjs` (812), `verify-easy.cjs` (thêm: 7 mẫu có hình thu nhỏ, mở đúng mẫu, nhận định mẹ/pha tiềm thời trên từng mẫu), `verify-library.cjs`, `verify-studio-plus.cjs` đạt; `git diff --check` sạch.
