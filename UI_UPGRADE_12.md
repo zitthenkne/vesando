@@ -84,6 +84,18 @@ Dành cho giảng dạy trên lớp: người học đọc sản đồ đúng nh
 - Có mục **Xem nội dung prompt** để sao chép thủ công khi trình duyệt chặn clipboard.
 - Câu nhận định huyết áp ghi rõ ngưỡng: tâm thu ≥ 140 hoặc tâm trương ≥ 90; mức nặng: tâm thu ≥ 160 hoặc tâm trương ≥ 110.
 
+## Vòng 11 — Hai chế độ cảnh báo trong Theo dõi
+
+Công tắc **Cảnh báo: Học tập | Lâm sàng** ở đầu thẻ sản đồ (Theo dõi); lựa chọn được nhớ trên trình duyệt.
+
+- **Học tập** (mặc định): giữ cách hiển thị nhận định kèm giải thích và nguồn như trước.
+- **Lâm sàng**: ngay khi ghi một số đo làm phát sinh dấu hiệu mới:
+  - Toàn màn hình nhuộm hồng nhạt, viền đỏ nhấp nháy 3 lần (mức cần đối chiếu: vàng nhạt).
+  - Băng **Báo động / Cảnh báo · giờ** ở đầu màn hình, nêu ngắn gọn từng dấu hiệu (ví dụ "Tim thai 92 lần/phút ngoài ngưỡng").
+  - Trên sản đồ: **vòng tròn đỏ khoanh đúng điểm** dữ liệu báo động (tim thai, CTC, đầu) và dải hồng dọc cột giờ đó (áp dụng cả cho cơn co, mạch, huyết áp, nhiệt độ).
+  - **Xem trên sản đồ** cuộn tới điểm; **Đã xem** tắt nhuộm màu và vòng khoanh.
+- Chỉ dấu hiệu mới phát sinh mới kích hoạt; mở hồ sơ, đổi hồ sơ hoặc chuyển chế độ không gây báo động. Không hiện khi in.
+
 ## Kiểm chứng
 
 - `verify.cjs` (812), `verify-easy.cjs` (thêm: 7 mẫu có hình thu nhỏ, mở đúng mẫu, nhận định mẹ/pha tiềm thời trên từng mẫu), `verify-library.cjs`, `verify-studio-plus.cjs` đạt; `git diff --check` sạch.

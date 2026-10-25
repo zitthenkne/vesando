@@ -39,6 +39,21 @@ const server=http.createServer(async(req,res)=>{const file=files[new URL(req.url
       await start.getByRole('button',{name:'Ghi số đo đầu tiên'}).click();
       await page.fill('#quick-cervix','4');await page.getByRole('button',{name:'Ghi nhận',exact:true}).first().click();
       await page.waitForFunction(()=>!document.querySelector('.chart-empty-start'));
+      // Clinical alert mode: a normal value raises nothing; a new out-of-range value tints the screen, names it and rings the point.
+      await page.getByRole('radio',{name:'Lâm sàng'}).click();
+      await page.evaluate(()=>{document.querySelector('#app')._vnode.component.setupState.selectedTime=1});
+      await page.fill('#quick-fhr','140');await page.getByRole('button',{name:'Ghi nhận',exact:true}).first().click();
+      assert.equal(await page.locator('.alarm-banner').count(),0,'No alarm for an in-range value');
+      await page.evaluate(()=>{document.querySelector('#app')._vnode.component.setupState.selectedTime=1.5});
+      await page.fill('#quick-fhr','92');await page.getByRole('button',{name:'Ghi nhận',exact:true}).first().click();
+      await page.locator('.alarm-banner').waitFor();assert.match(await page.locator('.alarm-banner').textContent(),/Báo động · 09:30.*Tim thai 92/);
+      assert.equal(await page.locator('.alarm-tint.critical').count(),1);await page.locator('.alarm-ring').first().waitFor();
+      await page.getByRole('button',{name:'Đã xem'}).click();assert.equal(await page.locator('.alarm-tint').count(),0);
+      await page.getByRole('radio',{name:'Học tập'}).click();
+      await page.evaluate(()=>{document.querySelector('#app')._vnode.component.setupState.selectedTime=2});
+      await page.fill('#quick-fhr','190');await page.getByRole('button',{name:'Ghi nhận',exact:true}).first().click();
+      assert.equal(await page.locator('.alarm-banner').count(),0,'Learning mode keeps the explanatory display only');
+      await page.evaluate(()=>{document.querySelector('#app')._vnode.component.setupState.selectedTime=0});
       const band=key=>page.locator('label.field:has(#quick-'+key+') .quick-range');
       assert.match(await band('fhr').textContent(),/^Ngưỡng 120–160$/);
       assert.equal(await band('cervix').count(),0,'Cervix has no fixed band');
