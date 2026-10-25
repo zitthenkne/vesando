@@ -74,6 +74,13 @@ const server=http.createServer(async(req,res)=>{const file=files[new URL(req.url
       assert.match(await presenter.locator('.presenter-progress').textContent(),/11:30.*Mốc 8 \/ 8/);
       assert.ok(await presenter.locator('.presenter-chips span.alert').count()>=1);assert.match(await presenter.textContent(),/Nguồn:/);
       assert.equal(await page.evaluate(()=>document.querySelector('#app')._vnode.component.setupState.viewTime),3.5,'Chart follows the presenter');
+      // "Che dữ liệu sau mốc": the chart shows only moments up to the current one; closing restores everything.
+      const fhrPoints=()=>page.locator('.case-card:visible [data-observation-field="fhr"]').count(),allPoints=await fhrPoints();
+      await presenter.locator('.presenter-reveal').click();await presenter.press('Home').catch(()=>{});
+      for(let k=0;k<7;k++)await presenter.press('ArrowLeft');
+      assert.equal(await fhrPoints(),allPoints/8,'Only the first moment is drawn');
+      await presenter.press('ArrowRight');assert.equal(await fhrPoints(),allPoints/4);
+      await presenter.locator('.presenter-reveal').click();assert.equal(await fhrPoints(),allPoints);
       await presenter.press('Escape');assert.equal(await presenter.count(),0);
       assert.deepEqual(errors,[]);await page.close();
     }

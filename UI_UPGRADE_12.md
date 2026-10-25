@@ -56,6 +56,14 @@ Học từ mục **Mẫu** của Canva: bắt đầu từ một mẫu có sẵn,
   - Pha tiềm thời ≥ 8 giờ chưa đạt mốc hoạt động — *WHO 1994, hướng dẫn sử dụng sản đồ*.
   Áp dụng cho cả Soạn đề (Kiểm tra, Diễn biến) và Theo dõi.
 
+## Vòng 7 — Trình chiếu từng bước có che dữ liệu
+
+Dành cho giảng dạy trên lớp: người học đọc sản đồ đúng như khi diễn biến đang xảy ra.
+
+- Trong **Diễn biến** có nút mắt **Che dữ liệu sau mốc hiện tại**. Khi bật, sản đồ chỉ vẽ số đo và sự kiện đến mốc đang chiếu; mỗi lần sang mốc mới thì phần tiếp theo mới xuất hiện.
+- Áp dụng cho cả Soạn đề và Theo dõi. Chỉ ảnh hưởng hình đang hiển thị; dữ liệu ca, bản xuất và lịch sử không thay đổi. Đóng trình chiếu hoặc tắt nút thì sản đồ hiện đầy đủ.
+- Gợi ý dùng: bật che dữ liệu → dừng ở từng mốc để người học nhận định → sang mốc kế để đối chiếu.
+
 ## Kiểm chứng
 
 - `verify.cjs` (812), `verify-easy.cjs` (thêm: 7 mẫu có hình thu nhỏ, mở đúng mẫu, nhận định mẹ/pha tiềm thời trên từng mẫu), `verify-library.cjs`, `verify-studio-plus.cjs` đạt; `git diff --check` sạch.

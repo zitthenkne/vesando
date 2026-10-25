@@ -515,3 +515,5 @@ body{caret-color:var(--brand)}#app :is(.btn,.text-btn,.home-nav-button,.home-sid
 .template-card strong{font-size:13.5px}
 .template-card small{color:var(--muted);font-size:11.5px;line-height:1.4}
 @media(prefers-reduced-motion:reduce){.template-card{transition:none}.template-card:hover{transform:none}}
+#app .presenter-reveal.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+[data-theme=dark] #app .presenter-reveal.active{color:#062521}
