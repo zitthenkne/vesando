@@ -70,6 +70,13 @@ Dành cho giảng dạy trên lớp: người học đọc sản đồ đúng nh
 - Trang đề: tên tình huống, thông tin sản phụ, quy chuẩn, sản đồ (vector) và phần Tình huống / Yêu cầu.
 - Trang đáp án (in sang trang riêng): kết luận chung; bảng diễn biến theo mốc (CTC, đầu, tim thai, cơn co, mạch, HA, nhiệt độ, ối) và các dấu hiệu tại mốc đó kèm nguồn — chỉ dùng dữ liệu đã biết đến mốc; mục Lưu ý khi đọc. Có câu ghi chú: nhận định tự động, giảng viên rà soát trước khi sử dụng.
 
+## Vòng 9 — So sánh quy chuẩn
+
+- **Kiểm tra → So sánh 3 quy chuẩn**: cùng dữ liệu ca, đặt cạnh nhau WHO 1993 · Modified · WHO LCG. Mỗi cột có hình sản đồ theo mô hình, kết luận chung và danh sách dấu hiệu kèm nguồn.
+- Dấu hiệu không có ở mọi mô hình được đánh dấu **Khác giữa các mô hình** (ví dụ tiêu chí ALERT riêng của LCG, đường báo động/hành động của mô hình lịch sử).
+- Hộp thoại nhận focus khi mở; Esc hoặc nút đóng trả focus về nút đã mở. Màn hình hẹp xếp ba cột thành một.
+- Khi bật che dữ liệu trong Diễn biến, dải **Lướt theo thời gian** cũng chỉ hiện các mốc đến thời điểm đang chiếu.
+
 ## Kiểm chứng
 
 - `verify.cjs` (812), `verify-easy.cjs` (thêm: 7 mẫu có hình thu nhỏ, mở đúng mẫu, nhận định mẹ/pha tiềm thời trên từng mẫu), `verify-library.cjs`, `verify-studio-plus.cjs` đạt; `git diff --check` sạch.

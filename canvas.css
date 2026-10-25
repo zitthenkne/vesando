@@ -522,3 +522,25 @@ body{caret-color:var(--brand)}#app :is(.btn,.text-btn,.home-nav-button,.home-sid
 .exam-pack-actions{display:flex;flex-wrap:wrap;gap:8px}
 .exam-pack-actions .btn{min-height:42px;display:inline-flex;align-items:center;gap:6px}
 .exam-pack-actions .btn.primary{flex:1 1 100%;justify-content:center}
+/* Standards comparison dialog. */
+.compare-backdrop{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:16px;background:rgba(10,25,32,.45)}
+.compare-dialog{width:min(1280px,100%);max-height:calc(100vh - 32px);overflow:auto;background:var(--surface-raised,var(--surface));color:var(--ink);border-radius:20px;box-shadow:0 24px 60px rgba(0,0,0,.28);padding:18px 20px 20px;outline:none}
+.compare-dialog>header{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px}
+.compare-dialog h2{margin:0;font-size:18px}.compare-dialog header p{margin:4px 0 0;color:var(--muted);font-size:12.5px}
+.compare-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.compare-col{border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--surface);min-width:0}
+.compare-col.critical{border-color:var(--error-ink)}
+.compare-col h3{margin:0;font-size:14px}.compare-col>small{color:var(--muted);font-size:11px}
+.compare-thumb{margin:10px 0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff;aspect-ratio:4/3}
+.compare-thumb img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.compare-col.warn .reading-dot{background:#d97706}.compare-col.critical .reading-dot{background:var(--error-ink)}
+.compare-col ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.compare-col li{padding:7px 9px;border-radius:9px;background:var(--warning-bg);color:var(--warning-ink);font-size:12px;line-height:1.45}
+.compare-col li.critical{background:var(--error-bg);color:var(--error-ink)}
+.compare-col li.unique{box-shadow:inset 3px 0 var(--brand)}
+.compare-col li small{display:block;opacity:.8;font-size:10.5px}
+.compare-unique{display:inline-block;margin:0 6px 2px 0;padding:1px 7px;border-radius:999px;background:var(--brand);color:#fff;font-size:10px;font-weight:700}
+[data-theme=dark] .compare-unique{color:#062521}
+.compare-open{margin-top:10px;display:flex;align-items:center;justify-content:center;gap:6px;min-height:42px}
+@media(max-width:900px){.compare-grid{grid-template-columns:1fr}}
+@media print{.compare-backdrop{display:none!important}}

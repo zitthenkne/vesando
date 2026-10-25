@@ -72,6 +72,11 @@ const server=http.createServer(async(req,res)=>{const file=files[new URL(req.url
       await rail('Kiểm tra').click();
       const reading=page.locator('.exam-reading');assert.match(await reading.getAttribute('class'),/\bcritical\b/);
       assert.ok(await reading.locator('li.critical').count()>=1);assert.match(await reading.textContent(),/Nguồn:/);
+      // Standards comparison: three models side by side; findings not shared by all are marked; Esc closes and returns focus.
+      await page.locator('.compare-open').click();await page.locator('.compare-dialog').waitFor();
+      assert.equal(await page.locator('.compare-col').count(),3);assert.equal(await page.evaluate(()=>document.activeElement.className),'compare-dialog');
+      assert.ok(await page.locator('.compare-col').nth(2).locator('li.unique').count()>=2,'LCG-only criteria are marked');
+      await page.keyboard.press('Escape');assert.equal(await page.locator('.compare-dialog').count(),0);
       // Presenter steps through moments; captions show readings and sourced findings at that time; Esc closes.
       if(viewport.width<=1100)await page.locator('.close-toolbox-button').first().click().catch(()=>{});
       await rail('Diễn biến').click();
