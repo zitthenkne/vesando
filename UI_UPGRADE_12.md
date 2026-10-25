@@ -102,6 +102,13 @@ Công tắc **Cảnh báo: Học tập | Lâm sàng** ở đầu thẻ sản đ�
 - Băng báo động ghi kèm ngưỡng tham chiếu, ví dụ "Tim thai 92 lần/phút … (ngưỡng 120–160 lần/phút)".
 - **Nhật ký cảnh báo**: mỗi lần bấm Đã xem ghi lại giờ trên sản đồ, nội dung và thời điểm xác nhận (30 mục gần nhất trong phiên).
 
+## Vòng 13 — Khoanh đủ mọi thông số
+
+- Chế độ Lâm sàng khoanh trực tiếp trên sản đồ cả các thông số không phải điểm: **mạch** (vòng quanh điểm mạch), **huyết áp** (khung bo quanh mũi tên tâm thu–tâm trương), **cơn co** (khung quanh cột cơn co), **nhiệt độ, nước ối, uốn khuôn, đạm niệu** (vòng quanh ô trong bảng).
+- Khi vừa ghi, vòng nhấp nháy xuất hiện đúng tại từng thông số báo động; sau khi bấm Đã xem, vòng mảnh cố định giữ lại.
+- Băng báo động gọn hơn: bỏ phần ngoặc trùng, chỉ giữ "(ngưỡng …)".
+- Sửa kiểu chữ tiêu đề băng báo động về cùng phông giao diện.
+
 ## Kiểm chứng
 
 - `verify.cjs` (812), `verify-easy.cjs` (thêm: 7 mẫu có hình thu nhỏ, mở đúng mẫu, nhận định mẹ/pha tiềm thời trên từng mẫu), `verify-library.cjs`, `verify-studio-plus.cjs` đạt; `git diff --check` sạch.

@@ -52,6 +52,12 @@ const server=http.createServer(async(req,res)=>{const file=files[new URL(req.url
       await page.getByRole('button',{name:'Đã xem'}).click();assert.equal(await page.locator('.alarm-tint').count(),0);
       assert.equal(await page.locator('.case-card:visible circle.alert-mark').count(),1,'The abnormal point stays ringed after acknowledgement');
       assert.match(await page.locator('.alarm-log').textContent(),/Nhật ký cảnh báo.*09:30.*Đã xem \d\d:\d\d/s);
+      // Maternal vitals are ringed too: a fever and a fast pulse recorded at a new moment.
+      await page.evaluate(()=>{const st=document.querySelector('#app')._vnode.component.setupState;st.selectedTime=1.5;st.setQuickField('pulse','112');st.setQuickField('temperature','38.6')});
+      await page.getByRole('button',{name:'Ghi nhận',exact:true}).first().click();await page.locator('.alarm-banner').waitFor();
+      assert.match(await page.locator('.alarm-banner').textContent(),/Nhiệt độ 38,6 °C \(ngưỡng < 38 °C\).*Mạch mẹ 112 lần\/phút \(ngưỡng ≤ 100 lần\/phút\)/s);
+      assert.equal(await page.locator('.case-card:visible [data-mark="pulse@1.5"]').count(),1);assert.equal(await page.locator('.case-card:visible [data-mark="temperature@1.5"]').count(),1);
+      await page.getByRole('button',{name:'Đã xem'}).click();
       await page.getByRole('radio',{name:'Học tập'}).click();
       await page.evaluate(()=>{document.querySelector('#app')._vnode.component.setupState.selectedTime=2});
       await page.fill('#quick-fhr','190');await page.getByRole('button',{name:'Ghi nhận',exact:true}).first().click();
