@@ -91,7 +91,7 @@ const server=http.createServer(async(req,res)=>{const file=files[new URL(req.url
       await page.locator('.home-launch.exam-launch').click();await page.waitForSelector('.creation-rail');
       if(viewport.width<=1100)await page.locator('.close-toolbox-button').first().click().catch(()=>{});
       // Exam steps: a new exam starts at the brief; visiting Kiểm tra marks that step done.
-      assert.match(await page.locator('.exam-steps > summary').innerText(),/Bước 1\/5 · Đề bài & sản phụ/);
+      assert.match(await page.locator('.exam-steps > summary').textContent(),/Bước 1\/5 · Đề bài & sản phụ/);
       if(viewport.width<=1100)await page.locator('.close-toolbox-button').first().click().catch(()=>{});
       await page.locator('.exam-steps > summary').click();await page.locator('.exam-steps button',{hasText:'Kiểm tra'}).click();assert.equal(await state(),'review');
       assert.match(await page.locator('.exam-steps li',{hasText:'Kiểm tra'}).getAttribute('class'),/\bdone\b/);

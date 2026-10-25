@@ -703,3 +703,12 @@ body{caret-color:var(--brand)}#app :is(.btn,.text-btn,.home-nav-button,.home-sid
 
 /* Vòng 25 — sản đồ trống chỉ giữ một lời gọi hành động */
 .chart-empty-start + .chart-frame .chart-record-menu{display:none}
+
+/* Vòng 26 — gộp nút, bớt một hàng */
+.progress-field-toggle{display:inline-flex;align-items:center;gap:7px;flex:none;min-height:44px;padding:8px 12px;border:1px solid var(--brand);border-radius:var(--r-s);background:var(--brand-tint);color:var(--brand);font-size:12px;font-weight:600;cursor:pointer}
+.progress-field-toggle svg{width:16px;height:16px}
+.progress-field-toggle svg:last-child{width:13px;height:13px;opacity:.65}
+.session-toolbar .header-steps{margin:0 0 0 6px}
+.session-toolbar .header-steps>summary{min-height:36px}
+@media(max-width:760px){.session-toolbar .header-steps .steps-now{display:none}}
+.moment-latest.icon-btn{flex:none}

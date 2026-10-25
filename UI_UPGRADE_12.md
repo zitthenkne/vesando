@@ -200,6 +200,16 @@ Phản hồi: giao diện có quá nhiều nút cùng lúc, gây quá tải th�
 
 `verify-library.cjs`, `verify-studio-plus.cjs`: mở ca mẫu bằng thẻ mẫu đầu tiên thay cho lối tắt đã bỏ (cùng nội dung CASE-001).
 
+## Vòng 26 — Bớt hai hàng phía trên sản đồ
+
+1. **Nút "Bước x/5" chuyển lên giữa thanh tiêu đề** (cả Soạn đề và Theo dõi), như thanh tiến độ của Canva; trên điện thoại chỉ còn chấm tiến độ.
+2. **Dải lướt thời gian chỉ hiện trong chế độ Tập trung.** Ở chế độ thường, chọn mốc bằng thanh ‹ giờ › ngay trên sản đồ; xem lại cả diễn biến bằng **Diễn biến** ở thanh trái.
+3. **Hai nút "CTC" / "Đầu trên vệ" gộp thành một nút đổi**: hiện thông số đang ghi khi bấm lưới, bấm để chuyển sang thông số kia.
+4. **"Mới nhất" thành nút biểu tượng** ⏭ (có chú thích khi rê chuột).
+5. **Bỏ dòng phụ "Thu gọn để xem trọn sản đồ"** dưới tiêu đề Nhập nhanh — mũi tên thu gọn đã đủ nghĩa.
+
+`verify-studio-plus.cjs`: bật Tập trung trước khi kiểm tra lướt/phát thời gian. `verify-easy.cjs`: đọc nội dung nút bước bằng `textContent` (chữ bị ẩn trên màn hình hẹp).
+
 ## Kiểm chứng
 
 - `verify.cjs` (812), `verify-easy.cjs` (thêm: 7 mẫu có hình thu nhỏ, mở đúng mẫu, nhận định mẹ/pha tiềm thời trên từng mẫu), `verify-library.cjs`, `verify-studio-plus.cjs` đạt; `git diff --check` sạch.
