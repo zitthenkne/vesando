@@ -134,6 +134,12 @@ Công tắc **Cảnh báo: Học tập | Lâm sàng** ở đầu thẻ sản đ�
 - Menu **Ghi nhanh**: dòng đầu "Ghi tại mốc đang chọn trên sản đồ"; mỗi mục có mô tả ngắn (ví dụ Cơn co tử cung — "Số cơn / 10 phút và thời gian mỗi cơn"; Ghi chú sự kiện — "Nhãn đánh số chỉ vào giờ: bấm ối, gây tê, chuyển phòng…").
 - Bảng sửa ghi chú sự kiện không còn bị khuất dưới mép màn hình: trang tự cuộn để thấy đủ nút Lưu / Xóa. Nút phụ ghi rõ "Áp dụng màu và cỡ cho mọi ghi chú".
 
+## Vòng 18 — Tab Chú giải tự giải thích
+
+- Dòng chỉ dẫn đầu tab: biểu tượng mắt = ẩn/hiện đường trên sản đồ (dữ liệu giữ nguyên); bấm tên đường = đổi màu, nét, ký hiệu.
+- Mỗi đường có biểu tượng bút cạnh tên (đậm lên khi rê chuột/focus) để thấy rõ có thể chỉnh.
+- Bốn công tắc hiển thị (Vùng nguy cơ, Vạch nhóm hàng, Đường dóng sự kiện, Chú giải trong bản xuất) hiện mô tả ngay dưới tên thay vì chỉ trong tooltip.
+
 ## Kiểm chứng
 
 - `verify.cjs` (812), `verify-easy.cjs` (thêm: 7 mẫu có hình thu nhỏ, mở đúng mẫu, nhận định mẹ/pha tiềm thời trên từng mẫu), `verify-library.cjs`, `verify-studio-plus.cjs` đạt; `git diff --check` sạch.

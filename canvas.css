@@ -616,3 +616,13 @@ body{caret-color:var(--brand)}#app :is(.btn,.text-btn,.home-nav-button,.home-sid
 .chart-record-menu .record-item small{font-size:11px;color:var(--muted);font-weight:500;white-space:normal;line-height:1.35}
 .chart-record-menu>div>button{align-items:flex-start;min-height:52px;padding-top:9px;padding-bottom:9px}
 .chart-record-menu>div>button>svg{margin-top:2px}
+/* Legend tab: say what each control does. */
+.dossier-legend .legend-hint{display:flex;flex-wrap:wrap;gap:4px 18px;margin:0 0 10px;font-size:12px;color:var(--muted)}
+.dossier-legend .legend-hint span{display:inline-flex;align-items:center;gap:6px}
+.dossier-legend .legend-hint svg{width:14px;height:14px}
+.legend-item .legend-edit{width:13px;height:13px;margin-left:6px;opacity:.35;flex:none}
+.legend-item:hover .legend-edit,.legend-item:focus-visible .legend-edit{opacity:.9}
+.legend-switches button{align-items:flex-start;text-align:left}
+.legend-switches .switch-text{display:flex;flex-direction:column;gap:1px}
+.legend-switches .switch-text b{font-weight:600}
+.legend-switches .switch-text small{font-size:11px;color:var(--muted);font-weight:400;line-height:1.35;max-width:200px}
