@@ -16,21 +16,23 @@ async function menu(p){const el=p.locator('.case-card:visible .moment-browser');
 async function jump(p,t){const m=await menu(p);await m.getByRole('textbox',{name:'Giờ cần đến'}).fill(t);await m.getByRole('button',{name:'Đến mốc',exact:true}).click();await tick(p)}
 async function at(p,t,f,v){return p.evaluate(({t,f,v})=>{const a=document.querySelector('#app')._vnode.component.setupState,c=window.PartographCore,d=c.buildSVG(a.activeCase,{...a.chartOptions,editable:true}),svg=[...document.querySelectorAll('.case-card .partograph')].find(e=>e.checkVisibility()),r=svg.getBoundingClientRect(),y=f==='fhr'?c.fetalHeartY(v):c.cervixY(v);return {x:r.x+(c.G.left+d.labelOffset+d.timeline.plot(t)*d.hour)*d.scaleX*r.width/d.width,y:r.y+d.rowLayout.y(y)*d.scaleY*r.height/d.height}},{t,f,v})}
 (async()=>{
-  const sandbox={};vm.createContext(sandbox);vm.runInContext(await fs.readFile(path.join(__dirname,'enhancements.js'),'utf8'),sandbox);
+  const sandbox={};vm.createContext(sandbox);vm.runInContext(await fs.readFile(path.join(__dirname,'clinical-rules.js'),'utf8'),sandbox);vm.runInContext(await fs.readFile(path.join(__dirname,'enhancements.js'),'utf8'),sandbox);
   const parse=(s,start='23:30')=>sandbox.parseChartMoment(s,{patient:{startTime:start}});
   assert.equal(parse('01:00'),1.5);assert.equal(parse('23:30'),0);assert.equal(parse('+24'),24);assert.equal(parse('+1,5'),1.5);assert.equal(parse('08:45','08:15'),.5);
-  for(const s of ['24:00','12:99','+24.5','+0.2','text','-1','1:3'])assert.equal(parse(s),null,s);
-  console.log('PASS: precise half-hour navigation, midnight, relative time and invalid input');
+  for(const s of ['24:00','12:99','+72.5','+0.001','text','-1','1:3'])assert.equal(parse(s),null,s);
+  assert.equal(parse('+24.5'),24.5);assert.equal(parse('+0.2'),.2);assert.equal(parse('15:20','16:30'),1370/60);
+  console.log('PASS: precise minute navigation, midnight, multi-day relative time and invalid input');
+  if(process.argv.includes('--unit'))return;
   await new Promise(r=>server.listen(0,'127.0.0.1',r));let browser;
   try{
     browser=await chromium.launch({headless:true,...(process.env.CHROME_EXECUTABLE?{executablePath:process.env.CHROME_EXECUTABLE}:{channel:'chrome'})});
     const url='http://127.0.0.1:'+server.address().port,errors=[];
     const context=await browser.newContext({viewport:{width:1440,height:1100},reducedMotion:'reduce'}),p=await context.newPage();p.setDefaultTimeout(10000);p.on('pageerror',e=>errors.push(e.message));
-    await p.goto(url);await ready(p);const base=(await state(p)).c;
+    await p.goto(url);await ready(p);await p.locator('.home-template-disclosure>summary').click();await p.locator('.template-card').first().click();const base=(await state(p)).c;
     await jump(p,'+7.5');assert.equal((await state(p)).time,7.5);assert.deepEqual((await state(p)).c,base,'Navigation creates no measurements');
-    await jump(p,'+1.3');assert.equal((await state(p)).time,7.5);assert.match(await p.locator('.moment-browser .error').innerText(),/30/);
+    await jump(p,'+1.301');assert.equal((await state(p)).time,7.5);assert.match(await p.locator('.moment-browser .error').innerText(),/phút/);
     await p.getByRole('button',{name:'Mốc đã ghi trước',exact:true}).click();assert.equal((await state(p)).time,base.observations.filter(o=>o.time<7.5).at(-1).time);
-    await jump(p,'+0');await p.getByRole('button',{name:'Mới nhất',exact:true}).click();assert.equal((await state(p)).time,base.observations.at(-1).time);
+    await jump(p,'+0');await p.getByRole('button',{name:'Mốc mới nhất',exact:true}).click();assert.equal((await state(p)).time,base.observations.at(-1).time);
     await jump(p,'+0');await p.getByRole('button',{name:'Mốc đã ghi tiếp',exact:true}).click();assert.equal((await state(p)).time,base.observations[1].time);
     await jump(p,'+0');let m=await menu(p);await m.getByRole('combobox',{name:'Đối chiếu mốc',exact:true}).selectOption(String(base.observations[1].time));assert.equal(await m.locator('thead th').count(),3);
     assert.match(await m.locator('tbody').innerText(),new RegExp(String(base.observations[1].fhr)));
@@ -62,7 +64,7 @@ async function at(p,t,f,v){return p.evaluate(({t,f,v})=>{const a=document.queryS
     await p.locator('.case-card:visible .partograph').focus();await p.keyboard.press('Control+z');s=await state(p);assert.deepEqual(s.c,original);assert.equal(s.pending.length,2,'Undo restores the original records and every draft');
     await p.getByRole('button',{name:/Ghi tất cả 2 mốc/}).click();await p.locator('#quick-time').selectOption('4');await p.getByRole('combobox',{name:'Bước chuyển mốc sau khi ghi'}).selectOption('1');await p.locator('#quick-fhr').fill('148');await p.keyboard.press('Control+Shift+Enter');s=await state(p);assert.equal(s.selected,5);assert.equal(s.c.observations.find(o=>o.time===4).fhr,148);assert.equal(await p.evaluate(()=>document.activeElement.id),'quick-fhr');
     await p.getByRole('combobox',{name:'Bước chuyển mốc sau khi ghi'}).selectOption('2');await p.locator('#quick-fhr').fill('149');await p.locator('.record-next').click();assert.equal((await state(p)).selected,7);
-    const saved=(await state(p)).c;await jump(p,'+6.5');assert.equal((await state(p)).selected,6.5);assert.deepEqual((await state(p)).c,saved);await p.getByRole('button',{name:'Mới nhất',exact:true}).click();assert.equal((await state(p)).selected,saved.observations.at(-1).time);
+    const saved=(await state(p)).c;await jump(p,'+6.5');assert.equal((await state(p)).selected,6.5);assert.deepEqual((await state(p)).c,saved);await p.getByRole('button',{name:'Mốc mới nhất',exact:true}).click();assert.equal((await state(p)).selected,saved.observations.at(-1).time);
     assert.deepEqual((await state(p)).cases,base?[base]:[],'Monitoring edits leave exam cases intact');
     console.log('PASS: persistent previous measurements, group jump, individual/current-draft undo, change review, Shift Enter, atomic batch validation/save/undo, configurable record interval, Ctrl Shift Enter and monitoring navigation');
     for(const theme of ['light','dark'])for(const width of [320,390,768,1024,1440]){

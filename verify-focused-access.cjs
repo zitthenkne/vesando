@@ -15,6 +15,7 @@ async function contrastAudit(p){return p.locator('.json-workbench').evaluate(roo
   const ctx=document.createElement('canvas').getContext('2d'),rgba=color=>{ctx.clearRect(0,0,1,1);ctx.fillStyle=color;ctx.fillRect(0,0,1,1);return [...ctx.getImageData(0,0,1,1).data].map((v,i)=>i===3?v/255:v)},blend=(front,back)=>[0,1,2].map(i=>front[i]*front[3]+back[i]*(1-front[3])).concat(1),background=e=>{const color=rgba(getComputedStyle(e).backgroundColor);return color[3]>=.999?color:blend(color,e.parentElement?background(e.parentElement):[255,255,255,1])},lum=c=>c.slice(0,3).map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4}).reduce((n,v,i)=>n+v*[.2126,.7152,.0722][i],0);
   return [...root.querySelectorAll('.ai-send,.prompt-kind>button.active,.ai-mode-hint,.ai-input-meta small,.ai-brief-options>summary,.ai-tool-menu>summary')].filter(e=>e.checkVisibility()).map(e=>{const a=lum(rgba(getComputedStyle(e).color)),b=lum(background(e));return {label:e.getAttribute('aria-label')||e.textContent.trim().slice(0,45),ratio:(Math.max(a,b)+.05)/(Math.min(a,b)+.05)}})
 })}
+async function goHome(p){const home=p.getByRole('button',{name:'Trang bắt đầu',exact:true});if(await home.isVisible())await home.click();else{await p.getByLabel('Quản lý ca',{exact:true}).click();await p.getByRole('button',{name:'Thư viện sản phẩm',exact:true}).click()}}
 (async()=>{
   await fs.mkdir(output,{recursive:true});await new Promise(r=>server.listen(0,'127.0.0.1',r));
   const browser=await chromium.launch({headless:true,...(process.env.CHROME_EXECUTABLE?{executablePath:process.env.CHROME_EXECUTABLE}:{channel:'chrome'})});
@@ -31,7 +32,7 @@ async function contrastAudit(p){return p.locator('.json-workbench').evaluate(roo
     assert.equal(await p.locator('.rail-ai-entry').evaluate(e=>e===document.activeElement),true,'Closing from a removed home trigger restores focus to the AI rail');
     console.log('PASS: expanded mobile targets, text contrast in both themes, provider menu keyboard/Escape, modal Tab containment and shortcut isolation');
 
-    await p.getByRole('button',{name:'Trang bắt đầu',exact:true}).click();await p.getByRole('button',{name:'Trang chủ',exact:true}).click();await p.locator('.clinical-launch').click();
+    await goHome(p);await p.getByRole('button',{name:'Trang chủ',exact:true}).click();if(!await p.locator('.clinical-launch').isVisible())await p.locator('.home-create').click();await p.locator('.clinical-launch').click();
     await p.locator('#quick-fhr').fill('145');const pending=await snapshot(p);
     await p.locator('.rail-ai-entry').click();await p.getByRole('button',{name:'Bước 2: Nhập kết quả AI',exact:true}).click();
     await p.locator('.ai-reply-options>summary').click();await p.locator('.ai-notation-options>summary').click();assert.deepEqual(await touchAudit(p),[],'Reply controls have mobile touch targets');

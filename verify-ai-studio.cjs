@@ -115,6 +115,7 @@ async function fits(p,width,height,label){
     console.log('PASS: append preserves cases, colliding IDs are unique, selected-case replacement and undo');
 
     await open(page);
+    await page.getByRole('button',{name:'Bước 1: Soạn prompt',exact:true}).click();
     assert.ok((await prompt(page)).includes('Luyện nhận xét theo dữ kiện gốc'),'Detailed brief survives closing and reopening');
     await page.locator('.ai-brief-options>summary').click();
     assert.equal(await page.getByLabel('Dùng số liệu của ca đang mở',{exact:false}).isChecked(),false,'Sending context requires a fresh explicit choice');
@@ -189,22 +190,22 @@ async function fits(p,width,height,label){
       await page.getByRole('button',{name:'Trang chủ',exact:true}).click();
       assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Home fits '+width);
       if(width===390)await page.screenshot({path:path.join(output,'home-mobile.png')});
-      await page.getByRole('button',{name:'Tạo hồ sơ theo dõi',exact:false}).click();
+      if(!await page.locator('.clinical-launch').isVisible())await page.locator('.home-create').click();await page.getByRole('button',{name:'Tạo hồ sơ theo dõi',exact:false}).click();
       assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Clinical fits '+width);
       await home(page);
-      await page.getByRole('button',{name:'Tiếp tục phiên đang mở',exact:false}).click();
+      await page.locator('.home-resume').click();
     }
     await page.setViewportSize({width:1440,height:1000});
     await page.screenshot({path:path.join(output,'workspace-desktop.png')});
-    await open(page);await page.locator('.ai-brief-options>summary').click();
-    await page.getByLabel('Tự lưu đề bài trên thiết bị',{exact:true}).check();
+    await open(page);await page.getByRole('button',{name:'Bước 1: Soạn prompt',exact:true}).click();await page.locator('.ai-brief-options>summary').click();
+    await page.getByLabel('Tự lưu cả phiên AI trên thiết bị',{exact:true}).check();
     await page.waitForFunction(()=>JSON.parse(localStorage.getItem('partograph-ai-draft-v1'))?.brief?.goal==='Luyện nhận xét theo dữ kiện gốc');
     await page.reload();await page.waitForSelector('#app:not([v-cloak])');
     await page.getByRole('button',{name:'Bắt đầu với AI',exact:true}).click();
     await page.locator('.ai-brief-options>summary').click();
     assert.equal(await page.getByLabel('Mục tiêu học tập',{exact:true}).inputValue(),'Luyện nhận xét theo dữ kiện gốc');
     assert.equal(await page.getByLabel('Điều cần giữ nguyên hoặc tránh',{exact:true}).inputValue(),'Giữ số liệu, không viết đáp án');
-    await page.getByLabel('Tự lưu đề bài trên thiết bị',{exact:true}).uncheck();
+    await page.getByLabel('Tự lưu cả phiên AI trên thiết bị',{exact:true}).uncheck();
     assert.equal(await page.evaluate(()=>localStorage.getItem('partograph-ai-draft-v1')),null);
     assert.deepEqual(errors,[]);
     console.log('PASS: 24 AI stage/theme/viewport combinations, 4 home/clinical layouts, compact tools and Escape; no console/runtime errors');

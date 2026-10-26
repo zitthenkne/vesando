@@ -168,7 +168,7 @@ const setHidden=(page,hidden)=>page.evaluate(h=>{Object.defineProperty(document,
       const phone=await browser.newContext({viewport:{width,height:740},isMobile:true,hasTouch:true}),p=await phone.newPage();p.on('pageerror',e=>errors.push(width+': '+e.message));p.on('console',m=>{if(m.type()==='error')errors.push(width+': '+m.text())});
       await p.goto(url);await p.waitForSelector('#app:not([v-cloak])');
       assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'No horizontal scroll at '+width);
-      assert.ok(await p.locator('.session-name>summary').isVisible(),'Current case is visible at '+width);
+      assert.ok(await p.getByLabel('Đổi tên sản đồ',{exact:true}).isVisible(),'Current case is visible at '+width);
       for(const name of ['Soạn đề','Theo dõi'])assert.ok(await p.getByRole('radio',{name,exact:true}).isVisible());
       const rail=await p.locator('#studio-tools-navigation button:visible').evaluateAll(els=>els.map(e=>{const r=e.getBoundingClientRect();return [r.left,r.right,r.width]}));
       assert.equal(rail.length,6,'Six bottom-bar targets at '+width);

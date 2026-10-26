@@ -301,8 +301,8 @@ for(const change of [
  {field:'cervix',fromTime:0,fromValue:7,time:1,value:5},
  {field:'descent',fromTime:1,time:0,value:2},
  {field:'cervix',time:-.5,value:5},
- {field:'cervix',time:.25,value:5},
- {field:'cervix',time:25,value:5},
+ {field:'cervix',time:.251,value:5},
+ {field:'cervix',time:73,value:5},
  {field:'cervix',time:1,value:undefined},
  {field:'cervix',time:1,value:NaN},
  {field:'descent',time:1,value:6},
@@ -375,9 +375,9 @@ assert.throws(()=>editCell(c,{...oxyCell,expected:{...oxyCell.expected,oxyRate:9
 // Arrow notes: normalisation, the dedicated band, and callout labels.
 ok(showcase.events?.length===4&&showcase.observations.filter(o=>o.headMarker).length===4,'Opening case shows arrow notes and head positions');
 const noted=core.validateCase({...c,events:[{time:'10:15',label:'  Bắt đầu oxytocin  '},{time:1.5,label:'Gây tê ngoài màng cứng'},{time:0.1,label:'Nhập phòng sinh'}]});
-ok(JSON.stringify(noted.events)===JSON.stringify([{time:0,label:'Nhập phòng sinh'},{time:1.5,label:'Gây tê ngoài màng cứng'},{time:2.25,label:'Bắt đầu oxytocin'}]),'Events accept clock times, round to 15 minutes, trim labels and sort by time');
+ok(JSON.stringify(noted.events)===JSON.stringify([{time:0.1,label:'Nhập phòng sinh'},{time:1.5,label:'Gây tê ngoài màng cứng'},{time:2.25,label:'Bắt đầu oxytocin'}]),'Events accept clock times, preserve exact minutes, trim labels and sort by time');
 assert.throws(()=>core.validateCase({...c,events:[{time:2,label:''}]}));checks++;
-assert.throws(()=>core.validateCase({...c,events:[{time:30,label:'Ngoài giờ'}]}));checks++;
+assert.throws(()=>core.validateCase({...c,events:[{time:73,label:'Ngoài giờ'}]}));checks++;
 ok(core.validateCase({...c,events:[]}).events===undefined,'An empty event list leaves the case unchanged');
 const plain=core.buildSVG(c,{design:{cellWidth:1,rowHeight:1,rowMode:'all'}}),withNotes=core.buildSVG(noted,{design:{cellWidth:1,rowHeight:1,rowMode:'all'}});
 ok(!plain.inner.includes('SỰ KIỆN')&&withNotes.inner.includes('>SỰ KIỆN<'),'The events band appears only when the case has notes');

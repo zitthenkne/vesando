@@ -1,5 +1,34 @@
 # Đối chiếu nguồn sản đồ
 
+## Bổ sung biểu diễn dữ kiện đề thi — 25/10/2026
+
+- Theo xác nhận mới nhất của người dùng, bản vẽ dùng **một đường độ lọt** và
+  hai cột đọc chung: **5/5 ↔ −3; 4/5 ↔ −2; 3/5 ↔ −1; 2/5 ↔ 0;
+  1/5 ↔ +1; 0/5 ↔ +2**. Bỏ đường station thứ hai. Đây là quy ước hiển thị do
+  người soạn chốt cho bài học, không gán bảng này thành quy đổi lâm sàng phổ quát.
+- Dữ liệu vẫn giữ nguyên cách ghi nguồn: `descent` (/5) hoặc `station`. Hàm vẽ
+  định vị một điểm theo quy ước trên, không điền thêm kết quả khám chưa được cho.
+  Nếu cả hai trường không khớp quy ước, vẽ theo /5 gốc và ghi rõ sai khác;
+  station ngoài −3…+2 được giữ và thông báo ngoài thang, không ép về mốc cuối.
+- Nguồn phân biệt phép đo: [MedlinePlus/NLM, Your baby in the birth canal](https://medlineplus.gov/ency/article/002060.htm),
+  mục Fetal station; đầu trên vệ /5 giữ nguồn WHO/ICM 2008 đã đối chiếu bên dưới.
+- Ngôi, kiểu thế nguyên văn, độ xóa CTC và mã kiểu thế chẩm được giữ theo từng
+  lần khám. Mã LOA hoặc mô tả rõ “chẩm trái trước (CTT)” dựng hình tại đúng mốc;
+  “ngôi đầu” không tự tạo kiểu thế. Nguồn thuật ngữ: [MSD Manual Professional,
+  Fetal Presentation, Position, and Lie](https://www.msdmanuals.com/professional/gynecology-and-obstetrics/intrapartum-complications/fetal-presentation-position-and-lie-including-breech-presentation).
+- Số giờ qua ngày và phút lẻ được giữ, không làm tròn để ép về ô nửa giờ.
+  Giới hạn phần mềm mở từ 24 lên 72 giờ và tối đa 300 lần ghi; đây là giới hạn
+  tài nguyên phần mềm, không phải thời gian theo dõi hoặc ngưỡng can thiệp y khoa.
+  Thiếu năm thì để trống ngày ISO và giữ ngày nguyên văn, không tự lấy năm hiện tại.
+- Bảng AI đối chiếu từng lần khám dùng cùng mốc căn và hình học với bản vẽ.
+  Không đổi độ dốc, điểm khởi đầu hoặc ngưỡng cảnh báo của các mô hình hiện có;
+  không bổ sung chẩn đoán, liều thuốc, phác đồ Anti-D hoặc đáp án câu hỏi của đề.
+- Kiểm tra bằng đề người dùng đưa: 7 lần khám qua 25 giờ, mốc 15:20, station
+  −3 → −2 → +1; /5, tim thai và liều tăng co chưa cho được giữ trống. Hình CTT
+  chỉ xuất hiện ở 17:30; thiếu độ xóa ở mốc cuối không tự suy thành 100%.
+  `verify-exam-conversion.cjs` kiểm tra JSON khứ hồi, ba mô hình, bảng nhập,
+  ngày thiếu năm, hai phép đo đồng thời và SVG không chứa đích chỉnh sửa.
+
 ## Cập nhật ký hiệu hiển thị — 17/10/2026
 
 Theo yêu cầu người dùng, nhãn mặc định hiển thị Việt là **C = còn ối; T = nước ối trắng; K = khô/không thấy dịch sau vỡ ối; X = xanh/phân su**. Chữ T được đổi từ “Trong” thành “Trắng” theo cách gọi người dùng yêu cầu. Trống là chưa ghi nhận, không tự chuyển thành K. Các mức phân su (+/++/+++) được giữ, lẫn máu ghi rõ “Máu”.

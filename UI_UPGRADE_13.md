@@ -1,5 +1,9 @@
 # Giao diện gọn và không gian AI
 
+> Cập nhật chỉ dẫn: người dùng đánh giá đợt này chưa hoàn thành và yêu cầu thêm
+> 20 vòng. Tiếp tục theo **UI_UPGRADE_14.md**; không dùng kết luận dừng ở cuối
+> báo cáo cũ làm điều kiện dừng của đợt mới.
+
 ## Mục tiêu
 
 Mở web với ít lựa chọn; công cụ phụ mở khi cần. AI là lối bắt đầu rõ ràng,
