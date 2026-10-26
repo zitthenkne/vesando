@@ -15,9 +15,10 @@ const server=http.createServer(async(req,res)=>{
 });
 const sample={id:'AI-FIXTURE',fluidNotation:'vn',title:'Tình huống học tập',patient:{startTime:'09:00',date:'2026-10-25',name:'Tên giả định',code:'MA-GIA-DINH'},narrative:'Đề bài giả định để kiểm tra giao diện.',observations:[{time:0,cervix:4,fhr:140},{time:2,cervix:5,fhr:142}],events:[]};
 const state=p=>p.evaluate(()=>JSON.stringify(document.querySelector('#app')._vnode.component.setupState.cases));
-const open=p=>p.locator('.rail-ai-entry').click();
+const open=async p=>{await p.locator('.rail-ai-entry').click();await p.getByRole('button',{name:'Bước 1: Soạn prompt',exact:true}).click()};
 const goReply=p=>p.getByRole('button',{name:'Bước 2: Nhập kết quả AI',exact:true}).click();
 const goReview=p=>p.getByRole('button',{name:'Xem trước sản đồ',exact:true}).click();
+const home=async p=>{const b=p.getByRole('button',{name:'Trang bắt đầu',exact:true});if(await b.isVisible())await b.click();else{await p.getByLabel('Quản lý ca',{exact:true}).click();await p.getByRole('button',{name:'Thư viện sản phẩm',exact:true}).click()}};
 const close=p=>p.getByRole('button',{name:'Đóng nhập JSON',exact:true}).click();
 const prompt=p=>p.getByLabel('Prompt tạo JSON sản đồ',{exact:true}).inputValue();
 async function fits(p,width,height,label){
@@ -159,7 +160,7 @@ async function fits(p,width,height,label){
     await close(page);
     console.log('PASS: detailed brief retention, explicit context with identity fields removed, denied clipboard, blocked popup, stale copy/paste protection and oversized file guard');
 
-    assert.equal(await page.locator('.creation-rail>button:visible').count(),4);
+    assert.equal(await page.locator('.creation-rail>button:visible').count(),7);
     await page.getByLabel('Thêm công cụ',{exact:true}).click();
     await page.getByRole('button',{name:'Kiểm tra sản đồ',exact:false}).click();
     assert.equal(await page.locator('.rail-more').getAttribute('open'),null);
@@ -184,13 +185,13 @@ async function fits(p,width,height,label){
       const menu=await page.locator('.rail-more-menu').boundingBox();
       assert.ok(menu.x>=0&&menu.x+menu.width<=width+1&&menu.y>=0&&menu.y+menu.height<=900);
       await page.keyboard.press('Escape');assert.equal(await page.locator('.rail-more').getAttribute('open'),null);
-      await page.getByRole('button',{name:'Trang bắt đầu',exact:true}).click();
+      await home(page);
       await page.getByRole('button',{name:'Trang chủ',exact:true}).click();
       assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Home fits '+width);
       if(width===390)await page.screenshot({path:path.join(output,'home-mobile.png')});
       await page.getByRole('button',{name:'Tạo hồ sơ theo dõi',exact:false}).click();
       assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Clinical fits '+width);
-      await page.getByRole('button',{name:'Trang bắt đầu',exact:true}).click();
+      await home(page);
       await page.getByRole('button',{name:'Tiếp tục phiên đang mở',exact:false}).click();
     }
     await page.setViewportSize({width:1440,height:1000});
