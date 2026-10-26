@@ -5,7 +5,7 @@ const http=require('node:http');
 const path=require('node:path');
 const os=require('node:os');
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
-const assets=new Set(['index.html','studio.css','workspace.css','interaction.css','theme.css','canvas.css','clinical-rules.js','guidance.js','enhancements.js']);
+const assets=new Set(['index.html','studio.css','workspace.css','interaction.css','theme.css','canvas.css','clinical-rules.js','guidance.js','enhancements.js','workspace-next.js','workspace-next.css']);
 const output=path.join(os.tmpdir(),'vesando-focused-ui');
 const server=http.createServer(async(req,res)=>{
   const file=new URL(req.url,'http://localhost').pathname.slice(1)||'index.html';
