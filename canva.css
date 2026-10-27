@@ -341,7 +341,7 @@
 @media (max-width:760px){#app#app .toast{top:auto!important;bottom:84px!important}}
 /* Home sidebar: brand text truncates before the settings button. */
 #app#app#app .project-home .home-brand{min-width:0;overflow:hidden}
-#app#app#app .project-home .home-brand strong{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
 /* Black-and-white notice on the canvas (mono is easy to leave on by accident). */
 #app .cv-mono-note{display:inline-flex;align-items:center;gap:8px;min-height:32px;padding:0 6px 0 12px;border-radius:999px;background:#fff7ed;color:#9a3412;font:600 12px/1 inherit;box-shadow:0 0 0 1px #fed7aa}
 #app .cv-mono-note>button{min-height:24px;padding:0 10px;border:0;border-radius:999px;background:#9a3412;color:#fff;font:700 12px/1 inherit;cursor:pointer}
@@ -387,3 +387,57 @@
 #app#app#app .studio-workspace .toolbox .next-record-footer>label>select{width:auto;min-width:110px}
 #app#app#app .studio-workspace .toolbox .next-record-footer>.btn{width:100%;min-width:0;white-space:nowrap;padding-inline:10px!important}
 #app#app#app .studio-workspace .toolbox .next-field button{white-space:normal;line-height:1.2}
+
+/* ===== Round 6: panels as Canva panels, dark mode polish ===== */
+/* Text on brand-filled chips must stay readable in both themes (dark brand is a light teal). */
+:root{--cv-on-brand:#fff}
+:root[data-theme=dark]{--cv-on-brand:#06201d}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--cv-on-brand:#06201d}}
+#app#app .next-moment-track>button.active,#app#app .next-moment-track>button.active *{color:var(--cv-on-brand)!important}
+#app#app#app .studio-workspace .toolbox .next-entry-head>button.text-btn:not(.next-case-edit){color:var(--cv-on-brand)!important}
+
+/* Panel header: same surface as the panel; close is a plain icon button. */
+#app#app#app .studio-workspace .toolbox .toolbox-heading{background:var(--surface)!important;box-shadow:none!important}
+#app#app#app .studio-workspace .toolbox .toolbox-heading .icon-btn{background:transparent!important;border:0!important;box-shadow:none!important;border-radius:10px!important}
+#app#app#app .studio-workspace .toolbox .toolbox-heading .icon-btn:hover{background:var(--cv-hover)!important}
+
+/* Record footer: "Chuyển mốc" label and its select on one line. */
+#app#app#app .studio-workspace .toolbox .next-record-footer>label{display:flex!important;flex-direction:row!important;text-align:left}
+
+/* Data table opens as a wide sheet (Canva-style), not a 340px column. */
+@media (min-width:761px){
+  #app#app#app#app .studio-workspace:not(.focused):has(.next-panel-table)>.workbench.inspector-open{grid-template-columns:min(880px,58vw) minmax(0,1fr)!important}
+  #app#app#app .studio-workspace .next-data-table{border-collapse:separate;border-spacing:0}
+  #app#app#app .studio-workspace .next-data-table :is(th,td){border:0!important;border-bottom:1px solid var(--line)!important}
+  #app#app#app .studio-workspace .next-data-table thead th{position:sticky;top:0;background:var(--surface);z-index:2}
+  #app#app#app .studio-workspace .next-data-table tbody th{position:sticky;left:0;background:var(--surface);z-index:1}
+}
+
+/* Empty / all-clear states: one friendly card instead of repeated "nothing here" lines. */
+#app .cv-empty{display:grid;justify-items:center;gap:6px;padding:28px 16px;margin:4px 0 16px;border-radius:16px;background:var(--cv-tile);text-align:center}
+#app .cv-empty>span{width:48px;height:48px;display:grid;place-items:center;border-radius:50%;background:var(--surface);color:var(--brand,#0f766e);box-shadow:0 2px 8px #0f172a14}
+#app .cv-empty>span>svg{width:22px;height:22px}
+#app .cv-empty>strong{font-size:15px}
+#app .cv-empty>small{color:var(--muted);font-size:13px;max-width:260px}
+#app .cv-all-clear>span{background:#dcfce7;color:#15803d}
+:root[data-theme=dark] #app .cv-all-clear>span{background:#14532d;color:#86efac}
+/* Review: groups without findings disappear; findings are cards with a coloured edge per kind. */
+#app#app .next-issue-group:not(:has(button)){display:none}
+#app#app .next-issue-group>h3{display:flex;align-items:center;gap:8px;font-size:14px;margin:8px 0}
+#app#app .next-issue-group>button{display:grid;gap:2px;width:100%;text-align:left;padding:12px 14px;margin:0 0 8px;border:0;border-radius:12px;background:var(--cv-tile);box-shadow:inset 3px 0 0 var(--cv-kind,#0f766e);cursor:pointer}
+#app#app .next-issue-group>button:hover{background:var(--brand-soft,#e6f4f1)}
+#app#app .next-issue-group[data-kind=layout]{--cv-kind:#2563eb}
+#app#app .next-issue-group[data-kind=clinical]{--cv-kind:#d97706}
+
+/* Design tabs: underline tabs like Canva's panel tabs. */
+#app#app#app .studio-workspace .toolbox .design-nav{display:flex;gap:4px;border-bottom:1px solid var(--line);padding:0;margin:0 0 14px;background:transparent!important;border-radius:0}
+#app#app#app .studio-workspace .toolbox .design-nav>button{flex:1;min-height:44px;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:var(--muted);font-weight:600;border-bottom:2px solid transparent!important;margin-bottom:-1px}
+#app#app#app .studio-workspace .toolbox .design-nav>button.active,#app#app#app .studio-workspace .toolbox .design-nav>button[aria-pressed=true]{color:var(--brand,#0f766e);border-bottom-color:var(--brand,#0f766e)!important}
+/* The canvas hint "Bấm vùng cần chỉnh" repeats what the hover outline already shows. */
+#app#app .chart-viewbar .direct-design-hint{display:none!important}
+
+/* Home brand: name wraps under the logo rather than truncating. */
+#app#app#app .project-home .home-brand strong{white-space:normal!important;overflow:visible!important;text-overflow:clip!important}
+/* Panels slide in from the rail like Canva's object panels. */
+@keyframes cv-panel-in{from{opacity:0;transform:translateX(-12px)}}
+@media (min-width:761px) and (prefers-reduced-motion:no-preference){#app#app#app .studio-workspace .workbench.inspector-open>.inspector-shell>.toolbox>.next-panel,#app#app#app .studio-workspace .workbench.inspector-open>.inspector-shell>.toolbox{animation:cv-panel-in .16s ease-out}}
