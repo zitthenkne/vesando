@@ -573,3 +573,42 @@
 }
 @media (max-width:760px){#app#app#app#app .studio-workspace:not(.focused) .workarea>.cv-pages{order:99!important}#app#app#app#app .studio-workspace:not(.focused) .workarea{min-height:0!important}#app#app#app .project-home .library-filters>.library-tag-filter{max-width:30%}}
 @media (max-width:760px){#app#app#app#app .studio-workspace:not(.focused) .workarea .next-zoom-actions .btn{font-size:0!important;gap:0!important;width:44px;padding:0!important;justify-content:center}#app#app#app#app .studio-workspace:not(.focused) .workarea .next-zoom-actions .btn>svg:not(:first-child){display:none}#app#app#app#app .studio-workspace:not(.focused) .workarea :is(.workspace,.case-list,.case-card,.chart-frame,.chart-scroll){flex:0 0 auto!important}}
+
+/* ===== Round 10: one selection system — Canva's top context toolbar + a small floating mini-bar by the point ===== */
+@media (min-width:761px){
+  /* Properties toolbar: fixed at the top centre of the canvas, single line (overrides the point-anchored inline position). */
+  #app#app#app#app .studio-workspace:not(.focused) .workarea .next-context{position:absolute!important;top:10px!important;left:50%!important;right:auto!important;bottom:auto!important;transform:translateX(-50%)!important;margin:0!important;flex-wrap:nowrap!important;white-space:nowrap;max-width:calc(100% - 32px)!important;overflow-x:auto;scrollbar-width:none;z-index:14}
+  #app#app#app#app .studio-workspace:not(.focused) .workarea .next-context>*{flex:0 0 auto}
+  #app#app#app#app .studio-workspace:not(.focused) .workarea .next-context>strong{max-width:220px;overflow:hidden;text-overflow:ellipsis}
+  /* Separators between control groups, like Canva's toolbar dividers. */
+  #app#app#app#app .studio-workspace:not(.focused) .workarea .next-context>:is(label,button,.btn)+:is(label,button,.btn){position:relative}
+
+}
+/* Floating mini-bar by the point: dark pill like Canva's quick actions. */
+#app#app .point-toolbar{border:0!important;border-radius:12px!important;background:#1f2430!important;color:#fff!important;box-shadow:0 8px 24px #0005!important;padding:4px!important;gap:2px!important}
+#app#app .point-toolbar>button,#app#app .point-toolbar .point-toolbar-label{color:#fff!important;background:transparent!important;border:0!important;box-shadow:none!important}
+#app#app .point-toolbar>button{border-radius:8px!important}
+#app#app .point-toolbar>button:hover{background:#ffffff1f!important}
+#app#app .point-toolbar .point-toolbar-label{opacity:.85}
+#app#app .point-toolbar .point-toolbar-label b{color:#fff}
+#app#app .point-toolbar-menu{color:var(--ink);background:var(--surface)!important;border-radius:12px!important;border:0!important;box-shadow:0 12px 40px #0f172a2e,0 0 0 1px #0f172a0f!important}
+@media (min-width:761px){
+  /* Time and drag mode live in the top toolbar; the mini-bar keeps −, +, Sửa, ⋯, ×. */
+  #app#app .point-toolbar .next-near-point{display:none!important}
+  #app#app .point-toolbar{flex-wrap:nowrap!important;width:auto!important}
+}
+/* The hover label would sit on top of the mini-bar while a point is selected. */
+#app#app:has(.point-toolbar) .next-hover-label{display:none!important}
+#app#app .next-hover-label{background:#1f2430;border-radius:8px;box-shadow:0 4px 14px #0003}
+@media (min-width:761px){#app#app#app .project-home .home-sidebar>.home-brand{max-width:calc(100% - 64px)!important}#app#app#app .project-home .home-brand strong{white-space:nowrap!important;font-size:17px}#app#app#app .project-home .home-comfort{width:40px!important;height:40px!important;min-height:40px!important;right:10px!important;left:auto!important}}
+/* Narrow canvas: the chart header row is in flow, so the properties toolbar sits just below it. */
+@container canvas (max-width:859px){#app#app#app#app#app .studio-workspace:not(.focused) .workarea .next-context{top:58px!important}}
+/* Phone: the point toolbar docks above the bottom tool bar (Canva mobile), never over the canvas controls. */
+@media (max-width:760px){
+  #app#app#app .point-toolbar{position:fixed!important;left:8px!important;right:8px!important;top:auto!important;bottom:calc(76px + env(safe-area-inset-bottom))!important;transform:none!important;width:auto!important;max-width:none!important;flex-wrap:wrap!important;justify-content:center;z-index:45}
+  #app#app#app .point-toolbar .next-near-point{border-color:#ffffff26!important;justify-content:center}
+  #app#app#app .point-toolbar .next-near-point label{color:#fff}
+  #app#app#app .point-toolbar .next-near-point :is(input,select){background:#ffffff1f!important;color:#fff!important;border:0!important}
+}
+/* Mode buttons in the data panel wrap their label instead of spilling. */
+#app#app#app .studio-workspace .toolbox .data-tools button{white-space:normal!important;min-width:0;overflow-wrap:anywhere}

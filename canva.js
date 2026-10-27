@@ -28,6 +28,8 @@
   const show=el=>{
     // An open menu already explains itself; a tip over it would cover the first item.
     if(el.matches('details[open]>summary'))return;
+    // Chart marks have their own hover readout; a second bubble would cover the point toolbar.
+    if(el.closest('svg.partograph'))return;
     const text=label(el);if(!text)return;
     hide();target=el;
     if(el.hasAttribute('title')){el.dataset.cvTip=el.getAttribute('title');el.removeAttribute('title')}

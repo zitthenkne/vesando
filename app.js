@@ -671,7 +671,7 @@ const app=createApp({
     watch(toolTab,t=>{if(t==='review'&&mode.value==='exam')patchUi({dossierOpen:true,dossierTab:'brief'})});
     watch(()=>[ui.value.accent,ui.value.radius],([accent,radius])=>{document.documentElement.dataset.accent=accent;document.documentElement.dataset.radius=radius},{immediate:true});
     const commands=computed(()=>[
-      {id:'json',label:'Lập sản đồ bằng AI · Nhập JSON',detail:'Phát triển ý tưởng hoặc chuyển đề có sẵn thành JSON, xem trước và dựng sản đồ.',icon:'sparkles',run:openJSON},{id:'review',label:'Xuất JSON để kiểm tra',detail:'Tải sản đồ đã chỉnh kèm quy chuẩn và thiết kế để gửi người khác.',icon:'file-json-2',run:downloadReview},
+      {id:'json',label:'Lập sản đồ bằng AI · Nhập JSON',detail:'Phát triển ý tưởng hoặc chuyển đề có sẵn thành JSON, xem trước và dựng sản đồ.',icon:'sparkles',run:openJSON},{id:'review-json',label:'Xuất JSON để kiểm tra',detail:'Tải sản đồ đã chỉnh kèm quy chuẩn và thiết kế để gửi người khác.',icon:'file-json-2',run:downloadReview},
       {id:'usage',label:'Hướng dẫn sử dụng',detail:'Bảy hướng dẫn từng bước cho người mới.',icon:'circle-help',run:openLearning},
       {id:'shortcuts',label:'Bảng phím tắt',detail:'Tất cả thao tác bàn phím và kéo điểm.',icon:'keyboard',shortcut:'?',run:()=>shortcutsOpen.value=true},
       ...toolTabs.map((t,i)=>({id:t.id,label:toolLabel(t),detail:t.hint,icon:t.icon,shortcut:'Alt+'+(i+1),run:()=>selectTool(t.id)})),

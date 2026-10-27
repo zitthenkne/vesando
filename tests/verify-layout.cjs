@@ -60,6 +60,8 @@ function audit(){
         ['design',async()=>{await p.locator('.home-template-disclosure>summary').click();await p.locator('.template-card').first().click()}],
         ['data',()=>app(p,a=>a.work.open('entry'))],
         ['select',()=>app(p,async a=>{await a.work.open('layers');const t=Math.max(...a.activeCase.observations.filter(o=>o.fhr!=null&&o.fhr!=='').map(o=>o.time));a.work.go(t);a.work.select({type:'point',field:'fhr',time:t});await a.work.ensureSelected()})],
+        // A real click opens both the top properties toolbar and the mini-bar by the point; they must not collide.
+        ['click point',async()=>{await app(p,a=>{a.work.clearSelection();a.work.close()});const pt=p.locator('.workarea svg.partograph [data-point-hit]').nth(3);await pt.scrollIntoViewIfNeeded();const b=await pt.boundingBox();await p.mouse.click(b.x+b.width/2,b.y+b.height/2);await p.mouse.move(2,h-2)}],
         ['two cases',()=>app(p,a=>{a.work.clearSelection();a.duplicateCase(a.activeCaseIndex)})],
         ['export',()=>app(p,a=>a.work.open('export'))],
         ['present',()=>app(p,a=>{a.work.close();a.work.changeSpace('present')})]];
