@@ -15,9 +15,11 @@ Chỉ mở file liên quan tới việc đang làm; đừng đọc cả thư m�
 | Trợ lý AI, thư viện, hướng dẫn trong app, xuất đề | `enhancements.js` (`registerEnhancements`) |
 | Không gian Nhập/Thiết kế/Trình chiếu, lớp, trục mốc, bảng dữ liệu | `workspace-next.js` (`registerNextWorkspace`) |
 | Quy tắc lâm sàng, giới hạn dữ liệu | `clinical-rules.js`, `guidance.js` |
+| Địa chỉ riêng của đề (`#de/<id>`, `#theo-doi/<id>`), Quay lại/Tới, sao chép liên kết | `app.js` (tìm `ROUTE_KIND`) |
+| Chú thích nổi kiểu Canva | `canva.js` |
 | Nguồn tham chiếu chuyên môn | `docs/CLINICAL_REFERENCES.md` |
 
-Thứ tự nạp script: `clinical-rules → guidance → enhancements → workspace-next → core → components → app`. Các hằng/hàm cấp cao của `core.js` là biến toàn cục dùng chung.
+Thứ tự nạp script: `clinical-rules → guidance → enhancements → workspace-next → canva → core → components → app`. Template Vue không truy cập được `document`/`navigator`/`location`; việc cần DOM viết thành hàm trong `setup()` của `app.js` rồi trả ra. Các hằng/hàm cấp cao của `core.js` là biến toàn cục dùng chung.
 
 ## CSS
 

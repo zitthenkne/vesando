@@ -10,6 +10,7 @@ Chạy từ thư mục gốc. Script trình duyệt cần Playwright và Chrome;
 | `tests/verify-boot.cjs` | Trình duyệt | Khởi động, Vue tải chậm/không tải được, tài liệu xuất |
 | `tests/verify-next-workspace.cjs` | Trình duyệt | Luồng không gian làm việc: chọn, kéo, nháp, lớp, AI, cảm ứng, bố cục |
 | `tests/verify-direct-title.cjs` | Trình duyệt | Đổi tên ca trực tiếp ở nhiều độ rộng |
+| `tests/verify-routes.cjs` | Trình duyệt | Địa chỉ riêng của đề: Quay lại/Tới, tải lại, tab mới, mã sai, sao chép liên kết, lối tắt trang chủ |
 | `tests/verify-ai-comparison.cjs`, `tests/verify-ai-session.cjs` | Trình duyệt | Đối chiếu và phiên AI |
 
 Mỗi script tự dựng server tĩnh với danh sách file được phép phục vụ. Khi thêm file JS/CSS mới vào `index.html`, thêm tên file vào danh sách đó.
