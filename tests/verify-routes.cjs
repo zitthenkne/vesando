@@ -75,6 +75,18 @@ const app=(p,fn,arg)=>p.evaluate(([src,arg])=>(0,eval)('('+src+')')(document.que
     assert.match(await app(p,a=>a.toast),/Không tìm thấy đề/);
     console.log('PASS: an unknown project id keeps the current project and says so');
 
+    // Page strip: add a case, PageUp/PageDown switch cases, the hover × removes one (undoable).
+    if(!await p.locator('.cv-pages.open').count())await p.locator('.cv-pages-toggle').click();
+    await p.locator('.cv-page-add').first().click();
+    assert.equal(await app(p,a=>a.cases.length),2);
+    await p.locator('body').click({position:{x:700,y:20}});await p.keyboard.press('Escape');
+    const before=await app(p,a=>a.activeCaseIndex);
+    await p.keyboard.press(before?'PageUp':'PageDown');
+    assert.notEqual(await app(p,a=>a.activeCaseIndex),before);
+    await p.locator('.cv-page-wrap').nth(1).hover();await p.locator('.cv-page-wrap').nth(1).locator('.cv-page-remove').click();
+    assert.equal(await app(p,a=>a.cases.length),1);
+    console.log('PASS: page strip adds a case, PageUp/PageDown switch cases, hover × removes a case');
+
     // Copy link.
     await app(p,a=>a.copyProjectLink());await p.waitForTimeout(200);
     assert.equal(await p.evaluate(()=>navigator.clipboard.readText()),url+'#de/'+second);

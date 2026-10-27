@@ -839,6 +839,8 @@ const app=createApp({
       try{await navigator.clipboard.writeText(url);notify('Đã sao chép liên kết của đề. Mở được trên trình duyệt này.','success')}catch{notify('Không sao chép được. Liên kết: '+url,'error')}
     }
     // Home shortcuts that need the DOM (templates cannot reach document).
+    // PageUp / PageDown move between cases (pages), like Canva's page navigation; ignored while typing.
+    addEventListener('keydown',e=>{if(homeOpen.value||mode.value!=='exam'||!['PageUp','PageDown'].includes(e.key)||e.target.closest?.('input,textarea,select,[contenteditable]'))return;const next=activeCaseIndex.value+(e.key==='PageDown'?1:-1);if(next<0||next>=cases.value.length)return;e.preventDefault();selectCase(next)});
     function homeFocusPrompt(){homeSource.value='brief';homeCreateOpen.value=true;Vue.nextTick(()=>document.getElementById('home-ai-brief')?.focus())}
     function homeShowTemplates(){const d=document.querySelector('.home-template-disclosure');if(d){d.open=true;d.scrollIntoView({behavior:'smooth',block:'start'})}}
     // Export profiles (e.g. In A4 → black and white) shape the export preview only; the editor keeps its own colours.

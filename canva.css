@@ -686,3 +686,16 @@
 #app dialog.ai-studio .ai-send{border:0!important;background:linear-gradient(135deg,#7c3aed,#db2777)!important;color:#fff!important}
 #app dialog.ai-studio .ai-tool-menu>summary{border:0!important;background:#be185d!important;color:#fff!important}
 @media (max-width:760px){#app dialog.ai-studio .ai-send{justify-content:flex-start!important;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}#app dialog.ai-studio .ai-steps>button{min-height:40px;padding:4px 8px!important}}
+
+/* ===== Round 13: page actions, saved indicator ===== */
+#app .cv-page-wrap{position:relative;flex:0 0 auto}
+#app .cv-page-remove{position:absolute;top:-6px;right:-6px;width:22px;height:22px;display:grid;place-items:center;padding:0;border:0;border-radius:50%;background:#1f2430;color:#fff;cursor:pointer;opacity:0;transition:opacity .12s;box-shadow:0 2px 6px #0004}
+#app .cv-page-remove>svg{width:12px;height:12px}
+#app .cv-page-wrap:is(:hover,:focus-within) .cv-page-remove{opacity:1}
+@media (hover:none){#app .cv-page-wrap .cv-page.active~.cv-page-remove{opacity:1}}
+/* Saved state reads like Canva's cloud tick next to the title. */
+@media (min-width:761px){
+  #app#app#app#app .studio-workspace:not(.focused) .workbench-bar .session-save-state{display:inline-flex!important;align-items:center;gap:6px}
+  #app#app#app#app .studio-workspace:not(.focused) .workbench-bar .session-save-state::before{content:'';flex:0 0 auto;width:15px;height:15px;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z'/%3E%3Cpath d='m9 13.5 2 2 4-4'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z'/%3E%3Cpath d='m9 13.5 2 2 4-4'/%3E%3C/svg%3E") center/contain no-repeat}
+}
+#app#app#app .cv-page-remove{top:4px!important;right:4px!important;width:20px!important;height:20px!important;min-width:20px!important;min-height:20px!important;padding:0!important}
