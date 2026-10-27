@@ -123,7 +123,7 @@
     </section></div>
     <div class="workbench" :class="{'focus-mode':focusMode,'inspector-open':inspectorOpen||!!work.panel}">
       <div v-if="sheetOpen" class="toolbox-backdrop" @click="closeToolbox" aria-hidden="true"></div>
-      <div class="inspector-shell" v-show="inspectorOpen||!!work.panel"><div class="panel-resizer" role="separator" aria-label="Độ rộng bảng công cụ" aria-orientation="vertical" tabindex="0" :aria-valuenow="panelWidth" :aria-valuemin="260" :aria-valuemax="520" @pointerdown="startPanelResize" @pointermove="movePanelResize" @pointerup="panelDrag=null" @pointercancel="panelDrag=null" @lostpointercapture="panelDrag=null" @keydown.left.prevent="panelWidth=clamp(panelWidth+(panelOnLeft()?-20:20),260,520)" @keydown.right.prevent="panelWidth=clamp(panelWidth+(panelOnLeft()?20:-20),260,520)"></div><div id="studio-toolbox" class="toolbox" :data-next-panel="!!work.panel" :class="{'mobile-open':inputsOpen}" :role="sheetOpen?'dialog':'complementary'" :aria-modal="sheetOpen?'true':undefined" tabindex="-1" aria-label="Bảng công cụ" v-show="inspectorOpen||!!work.panel">
+      <div class="inspector-shell" v-show="inspectorOpen||!!work.panel"><div class="panel-resizer" role="separator" aria-label="Độ rộng bảng công cụ" aria-orientation="vertical" tabindex="0" :aria-valuenow="panelWidth" :aria-valuemin="260" :aria-valuemax="520" @pointerdown="startPanelResize" @pointermove="movePanelResize" @pointerup="panelDrag=null" @pointercancel="panelDrag=null" @lostpointercapture="panelDrag=null" @keydown.left.prevent="panelWidth=clamp(panelWidth+(panelOnLeft()?-20:20),260,520)" @keydown.right.prevent="panelWidth=clamp(panelWidth+(panelOnLeft()?20:-20),260,520)"></div><div id="studio-toolbox" class="toolbox" :data-next-panel="!!work.panel" :class="{'mobile-open':inputsOpen}" role="complementary" tabindex="-1" aria-label="Bảng công cụ" v-show="inspectorOpen||!!work.panel">
         <div class="toolbox-mobile-heading toolbox-heading" @pointerdown="sheetDrag"><div><small>BẢNG CÔNG CỤ</small><strong>{{work.panel?work.title:libraryOpen?'Ca mẫu':currentTool.label}}<span v-if="panelContext&&!libraryOpen" class="panel-context">{{panelContext}}</span></strong></div><div class="panel-heading-actions"><button type="button" class="icon-btn panel-dock-toggle" :aria-label="ui.panelMode==='overlay'?'Ghim bảng bên cạnh sản đồ':'Chuyển thành bảng nổi'" :aria-pressed="ui.panelMode!=='overlay'" :title="ui.panelMode==='overlay'?'Ghim bảng bên cạnh sản đồ':'Chuyển thành bảng nổi để mở rộng sản đồ'" @click="ui.panelMode=ui.panelMode==='overlay'?'dock':'overlay'"><app-icon :name="ui.panelMode==='overlay'?'panel-left-open':'panel-left-close'"></app-icon></button><button class="icon-btn close-toolbox-button" @click="work.panel?work.close():closeToolbox()" aria-label="Đóng bảng công cụ"><app-icon name="x"></app-icon></button></div></div>
 
         <next-workspace-panel v-if="work.panel" :work="work"></next-workspace-panel>
@@ -171,7 +171,7 @@
 </div>
       </div></div>
 
-      <div class="workarea" :inert="sheetOpen&&!work.panel"><next-timeline v-if="!focusMode" :work="work"></next-timeline><next-export-proof v-if="toolTab==='export'" :work="work"></next-export-proof>
+      <div class="workarea"><next-timeline v-if="!focusMode" :work="work"></next-timeline><next-export-proof v-if="toolTab==='export'" :work="work"></next-export-proof>
       <div v-if="toolTab==='guide'" class="model-context" :class="{'reference-locked':standard!=='lcg'}"><app-icon name="book-open"></app-icon><div><strong>{{modelSpec(standard).label}}</strong><span>{{standard==='who1993'?'Giữ trọn hai đường tham chiếu đến hoành độ 19; tịnh tiến một lần theo mẫu.':standard==='modified'?'Giữ trọn báo động và hành động đến 10 cm; khung tối thiểu 10 giờ.':'Pha tích cực từ 5 cm; dùng ngưỡng thời gian riêng cho từng mức mở.'}}</span></div><button class="text-btn" @click="selectTool('guide')">Xem căn cứ<app-icon name="arrow-up-right"></app-icon></button></div>
     <section v-if="toolTab==='guide'&&!focusMode" class="learning-panel" aria-label="Lưu đồ đọc sản đồ">
       <div class="learning-heading"><div><span class="badge">Tài liệu Bộ môn · 2020</span><h3>Đọc diễn biến, hiểu bối cảnh.</h3><p>Lưu đồ học tập dành cho sản đồ có đường báo động / hành động.</p></div><app-icon name="git-branch"></app-icon></div>
@@ -1023,7 +1023,8 @@ const app=createApp({
     const inspectorOpen=computed(()=>!homeOpen.value&&!focusMode.value&&toolTab.value!=='overview'&&!bedsideVisible.value);
     const sheetOpen=computed(()=>mobile.value&&inputsOpen.value&&inspectorOpen.value);
     const originalOverflow=document.body.style.overflow;
-    watch(sheetOpen,async open=>{document.body.style.overflow=open?'hidden':originalOverflow;if(open){await Vue.nextTick();document.querySelector('#studio-toolbox')?.focus()}});
+    // The docked/mobile inspector is non-modal; the chart and timeline remain operable.
+    watch(sheetOpen,()=>document.body.style.overflow=originalOverflow);
     const resizeUI=()=>{mobile.value=media.matches;if(!mobile.value)inputsOpen.value=false};media.addEventListener('change',resizeUI);
     try{theme.value=JSON.parse(localStorage.getItem('partograph-ui-v1')||'{}').theme==='dark'?'dark':'light'}catch{}
     watch(theme,value=>{document.documentElement.dataset.theme=value;document.documentElement.style.colorScheme=value;document.querySelector('meta[name=theme-color]')?.setAttribute('content',value==='dark'?'#131e26':'#ffffff');try{localStorage.setItem('partograph-ui-v1',JSON.stringify({theme:value}))}catch{}},{immediate:true});
@@ -1571,7 +1572,7 @@ const app=createApp({
       if(key==='?'&&!typing&&!mod){event.preventDefault();shortcutsOpen.value=true;return}
       if(key==='0'&&!typing&&!mod&&!event.altKey){event.preventDefault();selectTool('overview');return}
       if(mod&&key===','){event.preventDefault();openPreferences();return}
-      if(sheetOpen.value){if(event.key==='Escape'){event.preventDefault();closeToolbox();return}if(event.key==='Tab'){const nodes=[...document.querySelectorAll('#studio-toolbox button,#studio-toolbox input,#studio-toolbox select,#studio-toolbox textarea,#studio-toolbox a,#studio-tools-navigation button')].filter(el=>!el.disabled&&el.getClientRects().length);const first=nodes[0],last=nodes.at(-1);if(!first)return;if(event.shiftKey&&(document.activeElement===first||document.activeElement.id==='studio-toolbox')){event.preventDefault();last.focus()}else if(!event.shiftKey&&(document.activeElement===last||document.activeElement.id==='studio-toolbox')){event.preventDefault();first.focus()}}}
+      if(sheetOpen.value){if(event.key==='Escape'){event.preventDefault();closeToolbox();return}}
       if(mod&&event.key==='Enter'){event.preventDefault();const form=event.target.closest('form');if(form&&form.checkVisibility())form.requestSubmit();else commitDraft();return}
       if(event.altKey&&!mod&&['1','2','3','4'].includes(key)){event.preventDefault();selectTool(toolTabs[Number(key)-1].id);return}
       if(typing||event.target.closest('dialog'))return;

@@ -288,6 +288,38 @@ async function check(p,name,fn){await fn();console.log('PASS:',name);}
       assert.match(await p.locator('.next-ai-changes').innerText(),/AI thêm gì.*Sửa gì.*Giữ gì.*giả định/s);
       await app(p,a=>a.importerOpen=false);
     });
+    await check(p,'Layout width is remembered per space and semantic text passes contrast in both themes',async()=>{
+      await app(p,async a=>{await a.work.changeSpace('capture');a.work.layout('entry');await a.work.changeSpace('design');a.work.layout('chart');await a.work.changeSpace('capture')});
+      assert.equal(await app(p,a=>a.panelWidth),480);
+      await app(p,async a=>{await a.work.changeSpace('design')});
+      assert.equal(await app(p,a=>a.panelWidth),300);
+      await app(p,async a=>{await a.work.changeSpace('capture');a.work.error='Kiểm tra thông báo lỗi';a.work.message='Đã ghi nhận';a.work.set('fhr','152')});
+      for(const theme of ['light','dark']){
+        await p.evaluate(theme=>document.documentElement.dataset.theme=theme,theme);
+        await app(p,a=>{a.work.error='Kiểm tra thông báo lỗi';a.work.message='Đã ghi nhận'});
+        const ratios=await p.locator('.next-panel .next-error,.next-panel .next-success,.next-record-footer .btn.primary,.next-spaces [aria-checked=true]').evaluateAll(nodes=>{
+          const lum=rgb=>rgb.map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4}).reduce((v,c,i)=>v+c*[.2126,.7152,.0722][i],0);
+          return nodes.filter(e=>e.checkVisibility()&&!e.disabled).map(e=>{let bg=e;while(bg.parentElement&&getComputedStyle(bg).backgroundColor==='rgba(0, 0, 0, 0)')bg=bg.parentElement;const a=lum(getComputedStyle(e).color.match(/[\d.]+/g).slice(0,3).map(Number)),b=lum(getComputedStyle(bg).backgroundColor.match(/[\d.]+/g).slice(0,3).map(Number));return {text:e.innerText,ratio:(Math.max(a,b)+.05)/(Math.min(a,b)+.05)}});
+        });
+        assert.ok(ratios.length>=3);assert.ok(ratios.every(r=>r.ratio>=4.5),theme+' '+JSON.stringify(ratios));
+      }
+      await p.evaluate(()=>document.documentElement.dataset.theme='light');await app(p,a=>{a.work.discard();a.work.error='';a.work.message=''});
+    });
+    await check(p,'Touch first selects a point without changing data or hiding the timeline behind a modal',async()=>{
+      const touch=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,reducedMotion:'reduce'}),t=await touch.newPage();
+      try {
+        t.on('pageerror',e=>errors.push(e.message));await t.goto('http://127.0.0.1:'+server.address().port);await t.waitForSelector('#app:not([v-cloak])');
+        await app(t,async a=>{await a.createLibraryProject('clinical');a.work.set('fhr','142');await a.work.record();a.work.close();a.toolTab='overview';a.dataMode='drag'});
+        const before=await app(t,a=>JSON.stringify(a.activeCase));
+        const rect=await t.locator('.clinical-chart-card [data-point-hit][data-observation-field=fhr]').first().boundingBox();
+        await t.touchscreen.tap(rect.x+rect.width/2,rect.y+rect.height/2);
+        assert.equal(await app(t,a=>JSON.stringify(a.activeCase)),before);
+        assert.equal(await app(t,a=>a.work.selection[0]?.field),'fhr');
+        assert.equal(await t.locator('.chart-cell-editor').count(),0);
+        assert.equal(await t.locator('.workarea[inert]').count(),0);
+        assert.equal(await t.locator('#studio-toolbox[aria-modal=true]').count(),0);
+      } finally {await touch.close();}
+    });
     console.log('Runtime errors:',JSON.stringify(errors));
     assert.deepEqual(errors,[]);
   } finally {await browser.close();await new Promise(r=>server.close(r));}
