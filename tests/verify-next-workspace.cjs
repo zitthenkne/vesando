@@ -30,24 +30,24 @@ async function check(p,name,fn){await fn();console.log('PASS:',name);}
     p.on('console',m=>{if(m.type()==='error'&&!m.text().includes('Failed to load resource'))errors.push(m.text())});
     await p.goto('http://127.0.0.1:'+server.address().port);await p.waitForSelector('#app:not([v-cloak])');
     await p.locator('.home-template-disclosure>summary').click();await p.locator('.template-card').first().click();
-    await p.locator('.next-workspace-bar:visible').first().waitFor();
+    await p.locator('.workbench-bar .cv-present:visible').first().waitFor();
     await p.screenshot({path:path.join(output,'desktop.png'),fullPage:true});
     console.log('SCREENSHOT:',path.join(output,'desktop.png'));
     assert.deepEqual(errors,[],'No runtime errors');
-    await check(p,'Three spaces preserve the active case, time, draft and viewport',async()=>{
+    await check(p,'Switching tools (Dữ liệu / Trình bày / Trình chiếu) preserves the active case, time, draft and viewport',async()=>{
       await app(p,a=>a.work.go(1.5));
       const before=await app(p,a=>JSON.stringify(a.activeCase));
-      await p.getByRole('radio',{name:'Nhập & theo dõi',exact:true}).click();
+      await p.locator('.creation-rail').getByRole('button',{name:'Dữ liệu',exact:true}).click();
       await p.locator('#next-fhr').fill('143');
       assert.equal(await app(p,a=>a.work.changes.length),1);
       assert.equal(await app(p,a=>a.activeCase.observations.find(o=>o.time===1.5)?.fhr),JSON.parse(before).observations.find(o=>o.time===1.5)?.fhr);
       assert.equal(await p.locator('.next-draft-point').count(),1);
-      await p.getByRole('radio',{name:'Thiết kế',exact:true}).click();
+      await p.locator('.creation-rail').getByRole('button',{name:'Trình bày',exact:true}).click();
       assert.equal(await app(p,a=>a.viewTime),1.5);
-      await p.getByRole('radio',{name:'Trình chiếu',exact:true}).click();
+      await p.locator('.workbench-bar .cv-present').click();
       assert.equal(await app(p,a=>a.viewTime),1.5);
       assert.equal(await app(p,a=>JSON.stringify(a.activeCase)),before);
-      await p.getByRole('radio',{name:'Nhập & theo dõi',exact:true}).click();
+      await p.locator('.creation-rail').getByRole('button',{name:'Dữ liệu',exact:true}).click();
       assert.equal(await p.locator('#next-fhr').inputValue(),'143');
       assert.match(await p.locator('.session-save-state').innerText(),/Có bản nháp/);
       await p.locator('#next-fhr').press('Control+Enter');
@@ -79,7 +79,7 @@ async function check(p,name,fn){await fn();console.log('PASS:',name);}
       const project=await app(p,a=>({id:a.projectIDs[a.mode],kind:a.mode}));
       await p.reload();await p.waitForSelector('#app:not([v-cloak])');
       await app(p,(a,arg)=>a.openLibraryProject(arg.id,arg.kind),project);
-      await p.getByRole('radio',{name:'Nhập & theo dõi',exact:true}).click();await app(p,a=>a.work.go(7.75));
+      await p.locator('.creation-rail').getByRole('button',{name:'Dữ liệu',exact:true}).click();await app(p,a=>a.work.go(7.75));
       assert.equal(await p.locator('#next-fhr').inputValue(),'147');
       assert.equal(await app(p,a=>a.activeCase.observations.some(o=>o.time===7.75)),false);
       await app(p,a=>a.work.discard());
@@ -279,7 +279,7 @@ async function check(p,name,fn){await fn();console.log('PASS:',name);}
       await app(p,a=>{a.work.clearSelection();a.work.space='capture'});
     });
     await check(p,'One top bar on desktop and the floating panel never hides the selected point',async()=>{
-      assert.equal(await p.locator('.next-workspace-bar').count(),1);assert.ok(await p.locator('.workbench-bar .next-spaces').count()===1);
+      assert.equal(await p.locator('.next-workspace-bar').count(),1);assert.ok(await p.locator('.workbench-bar .cv-present').count()===1);
       const last=await app(p,a=>Math.max(...a.activeCase.observations.filter(o=>o.fhr!=null&&o.fhr!=='').map(o=>o.time)));
       await app(p,a=>{a.work.space='capture';a.work.panel='entry';a.inspectorOpen=true});await p.waitForTimeout(200);
       await app(p,async(a,t)=>{a.work.go(t);a.work.select({type:'point',field:'fhr',time:t});await a.work.ensureSelected()},last);await p.waitForTimeout(250);
@@ -429,7 +429,7 @@ async function check(p,name,fn){await fn();console.log('PASS:',name);}
     });
     await check(p,'Clinical mode uses the same sheet and has time-locked dragging by default',async()=>{
       await app(p,a=>a.createLibraryProject('clinical'));
-      await p.getByRole('radio',{name:'Nhập & theo dõi',exact:true}).click();
+      await p.locator('.creation-rail').getByRole('button',{name:'Dữ liệu',exact:true}).click();
       assert.equal(await app(p,a=>a.ui.dragAxis),'value');
       await p.locator('#next-fhr').fill('142');await p.locator('#next-fhr').press('Control+Enter');
       assert.equal(await app(p,a=>a.clinical.observations.find(o=>o.time===0).fhr),142);
@@ -517,7 +517,7 @@ async function check(p,name,fn){await fn();console.log('PASS:',name);}
       for(const theme of ['light','dark']){
         await p.evaluate(theme=>document.documentElement.dataset.theme=theme,theme);
         await app(p,a=>{a.work.error='Kiểm tra thông báo lỗi';a.work.message='Đã ghi nhận'});
-        const ratios=await p.locator('.next-panel .next-error,.next-panel .next-success,.next-record-footer .btn.primary,.next-spaces [aria-checked=true]').evaluateAll(nodes=>{
+        const ratios=await p.locator('.next-panel .next-error,.next-panel .next-success,.next-record-footer .btn.primary,.workbench-bar .quick-export').evaluateAll(nodes=>{
           const lum=rgb=>rgb.map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4}).reduce((v,c,i)=>v+c*[.2126,.7152,.0722][i],0);
           return nodes.filter(e=>e.checkVisibility()&&!e.disabled).map(e=>{let bg=e;while(bg.parentElement&&getComputedStyle(bg).backgroundColor==='rgba(0, 0, 0, 0)')bg=bg.parentElement;const a=lum(getComputedStyle(e).color.match(/[\d.]+/g).slice(0,3).map(Number)),b=lum(getComputedStyle(bg).backgroundColor.match(/[\d.]+/g).slice(0,3).map(Number));return {text:e.innerText,ratio:(Math.max(a,b)+.05)/(Math.min(a,b)+.05)}});
         });

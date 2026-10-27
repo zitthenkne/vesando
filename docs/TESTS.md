@@ -10,6 +10,7 @@ Chạy từ thư mục gốc. Script trình duyệt cần Playwright và Chrome;
 | `tests/verify-boot.cjs` | Trình duyệt | Khởi động, Vue tải chậm/không tải được, tài liệu xuất |
 | `tests/verify-next-workspace.cjs` | Trình duyệt | Luồng không gian làm việc: chọn, kéo, nháp, lớp, AI, cảm ứng, bố cục |
 | `tests/verify-direct-title.cjs` | Trình duyệt | Đổi tên ca trực tiếp ở nhiều độ rộng |
+| `tests/verify-layout.cjs` | Trình duyệt | Không có nút/nhãn chồng lấp, tràn khung hay chữ tràn khỏi nút; thông báo đúng cỡ — 2000/1366/1024/900/390 px × 7 trạng thái. Chạy sau mọi thay đổi CSS |
 | `tests/verify-routes.cjs` | Trình duyệt | Địa chỉ riêng của đề: Quay lại/Tới, tải lại, tab mới, mã sai, sao chép liên kết, lối tắt trang chủ |
 | `tests/verify-ai-comparison.cjs`, `tests/verify-ai-session.cjs` | Trình duyệt | Đối chiếu và phiên AI |
 

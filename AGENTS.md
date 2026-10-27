@@ -27,6 +27,8 @@ Nạp theo thứ tự, file sau đè file trước: `base → studio → workspa
 
 - Các lớp cũ dùng nhiều `!important` và bộ chọn `#app#app…`. **Sửa giao diện mới trong `canva.css`** (khung kiểu Canva: thanh trên, thanh trái, bảng ghim, vùng canvas, thanh thu phóng) thay vì thêm vào lớp cũ.
 - Màu dùng biến `--surface`, `--line`, `--brand`, `--brand-soft`, `--ink`; giao diện tối qua `:root[data-theme=dark]`.
+- Khung Canva áp dụng từ 761px trở lên; dưới 761px là bố cục điện thoại (thanh công cụ dưới, bảng trượt). Sau khi sửa CSS luôn chạy `node tests/verify-layout.cjs`.
+- Không có nút chuyển "không gian": công cụ ở thanh trái tự chọn chế độ (`spaceFor` trong `workspace-next.js`): Dữ liệu → nhập (kéo khóa giờ), Trình bày/Chú thích/Lớp → thiết kế. Trình chiếu là nút riêng trên thanh trên.
 
 ## Kiểm tra
 
