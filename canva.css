@@ -513,3 +513,63 @@
 #app#app#app .studio-workspace .workbench-bar details>div:is(.case-menu-list),#app#app#app .studio-workspace .workbench-bar .workspace-menu>div{border:0!important;border-radius:14px!important;box-shadow:0 12px 40px #0f172a2e,0 0 0 1px #0f172a0f!important;padding:6px!important;background:var(--surface)!important}
 #app#app#app .studio-workspace .workbench-bar :is(.case-menu-list,.workspace-menu>div) .btn{border:0!important;background:transparent!important;box-shadow:none!important;border-radius:10px!important;justify-content:flex-start;min-height:40px}
 #app#app#app .studio-workspace .workbench-bar :is(.case-menu-list,.workspace-menu>div) .btn:hover{background:var(--cv-hover)!important}
+
+/* ===== Round 9: phone editor and phone home ===== */
+@media (max-width:760px){
+  /* Top bar: the title gets the room; undo/redo only appear once there is something to undo. */
+  #app#app#app .studio-workspace:not(.focused) .workbench-bar .history-actions.idle{display:none!important}
+  #app#app#app .studio-workspace:not(.focused) .workbench-bar .session-title{flex:1 1 auto!important;min-width:0!important;max-width:none!important}
+  #app#app#app .studio-workspace:not(.focused) .workbench-bar .session-actions{gap:2px!important}
+  #app#app#app .studio-workspace:not(.focused) .workbench-bar .session-actions>:is(button,details>summary){width:40px!important;min-width:40px!important;height:40px!important;min-height:40px!important;border:0!important;background:transparent!important;box-shadow:none!important;border-radius:10px!important}
+  #app#app#app .studio-workspace:not(.focused) .workbench-bar .session-actions>:is(button,details>summary):active{background:var(--cv-hover)!important}
+  #app#app#app .studio-workspace:not(.focused) .workbench-bar .session-actions>.quick-export{display:none!important}
+  /* Timeline heading: date on the left, two compact text controls on the right, one line. */
+  #app#app .next-time-heading{flex-wrap:nowrap!important;gap:6px!important;overflow:hidden}
+  #app#app .next-time-heading>strong{font-size:14px;white-space:nowrap}
+  #app#app .next-time-heading>:is(.next-timeline-toggle,.next-exact-time){margin-left:auto}
+  #app#app .next-time-heading>.next-exact-time{margin-left:0}
+  #app#app .next-time-heading :is(.next-timeline-toggle,.next-exact-time>summary){font-size:0!important;gap:0!important;width:36px;height:36px;justify-content:center;border-radius:10px!important}
+  #app#app .next-time-heading :is(.next-timeline-toggle,.next-exact-time>summary)>svg{width:18px;height:18px}
+  #app#app .next-time-heading .next-timeline-toggle::before{content:'';width:18px;height:18px;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M3 12h18M7 8v8M12 8v8M17 8v8'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M3 12h18M7 8v8M12 8v8M17 8v8'/%3E%3C/svg%3E") center/contain no-repeat}
+  #app#app .next-time-heading .next-timeline-toggle>svg{display:none}
+  /* Standard picker and view menu: one slim row of pills. */
+  #app#app#app .studio-workspace:not(.focused) .workarea .chart-viewbar{padding:6px 10px!important;gap:8px;background:transparent!important;border:0!important}
+  #app#app#app .studio-workspace:not(.focused) .workarea .standard-picker{min-height:40px!important;height:40px;border:0!important;border-radius:999px!important;background:var(--surface)!important;box-shadow:var(--cv-pill-shadow);padding:0 0 0 12px!important}
+  #app#app#app .studio-workspace:not(.focused) .workarea .standard-picker>span{display:none}
+  #app#app#app .studio-workspace:not(.focused) .workarea .standard-picker select{border:0!important;background-color:transparent!important;min-height:38px!important;font-weight:600}
+  #app#app#app .studio-workspace:not(.focused) .workarea .view-menu>summary{min-height:40px!important;height:40px;border:0!important;border-radius:999px!important;background:var(--surface)!important;box-shadow:var(--cv-pill-shadow)}
+  /* Under the page: zoom actions and the page toggle share one row; no white slab. */
+  #app#app#app .studio-workspace:not(.focused) .workarea{min-height:0!important;padding-bottom:0!important}
+  #app#app#app .studio-workspace:not(.focused) .workarea .chart-frame>.next-canvas-controls{margin:10px 10px 0!important}
+  #app#app#app .studio-workspace:not(.focused) .workarea>.cv-pages{order:0;position:absolute;right:10px;bottom:auto;margin-top:-50px;padding:0!important;background:transparent!important;border:0!important}
+  #app#app#app .studio-workspace:not(.focused) .workarea>.cv-pages.open{position:static;margin:10px 0 0;padding:8px 10px!important;background:var(--surface)!important;border-top:1px solid var(--line)!important}
+  #app#app#app .studio-workspace:not(.focused) .workarea .cv-pages-toggle{min-height:40px;padding:0 14px;border-radius:999px;background:var(--surface);box-shadow:var(--cv-pill-shadow)}
+  #app#app#app .studio-workspace:not(.focused) .workarea .next-zoom-actions .btn{min-height:40px!important}
+  /* Export proof header on one line; its hint is a desktop affordance. */
+  #app#app#app .workarea .next-export-proof{padding:10px 12px 20px!important}
+  #app#app#app .workarea .next-export-proof>header>span{display:none}
+  #app#app#app .workarea .next-export-proof>header>strong{white-space:nowrap}
+  /* Bottom tool bar: active tool is a filled pill around the icon (Canva mobile). */
+  #app#app#app .studio-workspace:not(.focused)>.creation-rail>button{background:transparent!important}
+  #app#app#app .studio-workspace:not(.focused)>.creation-rail>button>svg{padding:4px 14px;width:52px!important;height:30px!important;border-radius:999px;box-sizing:border-box}
+  #app#app#app .studio-workspace:not(.focused)>.creation-rail>button[aria-pressed=true]{color:var(--brand,#0f766e)!important}
+  #app#app#app .studio-workspace:not(.focused)>.creation-rail>button[aria-pressed=true]>svg{background:var(--brand-soft,#e6f4f1)}
+  /* Home: filters, tag, search and sort fold into two compact rows. */
+  #app#app#app .project-home .library-filters{display:flex!important;align-items:center;gap:8px;flex-wrap:nowrap}
+  #app#app#app .project-home .library-filters>[role=group]{flex:1 1 auto;min-width:0;display:flex;gap:2px;padding:3px;border-radius:12px;background:var(--cv-tile)}
+  #app#app#app .project-home .library-filters>[role=group]>button{flex:1;min-height:36px;padding:0 6px;font-size:12px;border:0;border-radius:9px;white-space:nowrap}
+  #app#app#app .project-home .library-filters>[role=group]>button.active{background:var(--surface);box-shadow:0 1px 3px #0f172a1f}
+  #app#app#app .project-home .library-filters>.library-tag-filter{flex:0 0 auto;max-width:42%}
+  #app#app#app .project-home .library-controls{display:grid!important;grid-template-columns:1fr auto auto;gap:8px;align-items:center}
+  #app#app#app .project-home .library-controls>.library-search{grid-column:1/-1}
+}
+@media (max-width:760px){
+  #app#app#app#app .studio-workspace:not(.focused) .workarea>.cv-pages:not(.open){position:relative!important;align-self:flex-end;margin:-50px 10px 0 0!important;z-index:5;right:auto;transform:none!important}
+  #app#app#app#app .studio-workspace:not(.focused) .workarea{padding-bottom:12px!important}
+  #app#app#app .project-home .library-filters>.library-tag-filter{max-width:34%;font-size:13px}
+  #app#app#app .project-home .library-filters>.library-tag-filter select{font-size:13px!important;min-width:0;width:100%}
+  #app#app#app .project-home .library-filters>[role=group]>button{display:inline-flex;align-items:center;justify-content:center;gap:4px}
+  #app#app#app .project-home .library-filters>[role=group]>button>svg{width:14px;height:14px}
+}
+@media (max-width:760px){#app#app#app#app .studio-workspace:not(.focused) .workarea>.cv-pages{order:99!important}#app#app#app#app .studio-workspace:not(.focused) .workarea{min-height:0!important}#app#app#app .project-home .library-filters>.library-tag-filter{max-width:30%}}
+@media (max-width:760px){#app#app#app#app .studio-workspace:not(.focused) .workarea .next-zoom-actions .btn{font-size:0!important;gap:0!important;width:44px;padding:0!important;justify-content:center}#app#app#app#app .studio-workspace:not(.focused) .workarea .next-zoom-actions .btn>svg:not(:first-child){display:none}#app#app#app#app .studio-workspace:not(.focused) .workarea :is(.workspace,.case-list,.case-card,.chart-frame,.chart-scroll){flex:0 0 auto!important}}
