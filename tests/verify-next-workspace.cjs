@@ -411,9 +411,11 @@ async function check(p,name,fn){await fn();console.log('PASS:',name);}
       assert.equal(label,'00:30 · 27/10/2026');
       await app(p,a=>a.work.open('library'));
       assert.ok(await p.locator('.next-library-item').count()>0);
-      await p.getByLabel('Ghim công cụ',{exact:true}).click();
+      // Desktop keeps extra tools in the rail's "Thêm" menu; narrow layouts keep the top-bar pin menu.
+      const more=p.locator('summary[aria-label="Thêm công cụ"]:visible, summary[aria-label="Ghim công cụ"]:visible').first();
+      await more.click();
       assert.ok(await p.locator('.next-pin-menu[open]').count());
-      await p.getByLabel('Ghim công cụ',{exact:true}).click();
+      await more.click();
     });
     await check(p,'Clinical mode uses the same sheet and has time-locked dragging by default',async()=>{
       await app(p,a=>a.createLibraryProject('clinical'));

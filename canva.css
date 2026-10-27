@@ -1,26 +1,73 @@
 /* Canva-style editor shell. Loaded last; owns the desktop frame so older layers need not be edited.
    Frame: full-height rail · side panel docked beside the rail (pushes, never covers) · grey canvas with the page centred · floating zoom pill. */
-:root{--cv-top:64px;--cv-rail:80px;--cv-canvas:#eceef1;--cv-page-shadow:0 1px 2px #0f172a14,0 6px 24px #0f172a14;--cv-pill-shadow:0 2px 8px #0f172a1f,0 0 0 1px #0f172a0d}
-:root[data-theme=dark]{--cv-canvas:#141a1f;--cv-page-shadow:0 0 0 1px #ffffff14,0 8px 28px #0008;--cv-pill-shadow:0 2px 10px #0009,0 0 0 1px #ffffff14}
-@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--cv-canvas:#141a1f;--cv-page-shadow:0 0 0 1px #ffffff14,0 8px 28px #0008;--cv-pill-shadow:0 2px 10px #0009,0 0 0 1px #ffffff14}}
+:root{--cv-top:60px;--cv-rail:76px;--cv-canvas:#eceef1;--cv-hover:#eef2f4;--cv-tile:#f3f5f7;--cv-bar:linear-gradient(90deg,#0f766e 0%,#0e7490 48%,#4338ca 100%);--cv-bar-ink:#0f5f59;--cv-page-shadow:0 1px 2px #0f172a14,0 6px 24px #0f172a14;--cv-pill-shadow:0 2px 8px #0f172a1f,0 0 0 1px #0f172a0d;--cv-panel-shadow:6px 0 24px -12px #0f172a40}
+:root[data-theme=dark]{--cv-canvas:#141a1f;--cv-hover:#ffffff14;--cv-tile:#ffffff0d;--cv-bar:linear-gradient(90deg,#0b4f4a 0%,#0c4a5e 48%,#312e81 100%);--cv-bar-ink:#0b4f4a;--cv-page-shadow:0 0 0 1px #ffffff14,0 8px 28px #0008;--cv-pill-shadow:0 2px 10px #0009,0 0 0 1px #ffffff14;--cv-panel-shadow:6px 0 24px -12px #000c}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--cv-canvas:#141a1f;--cv-hover:#ffffff14;--cv-tile:#ffffff0d;--cv-bar:linear-gradient(90deg,#0b4f4a 0%,#0c4a5e 48%,#312e81 100%);--cv-bar-ink:#0b4f4a;--cv-page-shadow:0 0 0 1px #ffffff14,0 8px 28px #0008;--cv-pill-shadow:0 2px 10px #0009,0 0 0 1px #ffffff14;--cv-panel-shadow:6px 0 24px -12px #000c}}
 
 @media (min-width:1100px){
-  /* Top bar spans the full width (over the rail column); rail starts below it. */
-  #app#app#app#app .studio-workspace:not(.focused)>.creation-rail{top:var(--cv-top)!important;bottom:0!important;height:auto!important;width:var(--cv-rail)!important;padding:8px 8px 12px!important;gap:2px!important;z-index:24;border-right:1px solid var(--line)!important;background:var(--surface)!important}
-  #app#app#app#app .studio-workspace:not(.focused)>.creation-rail>button{min-height:62px!important;border-radius:10px!important;font-size:11px!important;font-weight:600}
-  #app#app#app#app .studio-workspace:not(.focused)>.creation-rail>button[aria-pressed=true]{background:var(--brand-soft,#e6f4f1)!important;color:var(--brand,#0f766e)!important}
-  #app#app#app#app .studio-workspace:not(.focused) .workspace-home{flex:0 0 auto;margin:0 calc((var(--cv-rail) - 44px)/2 - 16px) 0 calc((var(--cv-rail) - 44px)/2)!important;width:44px;height:44px;border-radius:12px}
+  /* Rail: same white sheet as the panel (no divider between them); each tool is an icon tile with its label underneath. */
+  #app#app#app#app .studio-workspace:not(.focused)>.creation-rail{top:var(--cv-top)!important;bottom:0!important;height:auto!important;width:var(--cv-rail)!important;padding:10px 6px 12px!important;gap:4px!important;z-index:24;border:0!important;background:var(--surface)!important;box-shadow:none!important}
+  #app#app#app#app .studio-workspace:not(.focused)>.creation-rail>button,#app#app#app#app .studio-workspace:not(.focused)>.creation-rail>.rail-more>summary{min-height:64px!important;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:0!important;border-radius:12px!important;background:transparent!important;color:var(--muted,#586b80)!important;font-size:11px!important;font-weight:600;cursor:pointer;list-style:none;padding:6px 2px!important;transition:color .15s}
+  #app#app#app#app .studio-workspace:not(.focused)>.creation-rail>.rail-more>summary::-webkit-details-marker{display:none}
+  #app#app#app#app .studio-workspace:not(.focused)>.creation-rail>button>svg,#app#app#app#app .studio-workspace:not(.focused)>.creation-rail>.rail-more>summary>svg{width:40px!important;height:40px!important;padding:9px;border-radius:12px;transition:background .15s,color .15s;box-sizing:border-box}
+  #app#app#app#app .studio-workspace:not(.focused)>.creation-rail>button:hover,#app#app#app#app .studio-workspace:not(.focused)>.creation-rail>.rail-more>summary:hover{color:var(--ink)!important}
+  #app#app#app#app .studio-workspace:not(.focused)>.creation-rail>button:hover>svg,#app#app#app#app .studio-workspace:not(.focused)>.creation-rail>.rail-more>summary:hover>svg{background:var(--cv-hover)}
+  #app#app#app#app .studio-workspace:not(.focused)>.creation-rail>button[aria-pressed=true],#app#app#app#app .studio-workspace:not(.focused)>.creation-rail>.rail-more[open]>summary{color:var(--brand,#0f766e)!important;background:transparent!important}
+  #app#app#app#app .studio-workspace:not(.focused)>.creation-rail>button[aria-pressed=true]>svg,#app#app#app#app .studio-workspace:not(.focused)>.creation-rail>.rail-more[open]>summary>svg{background:var(--brand-soft,#e6f4f1);color:var(--brand,#0f766e)}
+  #app#app#app#app .studio-workspace:not(.focused)>.creation-rail>.next-rail-divider{margin:4px 14px;opacity:.6}
+  /* Export lives in the top bar (Canva's Share); the rail keeps only creation tools. */
+  #app#app#app#app .studio-workspace:not(.focused)>.creation-rail>button[data-tool=export]{display:none!important}
 
-  /* Workspace: starts after the rail, no outer gutters. */
+  /* "Thêm": Canva's Apps drawer — a grid of tool tiles, each with a pin toggle. */
+  #app .creation-rail>.rail-more{position:relative}
+  #app#app .creation-rail .rail-more-panel{position:absolute;left:calc(100% + 10px);right:auto;top:auto;bottom:0;height:auto;min-width:0;max-height:calc(100dvh - var(--cv-top) - 24px);overflow:auto;z-index:40;width:300px;padding:14px;background:var(--surface);color:var(--ink);border-radius:16px;box-shadow:0 12px 40px #0f172a2e,0 0 0 1px #0f172a0f;display:grid;gap:12px}
+  #app .rail-more-panel>strong{font-size:14px}
+  #app .rail-more-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  #app .rail-more-item{position:relative}
+  #app .rail-more-open{width:100%;min-height:84px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:12px 8px;border:0;border-radius:12px;background:var(--cv-tile);color:var(--ink);font:600 12px/1.25 inherit;text-align:center;cursor:pointer;transition:background .15s,transform .15s}
+  #app .rail-more-open:hover{background:var(--brand-soft,#e6f4f1);transform:translateY(-1px)}
+  #app .rail-more-open>svg{width:24px;height:24px;color:var(--brand,#0f766e)}
+  #app .rail-more-pin{position:absolute;top:4px;right:4px;width:28px;height:28px;display:grid;place-items:center;border:0;border-radius:8px;background:transparent;color:var(--muted);cursor:pointer;opacity:0;transition:opacity .15s}
+  #app .rail-more-item:hover .rail-more-pin,#app .rail-more-pin:focus-visible,#app .rail-more-item.pinned .rail-more-pin{opacity:1}
+  #app .rail-more-item.pinned .rail-more-pin{color:var(--brand,#0f766e)}
+  #app .rail-more-pin>svg{width:15px;height:15px}
+  #app .rail-more-guided{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--muted)}
+
+  /* Top bar: Canva's gradient header — few controls, white on brand, one primary action (Xuất). */
   #app#app#app#app main.studio-workspace:not(.focused){margin-left:var(--cv-rail)!important;padding:0!important;width:auto!important;max-width:none!important;min-height:100dvh}
-  #app#app#app#app main.studio-workspace:not(.focused)>.workbench-bar{margin:0 0 0 calc(-1*var(--cv-rail))!important;padding:0 16px 0 0!important;min-height:var(--cv-top)!important;height:var(--cv-top);display:flex;align-items:center;border-bottom:1px solid var(--line)!important;background:var(--surface)!important;position:sticky!important;top:0!important;z-index:25}
-  #app#app#app#app main.studio-workspace:not(.focused)>.workbench-bar>.session-toolbar{width:100%;min-height:0}
+  #app#app#app#app main.studio-workspace:not(.focused)>.workbench-bar{margin:0 0 0 calc(-1*var(--cv-rail))!important;padding:0 16px 0 0!important;min-height:var(--cv-top)!important;height:var(--cv-top);display:flex;align-items:center;border:0!important;background:var(--cv-bar)!important;box-shadow:none!important;position:sticky!important;top:0!important;z-index:25;color:#fff}
+  #app#app#app#app main.studio-workspace:not(.focused)>.workbench-bar>.session-toolbar{width:100%;min-height:0;gap:6px;background:transparent!important;border:0!important;box-shadow:none!important}
+  #app#app#app#app .studio-workspace:not(.focused) .workspace-home{flex:0 0 auto;margin:0 calc((var(--cv-rail) - 44px)/2 - 6px) 0 calc((var(--cv-rail) - 44px)/2)!important;width:44px;height:44px;border-radius:12px}
+  #app#app#app#app .studio-workspace:not(.focused) .workbench-bar :is(.workspace-home,.history-actions .icon-btn,.case-menu-arrow,.next-save,.next-ai-entry,.workspace-search,.workspace-menu>summary,.tool-groups>summary,.steps-pill>summary){color:#fff!important;background:transparent!important;border:0!important;box-shadow:none!important}
+  #app#app#app#app .studio-workspace:not(.focused) .workbench-bar :is(.workspace-home,.history-actions .icon-btn,.case-menu-arrow,.next-save,.next-ai-entry,.workspace-search,.workspace-menu>summary,.tool-groups>summary,.steps-pill>summary):hover{background:#ffffff26!important}
+  #app#app#app#app .studio-workspace:not(.focused) .workbench-bar .history-actions .icon-btn:disabled{opacity:.45}
+  #app#app#app#app .studio-workspace:not(.focused) .workbench-bar .session-title,#app#app#app#app .studio-workspace:not(.focused) .workbench-bar .session-title :is(button,strong,span,input){color:#fff!important}
+  #app#app#app#app .studio-workspace:not(.focused) .workbench-bar .session-title input{background:#ffffff1f!important;border-color:#ffffff66!important}
+  #app#app#app#app .studio-workspace:not(.focused) .workbench-bar .session-save-state{color:#ffffffc7!important}
+  /* Menus that drop from the bar keep normal page colours. */
+  #app#app#app#app .studio-workspace:not(.focused) .workbench-bar details>:is(div,nav,ol){color:var(--ink)}
+  /* Workspace switcher: a translucent segmented pill; the active space is a white chip. */
+  #app#app#app#app .studio-workspace:not(.focused) .workbench-bar .next-workspace-bar{background:transparent!important;border:0!important;padding:0!important;margin:0 auto!important}
+  #app#app#app#app .studio-workspace:not(.focused) .workbench-bar .next-spaces{background:#ffffff1f!important;border:0!important;border-radius:12px!important;padding:3px!important;gap:2px}
+  #app#app#app#app .studio-workspace:not(.focused) .workbench-bar .next-spaces>button{color:#ffffffe0!important;background:transparent!important;border:0!important;border-radius:9px!important;min-height:36px!important;padding:0 14px!important;font-size:13px!important;font-weight:600}
+  #app#app#app#app .studio-workspace:not(.focused) .workbench-bar .next-spaces>button:hover{background:#ffffff1f!important}
+  #app#app#app#app .studio-workspace:not(.focused) .workbench-bar .next-spaces>button[aria-checked=true]{background:#fff!important;color:var(--cv-bar-ink)!important;box-shadow:0 1px 3px #0003}
+  #app#app#app#app .studio-workspace:not(.focused) .workbench-bar .next-layout{display:none!important}
+  /* Guided steps: progress dots only in the bar; the step list opens from them. */
+  #app#app#app#app .studio-workspace:not(.focused) .workbench-bar .header-steps .steps-now{display:none!important}
+  #app#app#app#app .studio-workspace:not(.focused) .workbench-bar .header-steps>summary{min-height:36px;padding:0 10px!important;border-radius:999px!important}
+  #app#app#app#app .studio-workspace:not(.focused) .workbench-bar .header-steps .steps-dots i{background:#ffffff59}
+  #app#app#app#app .studio-workspace:not(.focused) .workbench-bar .header-steps .steps-dots i.done{background:#fff}
+  #app#app#app#app .studio-workspace:not(.focused) .workbench-bar .header-steps .steps-dots i.next{background:#fde68a;box-shadow:0 0 0 3px #fde68a55}
+  #app#app#app#app .studio-workspace:not(.focused) .workbench-bar .quick-export{display:inline-flex!important;align-items:center;gap:6px;width:auto!important;min-width:0!important;min-height:40px!important;padding:0 18px!important;border:0!important;border-radius:10px!important;background:#fff!important;color:var(--cv-bar-ink)!important;font-size:14px!important;font-weight:700;box-shadow:0 1px 3px #0003}
+  #app#app#app#app .studio-workspace:not(.focused) .workbench-bar .quick-export>*{display:inline!important}
+  #app#app#app#app .studio-workspace:not(.focused) .workbench-bar .quick-export:hover{background:#f1f5f9!important}
 
   /* Panel docked beside the rail; the canvas takes the rest of the width. */
   #app#app#app#app .studio-workspace:not(.focused)>.workbench{margin:0!important;padding:0!important;gap:0!important;min-height:calc(100dvh - var(--cv-top))!important;grid-template-columns:minmax(0,1fr)!important;background:var(--cv-canvas)}
   #app#app#app#app .studio-workspace:not(.focused)>.workbench.inspector-open{grid-template-columns:var(--inspector-width,360px) minmax(0,1fr)!important}
   #app#app#app#app .studio-workspace:not(.focused)>.workbench.inspector-open>.inspector-shell{position:sticky!important;top:var(--cv-top)!important;left:auto!important;right:auto!important;bottom:auto!important;grid-column:1!important;grid-row:1!important;width:auto!important;height:calc(100dvh - var(--cv-top))!important;z-index:6;align-self:start}
-  #app#app#app#app .studio-workspace:not(.focused)>.workbench.inspector-open>.inspector-shell>.toolbox{height:100%!important;max-height:none!important;min-height:0!important;border:0!important;border-right:1px solid var(--line)!important;border-radius:0!important;box-shadow:none!important;background:var(--surface)!important;overflow:auto}
+  #app#app#app#app .studio-workspace:not(.focused)>.workbench.inspector-open>.inspector-shell>.toolbox{height:100%!important;max-height:none!important;min-height:0!important;border:0!important;border-radius:0!important;box-shadow:var(--cv-panel-shadow)!important;background:var(--surface)!important;overflow:auto;padding:0 16px 20px!important}
   /* Panel content: Canva-like density — short sticky header, list rows as hoverable tiles instead of ruled lines. */
   #app#app#app#app .studio-workspace:not(.focused) .toolbox .toolbox-heading{min-height:56px!important;padding:8px 0!important;margin:0 0 8px!important}
   #app#app#app#app .studio-workspace:not(.focused) .toolbox .toolbox-heading strong{font-size:16px;font-weight:700}
@@ -48,11 +95,15 @@
   #app#app#app#app .studio-workspace:not(.focused) .workarea .next-zoom-actions .btn:hover,#app#app#app#app .studio-workspace:not(.focused) .workarea .next-zoom-actions .btn[aria-pressed=true]{background:var(--brand-soft,#e6f4f1)!important;color:var(--brand,#0f766e)}
 
   /* Compact canvas header: the standard picker and view menu are small controls, not a full row. */
-  #app#app#app#app .studio-workspace:not(.focused) .workarea .standard-picker{min-height:36px!important;height:36px;width:auto!important;border-radius:10px!important;padding:0 0 0 10px!important;gap:6px}
+  #app#app#app#app .studio-workspace:not(.focused) .workarea .standard-picker{min-height:36px!important;height:36px;width:auto!important;border:0!important;border-radius:999px!important;padding:0 0 0 12px!important;gap:6px;background:var(--surface)!important;box-shadow:var(--cv-pill-shadow)}
+  #app#app#app#app .studio-workspace:not(.focused) .workarea .standard-picker select{border:0!important;background-color:transparent!important;border-radius:999px!important}
+  #app#app#app#app .studio-workspace:not(.focused) .workarea .view-menu>summary{border:0!important;border-radius:999px!important;background:var(--surface)!important;box-shadow:var(--cv-pill-shadow)}
   #app#app#app#app .studio-workspace:not(.focused) .workarea .standard-picker select{min-height:34px!important;height:34px;font-size:13px!important;padding-block:0!important}
   #app#app#app#app .studio-workspace:not(.focused) .workarea .view-menu>summary,#app#app#app#app .studio-workspace:not(.focused) .workarea .view-menu>button{min-height:36px!important;height:36px;font-size:13px}
   #app#app#app#app .studio-workspace:not(.focused) .workarea{container-type:inline-size;container-name:canvas}
 }
+/* Below desktop the rail is a bottom bar; extra tools stay in the top-bar pin menu. */
+@media (max-width:1099px){#app .creation-rail>.rail-more{display:none!important}}
 /* Phone: the canvas fills the space between the top bars and the bottom tool bar; controls sit under the page, never on it. */
 @media (max-width:760px){
   #app#app#app#app .studio-workspace:not(.focused) .workarea{display:flex;flex-direction:column;min-height:calc(100dvh - 152px - 68px);margin:0!important;padding:0 0 8px!important;background:var(--cv-canvas)}
