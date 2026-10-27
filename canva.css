@@ -612,3 +612,24 @@
 }
 /* Mode buttons in the data panel wrap their label instead of spilling. */
 #app#app#app .studio-workspace .toolbox .data-tools button{white-space:normal!important;min-width:0;overflow-wrap:anywhere}
+
+/* ===== Round 11: Theo dõi mode joins the Canva canvas; toasts at the bottom like Canva ===== */
+@media (min-width:761px){
+  #app#app#app#app .studio-workspace:not(.focused) .workarea>.clinical-section,#app#app#app#app .studio-workspace:not(.focused) .workarea .clinical-live-workspace{flex:1 1 auto;min-height:0;display:flex!important;flex-direction:column;margin:0!important;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important}
+  #app#app#app#app .studio-workspace:not(.focused) .workarea .clinical-live-workspace>:not(.clinical-chart-card){flex:0 0 auto}
+  #app#app#app#app .studio-workspace:not(.focused) .workarea .clinical-chart-card{flex:1 1 auto;min-height:0;margin:0!important;padding:0!important;border:0!important;box-shadow:none!important;background:transparent!important;border-radius:0!important}
+}
+/* Toasts: bottom centre above the canvas footer (Canva), clear of the timeline and title. */
+@media (min-width:761px){#app#app .toast{top:auto!important;bottom:72px!important}#app#app .project-home~.toast{top:auto!important;bottom:28px!important}}
+@keyframes cv-pop{from{opacity:0;transform:translate(-50%,8px)}}
+/* The toast already says it; the panel's copy of the same success line is dropped while the toast is up. */
+#app#app:has(.toast[data-tone=success]) .next-panel .next-success{display:none!important}
+/* Field state: a small chip after the label (đã ghi = green, nháp = blue), label never wraps under it. */
+#app#app#app .studio-workspace .toolbox .next-field-state{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:999px;font-size:10.5px!important;font-weight:700;background:var(--cv-tile);color:var(--muted)!important;white-space:nowrap;vertical-align:1px}
+#app#app#app .studio-workspace .toolbox .next-field[data-state=recorded] .next-field-state{background:#dcfce7;color:#15803d!important}
+#app#app#app .studio-workspace .toolbox .next-field[data-state=draft] .next-field-state{background:#dbeafe;color:#1d4ed8!important}
+:root[data-theme=dark] #app#app#app .studio-workspace .toolbox .next-field[data-state=recorded] .next-field-state{background:#14532d;color:#86efac!important}
+:root[data-theme=dark] #app#app#app .studio-workspace .toolbox .next-field[data-state=draft] .next-field-state{background:#1e3a8a;color:#bfdbfe!important}
+/* Timeline: moments without data read as placeholders, recorded ones stay solid. */
+#app#app .next-moment-track>button:not(.recorded):not(.active){background:transparent!important;box-shadow:inset 0 0 0 1px var(--line)!important;color:var(--muted)!important}
+#app#app .next-moment-track>button:not(.recorded):not(.active)>.next-moment-flags{display:none}
