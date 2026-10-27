@@ -633,3 +633,56 @@
 /* Timeline: moments without data read as placeholders, recorded ones stay solid. */
 #app#app .next-moment-track>button:not(.recorded):not(.active){background:transparent!important;box-shadow:inset 0 0 0 1px var(--line)!important;color:var(--muted)!important}
 #app#app .next-moment-track>button:not(.recorded):not(.active)>.next-moment-flags{display:none}
+
+/* ===== Round 12: AI dialog, Canva-style — one prompt box first, chips, quiet chrome ===== */
+#app dialog.ai-studio{border:0!important;border-radius:24px!important;box-shadow:0 30px 80px #0f172a59!important}
+#app dialog.ai-studio::backdrop{background:#0f172a73;backdrop-filter:blur(3px)}
+#app dialog.ai-studio .json-workbench-heading{border:0!important;padding-bottom:4px!important}
+#app dialog.ai-studio .json-workbench-heading p{display:none}
+#app dialog.ai-studio .json-workbench-heading .icon-btn{border:0!important;background:transparent!important;box-shadow:none!important;border-radius:12px!important}
+#app dialog.ai-studio .json-workbench-heading .icon-btn:hover{background:var(--cv-hover)!important}
+#app dialog.ai-studio .ai-heading-mark{background:linear-gradient(135deg,#7c3aed,#db2777)!important;color:#fff!important;border:0!important;border-radius:12px!important}
+/* Steps: pills with a connecting line, current one filled. */
+#app dialog.ai-studio .ai-steps{border:0!important;gap:6px;padding:4px 24px 12px!important}
+#app dialog.ai-studio .ai-steps>button{border:0!important;border-radius:999px!important;background:var(--cv-tile)!important;box-shadow:none!important;padding:6px 14px 6px 6px!important;min-height:44px}
+#app dialog.ai-studio .ai-steps>button small{display:none}
+#app dialog.ai-studio .ai-steps>button.active{background:var(--brand-soft,#e6f4f1)!important;color:var(--brand,#0f766e)}
+#app dialog.ai-studio .ai-steps>button b{border:0!important;background:var(--surface)!important}
+#app dialog.ai-studio .ai-steps>button.active b{background:var(--brand,#0f766e)!important;color:var(--cv-on-brand)!important}
+/* Compose column: intro gone (header says it), the idea box right under the mode switch. */
+#app dialog.ai-studio .ai-compose-intro{display:none!important}
+#app dialog.ai-studio .prompt-setup{display:flex!important;flex-direction:column;gap:14px}
+#app dialog.ai-studio .prompt-setup>.prompt-kind{order:1}
+#app dialog.ai-studio .prompt-setup>.ai-mode-hint{order:2;margin:-6px 0 0!important}
+#app dialog.ai-studio .prompt-setup>.prompt-subject{order:3}
+#app dialog.ai-studio .prompt-setup>.ai-suggestion-disclosure{order:4}
+#app dialog.ai-studio .prompt-setup>.ai-feature-selection{order:5}
+#app dialog.ai-studio .prompt-setup>*{order:6}
+#app dialog.ai-studio .prompt-setup>:is(.prompt-kind,.ai-mode-hint,.prompt-subject,.ai-suggestion-disclosure,.ai-feature-selection){margin-top:0}
+/* Mode switch: segmented pill. */
+#app dialog.ai-studio .prompt-kind{display:flex!important;gap:4px;padding:4px!important;border:0!important;border-radius:14px!important;background:var(--cv-tile)!important}
+#app dialog.ai-studio .prompt-kind>button{flex:1;border:0!important;border-radius:10px!important;background:transparent!important;box-shadow:none!important;min-height:40px}
+#app dialog.ai-studio .prompt-kind>button.active{background:var(--surface)!important;box-shadow:0 1px 3px #0f172a26!important;color:var(--brand,#0f766e)}
+/* Idea box: big, soft, focus ring. */
+#app dialog.ai-studio .prompt-subject textarea{border:1px solid transparent!important;border-radius:16px!important;background:var(--cv-tile)!important;box-shadow:none!important;padding:14px 16px!important;font-size:15px;min-height:150px}
+#app dialog.ai-studio .prompt-subject textarea:focus{background:var(--surface)!important;border-color:var(--brand,#0f766e)!important;box-shadow:0 0 0 4px var(--brand-soft,#e6f4f1)!important;outline:none}
+/* "Kết quả cần có": checkboxes become toggle chips. */
+#app dialog.ai-studio .ai-feature-selection{display:flex!important;flex-wrap:wrap;gap:8px;border:0!important;padding:0!important;margin:0}
+#app dialog.ai-studio .ai-feature-selection>legend{width:100%;padding:0 0 4px;font-size:13px;font-weight:700}
+#app dialog.ai-studio .ai-feature-selection>label{display:inline-flex!important;align-items:center;gap:6px;min-height:36px;padding:0 14px;border-radius:999px;background:var(--cv-tile);cursor:pointer;font-size:13px;font-weight:600;border:0!important;margin:0!important}
+#app dialog.ai-studio .ai-feature-selection>label:has(input:checked){background:var(--brand-soft,#e6f4f1);color:var(--brand,#0f766e);box-shadow:inset 0 0 0 2px var(--brand,#0f766e)}
+#app dialog.ai-studio .ai-feature-selection>label>input{position:absolute;opacity:0;pointer-events:none}
+#app dialog.ai-studio .ai-feature-selection>label:has(input:focus-visible){outline:2px solid var(--brand,#0f766e);outline-offset:2px}
+#app dialog.ai-studio .ai-feature-selection>small{width:100%}
+/* Suggestions: chips. */
+#app dialog.ai-studio .ai-suggestions>button{border:0!important;border-radius:999px!important;background:var(--cv-tile)!important;box-shadow:none!important;min-height:34px;font-size:13px}
+#app dialog.ai-studio .ai-suggestions>button:hover{background:var(--brand-soft,#e6f4f1)!important}
+/* Footer: the primary action uses the AI gradient. */
+#app dialog.ai-studio :is(footer,.json-workbench-footer) .btn.primary{border:0!important;background:linear-gradient(135deg,#7c3aed,#db2777)!important;color:#fff!important}
+@media (max-width:760px){
+  #app dialog.ai-studio{border-radius:0!important}
+  #app dialog.ai-studio :is(footer,.json-workbench-footer) .btn{font-size:13px!important;padding-inline:10px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+}
+#app dialog.ai-studio .ai-send{border:0!important;background:linear-gradient(135deg,#7c3aed,#db2777)!important;color:#fff!important}
+#app dialog.ai-studio .ai-tool-menu>summary{border:0!important;background:#be185d!important;color:#fff!important}
+@media (max-width:760px){#app dialog.ai-studio .ai-send{justify-content:flex-start!important;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}#app dialog.ai-studio .ai-steps>button{min-height:40px;padding:4px 8px!important}}
