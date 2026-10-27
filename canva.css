@@ -229,3 +229,62 @@
 #app#app#app .project-home :is(.project-card,.template-card):hover :is(.project-thumbnail,.template-thumb){transform:translateY(-3px);box-shadow:0 0 0 1px var(--line),0 14px 30px -10px #0f172a40}
 #app#app#app .project-home .project-grid:not(.project-list){grid-template-columns:repeat(auto-fill,minmax(220px,1fr))!important;gap:22px!important}
 #app a.project-open{display:block;color:inherit;text-decoration:none}
+
+/* ===== Round 4: airy — fewer lines, fewer duplicates, one footer row ===== */
+@media (min-width:1100px){
+  /* Collapsed page strip rides in the footer row (centre); expanded it becomes a strip under the canvas. */
+  #app#app#app#app .studio-workspace:not(.focused) .workarea{position:relative}
+  #app#app#app#app .studio-workspace:not(.focused) .workarea>.cv-pages:not(.open){position:absolute;left:50%;bottom:6px;transform:translateX(-50%);z-index:9;padding:0;border:0;background:transparent}
+  /* The view menu repeats the footer (fit width, full screen). */
+  #app#app#app#app .studio-workspace:not(.focused) .workarea .chart-viewbar .view-menu{display:none!important}
+  /* Standard picker: just the ruler icon and the value. */
+  #app#app#app#app .studio-workspace:not(.focused) .workarea .standard-picker>span{display:none}
+  #app#app#app#app .studio-workspace:not(.focused) .workarea .standard-picker select{font-weight:600}
+  /* Canvas breathing room. */
+  #app#app#app#app .studio-workspace:not(.focused) .workarea .chart-scroll{padding-left:40px!important;padding-right:40px!important}
+}
+/* Timeline: quiet text controls, compact moment chips (date only on the active one). */
+#app#app .next-time-heading{gap:10px}
+#app#app .next-time-heading>strong{font-size:15px}
+#app#app .next-time-heading :is(summary,button){color:var(--muted)!important;font-size:13px!important;font-weight:500;border:0!important;background:transparent!important;box-shadow:none!important}
+#app#app .next-time-heading :is(summary,button):hover{color:var(--ink)!important}
+#app#app .next-moment-track{gap:6px!important;padding:4px 0 6px!important}
+#app#app .next-moment-track>button{min-height:40px!important;height:auto;padding:4px 12px!important;border:0!important;border-radius:999px!important;background:var(--surface)!important;box-shadow:0 0 0 1px var(--line)!important;display:inline-flex!important;flex-direction:row!important;align-items:center;gap:6px}
+#app#app .next-moment-track>button>span:first-child{font-size:14px;font-weight:600}
+#app#app .next-moment-track>button:not(.active)>small{display:none}
+#app#app .next-moment-track>button.active{background:var(--brand,#0f766e)!important;color:#fff!important;box-shadow:0 2px 8px -2px #0f766e88!important}
+#app#app .next-moment-track>button.active *{color:#fff!important}
+#app#app .next-moment-track>button.active>small{font-size:11px;opacity:.85}
+
+/* Panels: generous spacing, no ruled lines, help lives in the rail's Trợ giúp. */
+#app#app#app .studio-workspace .toolbox .toolbox-heading{border-bottom:0!important}
+#app#app#app .studio-workspace .toolbox .toolbox-heading strong{font-size:18px!important;letter-spacing:-.01em}
+#app#app#app .studio-workspace .toolbox .next-help-button{display:none!important}
+#app#app#app .studio-workspace .toolbox .next-entry-groups>details{border:0!important;border-radius:14px!important;background:transparent;margin:0 0 6px!important}
+#app#app#app .studio-workspace .toolbox .next-entry-groups>details>summary{border:0!important;border-radius:10px;padding:10px 8px!important;font-weight:700}
+#app#app#app .studio-workspace .toolbox .next-entry-groups>details>summary:hover{background:var(--cv-hover)}
+#app#app#app .studio-workspace .toolbox .next-entry-groups>details[open]{background:transparent}
+/* Entry header: one soft card — who/when on top, actions as small pills. */
+#app#app#app .studio-workspace .toolbox .next-entry-head{display:grid!important;grid-template-columns:1fr auto;align-items:center;gap:2px 8px;padding:14px 16px!important;margin:0 0 14px!important;border:0!important;border-radius:14px;background:var(--cv-tile)}
+#app#app#app .studio-workspace .toolbox .next-entry-head>strong{grid-column:1;grid-row:1;font-size:16px}
+#app#app#app .studio-workspace .toolbox .next-entry-head>span{grid-column:1;grid-row:2;color:var(--muted);font-size:13px}
+#app#app#app .studio-workspace .toolbox .next-entry-head>.next-case-edit{grid-column:2;grid-row:1;min-height:32px!important;font-size:12px!important;padding:0 10px!important;border-radius:999px!important;background:var(--surface)!important}
+#app#app#app .studio-workspace .toolbox .next-entry-head>button.text-btn:not(.next-case-edit){grid-column:2;grid-row:2;min-height:32px!important;font-size:12px!important;padding:0 10px!important;border-radius:999px!important;background:var(--brand,#0f766e)!important;color:#fff!important;justify-self:end}
+#app#app#app .studio-workspace .toolbox .next-entry-head>b{grid-column:1/-1;grid-row:3;margin-top:6px;font-size:12px;font-weight:500;color:var(--muted)}
+/* Record actions stay in reach: a sticky footer at the bottom of the panel. */
+#app#app#app .studio-workspace .toolbox .next-record-footer{position:sticky;bottom:-20px;z-index:5;margin:8px -16px -20px!important;padding:12px 16px 16px!important;background:var(--surface);border-top:0!important;box-shadow:0 -8px 20px -14px #0f172a55}
+#app#app#app .studio-workspace .toolbox .next-record-footer>small{display:none}
+
+/* Home (returning): one resume card, then the shortcuts — no duplicate create buttons or subtitles. */
+#app#app#app .project-home .home-returning-actions{display:none!important}
+#app#app#app .project-home .home-greeting p{display:none}
+#app#app#app .project-home .home-greeting h1{font-size:clamp(26px,3vw,36px)!important}
+#app#app#app .project-home .home-resume{border:0!important;border-radius:16px!important;background:var(--surface);box-shadow:0 0 0 1px var(--line),0 8px 24px -16px #0f172a55!important}
+#app#app#app .project-home .library-filters{background:transparent!important;box-shadow:none!important;border:0!important;padding:0!important}
+#app#app .next-moment-track{scroll-padding-inline:24px;padding-inline:16px!important;-webkit-mask-image:linear-gradient(90deg,transparent,#000 18px,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(90deg,transparent,#000 18px,#000 calc(100% - 28px),transparent)}
+/* Export proof: pages float on the grey canvas, header padded like the editor's. */
+#app#app#app .workarea .next-export-proof{flex:1 1 auto;min-height:0;overflow:auto;background:var(--cv-canvas)!important;padding:12px 40px 40px!important;border:0!important}
+#app#app#app .workarea .next-export-proof>header{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:8px 0 16px!important;background:transparent!important;border:0!important}
+#app#app#app .workarea .next-export-proof>header>strong{font-size:15px}
+#app#app#app .workarea .next-export-proof>header>span{color:var(--muted);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+#app#app#app .workarea .next-proof-page{box-shadow:var(--cv-page-shadow)!important;border:0!important;border-radius:2px}
