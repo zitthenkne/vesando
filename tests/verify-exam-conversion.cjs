@@ -61,7 +61,7 @@ const tabular=sandbox.studioParseTable('time\tstation\teffacement\n22.8333333333
 console.log('PASS: original exam data, exact minutes/25 hours, unknown year, independent descent scales, missing data, LOA, deterministic line regions, round trips and clean SVG in all 3 models');
 
 if(process.argv.includes('--browser'))(async()=>{
-  const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright'),assets=new Set(['index.html','base.css','core.js','components.js','app.js','canva.css','workspace-next.js','workspace-next.css','studio.css','workspace.css','interaction.css','theme.css','canvas.css','clinical-rules.js','guidance.js','enhancements.js']);
+  const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright'),assets=new Set(['index.html','base.css','core.js','components.js','app.js','canva.css','canva.js','workspace-next.js','workspace-next.css','studio.css','workspace.css','interaction.css','theme.css','canvas.css','clinical-rules.js','guidance.js','enhancements.js']);
   const server=http.createServer((req,res)=>{const file=new URL(req.url,'http://localhost').pathname.slice(1)||'index.html';if(!assets.has(file)){res.writeHead(404);res.end();return}res.setHeader('Content-Type',(file.endsWith('.js')?'application/javascript':file.endsWith('.css')?'text/css':'text/html')+';charset=utf-8');res.end(fs.readFileSync(path.join(ROOT,file)))});
   await new Promise(r=>server.listen(0,'127.0.0.1',r));const browser=await chromium.launch({headless:true,executablePath:process.env.CHROME_EXECUTABLE||'C:/Program Files/Google/Chrome/Application/chrome.exe'}),output=path.join(os.tmpdir(),'vesando-focused-ui');fs.mkdirSync(output,{recursive:true});
   try{

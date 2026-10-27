@@ -2,7 +2,7 @@
 const ROOT=require('node:path').join(__dirname,'..');
 const assert=require('node:assert/strict'),fs=require('node:fs/promises'),http=require('node:http'),path=require('node:path'),os=require('node:os');
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
-const assets=new Set(['index.html','base.css','core.js','components.js','app.js','canva.css','workspace-next.js','workspace-next.css','studio.css','workspace.css','interaction.css','theme.css','canvas.css','clinical-rules.js','guidance.js','enhancements.js','workspace-next.js','workspace-next.css']);
+const assets=new Set(['index.html','base.css','core.js','components.js','app.js','canva.css','canva.js','workspace-next.js','workspace-next.css','studio.css','workspace.css','interaction.css','theme.css','canvas.css','clinical-rules.js','guidance.js','enhancements.js','workspace-next.js','workspace-next.css']);
 const server=http.createServer(async(req,res)=>{const f=new URL(req.url,'http://localhost').pathname.slice(1)||'index.html';if(!assets.has(f)){res.writeHead(404);res.end();return}res.setHeader('Content-Type',(f.endsWith('.js')?'application/javascript':f.endsWith('.css')?'text/css':'text/html')+';charset=utf-8');res.end(await fs.readFile(path.join(ROOT,f)))});
 const reply='Phản hồi AI đang chỉnh, chưa thể phân tích';
 const open=p=>p.locator('.next-ai-entry').click(),close=p=>p.getByRole('button',{name:'Đóng nhập JSON',exact:true}).click();

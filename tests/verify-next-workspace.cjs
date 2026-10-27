@@ -6,7 +6,7 @@ const path = require('node:path');
 const http = require('node:http');
 const os = require('node:os');
 const {chromium} = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
-const assets = new Set(['index.html','base.css','core.js','components.js','app.js','canva.css','workspace-next.js','workspace-next.css','studio.css','workspace.css','interaction.css','theme.css','canvas.css','clinical-rules.js','guidance.js','enhancements.js','workspace-next.js','workspace-next.css']);
+const assets = new Set(['index.html','base.css','core.js','components.js','app.js','canva.css','canva.js','workspace-next.js','workspace-next.css','studio.css','workspace.css','interaction.css','theme.css','canvas.css','clinical-rules.js','guidance.js','enhancements.js','workspace-next.js','workspace-next.css']);
 const server = http.createServer(async (req,res) => {
   const name = new URL(req.url,'http://localhost').pathname.slice(1) || 'index.html';
   if (!assets.has(name)) {res.writeHead(404);res.end();return;}
@@ -405,6 +405,16 @@ async function check(p,name,fn){await fn();console.log('PASS:',name);}
       await app(p,a=>a.work.exportChoose('editable'));
       assert.equal(await p.locator('.next-export-proof pre').count(),1);
       await app(p,a=>a.work.open('entry'));
+    });
+    await check(p,'Export profiles (In A4 → black and white) never leave the editor chart monochrome',async()=>{
+      await app(p,a=>{a.mono=false;a.toolTab='overview'});await p.waitForTimeout(100);
+      await app(p,a=>{a.work.exportPurpose='print';a.toolTab='export'});await p.waitForTimeout(200);
+      assert.equal(await app(p,a=>a.mono),true,'print preview is black and white');
+      await app(p,a=>{a.toolTab='overview'});await p.waitForTimeout(200);
+      assert.equal(await app(p,a=>a.mono),false,'editor colours come back after leaving export');
+      await app(p,a=>{a.toolTab='export'});await p.waitForTimeout(200);
+      assert.equal(await app(p,a=>a.mono),true,'re-entering export restores its own profile');
+      await app(p,a=>{a.toolTab='overview'});
     });
     await check(p,'Cross-midnight navigation shows a full date; library and pin menu are available',async()=>{
       const label=await p.evaluate(()=>nextClock({patient:{startTime:'23:30',date:'2026-10-26'}},1));

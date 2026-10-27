@@ -330,10 +330,10 @@ function chartTextFit(text,room,f,u){
   return {lines,size,baselines:lines.length>1?[top+cap,top+cap+pitch]:[12+.36*size*u]};
 }
 const ACCENTS=[{id:'teal',label:'Xanh y khoa',color:'#0e6b62'},{id:'blue',label:'Xanh dương',color:'#1f5fbf'},{id:'green',label:'Xanh lá',color:'#2f7d32'},{id:'amber',label:'Hổ phách',color:'#b45309'},{id:'rose',label:'Hồng san hô',color:'#c0415c'}],DOSSIER_TABS=['brief','legend','drawing','actions'];
-const WORKSPACE_DEFAULTS={labels:true,timeline:false,hints:false,diagnostics:false,chartHeader:false,caseStrip:false,dossierOpen:false,clinicalAlerts:true,clinicalReminders:true,rememberPrompt:false,spacing:'compact',dock:'side',panelMode:'dock',dragAxis:'free',accent:'teal',radius:'normal',dossierTab:'brief'};
+const WORKSPACE_DEFAULTS={labels:true,timeline:false,hints:false,diagnostics:false,chartHeader:false,caseStrip:false,pages:true,dossierOpen:false,clinicalAlerts:true,clinicalReminders:true,rememberPrompt:false,spacing:'compact',dock:'side',panelMode:'dock',dragAxis:'free',accent:'teal',radius:'normal',dossierTab:'brief'};
 function workspacePreferences(raw={}){
   const clean={...WORKSPACE_DEFAULTS};if(!raw||typeof raw!=='object')return clean;
-  for(const key of ['labels','timeline','hints','diagnostics','chartHeader','caseStrip','dossierOpen','clinicalAlerts','clinicalReminders','rememberPrompt'])if(typeof raw[key]==='boolean')clean[key]=raw[key];
+  for(const key of ['labels','timeline','hints','diagnostics','chartHeader','caseStrip','pages','dossierOpen','clinicalAlerts','clinicalReminders','rememberPrompt'])if(typeof raw[key]==='boolean')clean[key]=raw[key];
   for(const [key,allowed] of Object.entries({spacing:['compact','comfortable'],dock:['bottom','side'],panelMode:['dock','overlay'],dragAxis:['value','time','free'],accent:ACCENTS.map(a=>a.id),radius:['sharp','normal','soft'],dossierTab:DOSSIER_TABS}))if(allowed.includes(raw[key]))clean[key]=raw[key];
   return clean;
 }
