@@ -483,3 +483,33 @@
 #app#app#app#app .studio-workspace .toolbox .switch-row>input[type=checkbox]{width:40px!important;min-width:40px!important;height:24px!important;min-height:24px!important;border-radius:999px!important;padding:0!important;background:#cbd5e1!important}
 #app#app#app#app .studio-workspace .toolbox .switch-row>input[type=checkbox]:checked{background:var(--brand,#0f766e)!important}
 :root[data-theme=dark] #app#app#app#app .studio-workspace .toolbox .switch-row>input[type=checkbox]:not(:checked){background:#475569!important}
+
+/* ===== Round 8: present mode, export panel, menus ===== */
+/* Present: canvas only — editor footer, page strip and timeline step aside; controls become one dark bar at the bottom centre. */
+#app#app#app#app .studio-workspace[data-next-space=present] .workarea :is(.canvas-navigation,.next-canvas-controls,.cv-pages,.next-timeline,.chart-viewbar){display:none!important}
+#app#app#app#app .studio-workspace[data-next-space=present] .workarea .chart-frame{padding-bottom:0!important}
+#app#app#app#app .studio-workspace[data-next-space=present] .workarea .chart-frame::after{display:none}
+#app#app#app .studio-workspace .presenter{position:fixed!important;left:50%!important;right:auto!important;top:auto!important;bottom:20px!important;transform:translateX(-50%);width:min(640px,calc(100vw - 32px))!important;max-height:42dvh;overflow:auto;border:0!important;border-radius:18px!important;background:#1f2430!important;color:#f8fafc!important;box-shadow:0 18px 50px #0007!important;z-index:40}
+#app#app#app .studio-workspace .presenter :is(strong,small,p,span){color:inherit}
+#app#app#app .studio-workspace .presenter .presenter-bar{border:0!important;background:transparent!important}
+#app#app#app .studio-workspace .presenter .icon-btn{background:#ffffff14!important;color:#fff!important;border:0!important}
+#app#app#app .studio-workspace .presenter .presenter-play{background:#fff!important;color:#1f2430!important}
+#app#app#app .studio-workspace .presenter .presenter-chips>span{background:#ffffff14!important;color:#e2e8f0!important;border:0!important}
+#app#app#app .studio-workspace .presenter .presenter-chips>span.alert{background:#7f1d1d!important;color:#fecaca!important}
+#app#app#app .studio-workspace .presenter .presenter-track{background:#ffffff26!important}
+#app#app#app .studio-workspace .presenter .presenter-quiet{color:#94a3b8!important}
+@media (max-width:760px){#app#app#app .studio-workspace .presenter{bottom:84px!important}}
+
+/* Export panel: sentence-case steps with a filled number; the panel's own preview repeats the canvas proof. */
+#app#app#app .studio-workspace .toolbox .inspector-label{text-transform:none!important;letter-spacing:0!important;font-size:14px!important;font-weight:700!important;color:var(--ink)!important;display:flex;align-items:center;gap:10px;margin:18px 0 10px!important}
+#app#app#app .studio-workspace .toolbox .export-step{width:22px;height:22px;display:inline-grid;place-items:center;border-radius:50%;background:var(--brand,#0f766e);color:var(--cv-on-brand)!important;font-size:12px}
+#app#app#app .studio-workspace .toolbox .inline-work-help{display:none}
+@media (min-width:761px){
+  #app#app#app .studio-workspace .toolbox .inspector-label:has(.export-step):has(+ .export-live-preview),#app#app#app .studio-workspace .toolbox .export-live-preview{display:none!important}
+  /* Search is in the top bar; the ⋯ menu need not repeat it. */
+  #app#app#app .studio-workspace .workspace-menu .menu-search{display:none!important}
+}
+/* Menus from the top bar: Canva-style rounded sheets with roomy rows. */
+#app#app#app .studio-workspace .workbench-bar details>div:is(.case-menu-list),#app#app#app .studio-workspace .workbench-bar .workspace-menu>div{border:0!important;border-radius:14px!important;box-shadow:0 12px 40px #0f172a2e,0 0 0 1px #0f172a0f!important;padding:6px!important;background:var(--surface)!important}
+#app#app#app .studio-workspace .workbench-bar :is(.case-menu-list,.workspace-menu>div) .btn{border:0!important;background:transparent!important;box-shadow:none!important;border-radius:10px!important;justify-content:flex-start;min-height:40px}
+#app#app#app .studio-workspace .workbench-bar :is(.case-menu-list,.workspace-menu>div) .btn:hover{background:var(--cv-hover)!important}

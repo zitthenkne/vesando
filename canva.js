@@ -26,6 +26,8 @@
     target=null;
   };
   const show=el=>{
+    // An open menu already explains itself; a tip over it would cover the first item.
+    if(el.matches('details[open]>summary'))return;
     const text=label(el);if(!text)return;
     hide();target=el;
     if(el.hasAttribute('title')){el.dataset.cvTip=el.getAttribute('title');el.removeAttribute('title')}
@@ -37,6 +39,7 @@
   document.addEventListener('focusin',e=>{const el=candidate(e);if(el&&el.matches(':focus-visible'))show(el)});
   document.addEventListener('focusout',hide);
   document.addEventListener('pointerdown',hide,true);
+  document.addEventListener('toggle',e=>{if(e.target.open)hide()},true);
   document.addEventListener('keydown',e=>{if(e.key==='Escape')hide()});
   addEventListener('scroll',hide,true);
   if(document.body)document.body.appendChild(tip);else document.addEventListener('DOMContentLoaded',()=>document.body.appendChild(tip),{once:true});
