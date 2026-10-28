@@ -717,6 +717,8 @@ const app=createApp({
       if(mod&&(key==='z'||key==='y')){event.preventDefault();if(event.shiftKey||key==='y')redoAny();else undoAny();return}
       if(event.altKey&&['ArrowLeft','ArrowRight'].includes(event.key)&&['overview','data'].includes(toolTab.value)&&dataPoint.value){event.preventDefault();moveDataPoint(event.key==='ArrowLeft'?-1:1);return}
       if(event.altKey&&['ArrowLeft','ArrowRight'].includes(event.key)&&mode.value==='exam'){event.preventDefault();selectMoment(clamp(selectedMoment.value+(event.key==='ArrowLeft'?-1:1),0,caseForView(activeCase.value).observations.length-1));return}
+      // Bút ghi khi bấm lưới chuyển dạ: C = độ mở CTC, L = độ lọt (đầu trên vệ).
+      if((key==='c'||key==='l')&&!mod&&!event.altKey&&work.space==='capture'){event.preventDefault();plotField.value=key==='c'?'cervix':'descent';return}
       if(key==='f'&&!mod&&!event.altKey){event.preventDefault();toggleFocus()}
       if(event.key==='Escape'&&focusMode.value)toggleFocus();
     }
@@ -793,7 +795,8 @@ const app=createApp({
       help:async()=>{studio.close();await Vue.nextTick();openLearning()}
     });
     const work=createNextWorkspace({
-      mode,homeOpen,toolTab,inputsOpen,focusMode,panelWidth,ui,design,projectIDs,recordStep,deviceError,libraryError,personalDesignName,cases,newExamCase,
+      mode,homeOpen,toolTab,inputsOpen,focusMode,panelWidth,ui,design,projectIDs,recordStep,deviceError,libraryError,personalDesignName,cases,newExamCase,plotField,
+      schedule:()=>schedulePlan(standard.value==='lcg'),nextDue:()=>nextDue.value,
       current:()=>activeCase.value,time:()=>viewTime.value,standard:()=>standard.value,hasDraft:()=>workspaceHasDraft.value,
       chart:()=>mode.value==='clinical'?clinicalChart.value:(examCharts.value||[]).find(c=>c.caseData.id===activeCase.value.id),
       settle:async()=>{if(!await settlePoint())return false;if(draftDirty.value){notify('Lưu hoặc hủy phần nhập trong bảng cũ trước khi chuyển.','error');return false}return true},

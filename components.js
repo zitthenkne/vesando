@@ -206,7 +206,7 @@ app.component('partograph',{
       if(event.pointerType!=='mouse'||this.pointDrag||this.resizeDrag||this.printPreview||this.options.designEditing||!this.editable){this.hover=null;return}
       if(this.hoverFrame)return;const {clientX,clientY,currentTarget,target}=event;
       this.hoverFrame=requestAnimationFrame(()=>{this.hoverFrame=null;const e={clientX,clientY,currentTarget,target,pointerType:'mouse'},at=this.locate(e),point=this.nearestPoint(e);if(!at||at.time===null||!at.field){this.hover=null;return}
-        const field=point?.dataset.observationField||(at.field==='fhr'?'fhr':this.field==='descent'?'descent':'cervix');if(field==='descent'&&at.descent===null){this.hover=null;return}
+        const field=point?.dataset.observationField||(at.field==='fhr'?'fhr':this.field==='descent'?'descent':'cervix');if(field==='descent'&&at.descent===null){const frame=this.$el.getBoundingClientRect();this.hover={x:clamp(clientX-frame.left+14,8,Math.max(8,frame.width-260)),y:clientY-frame.top+16,text:'Độ lọt chấm ở nửa dưới lưới: 5/5 ngang mức 5 cm, 0/5 ở đáy',preview:null};return}
         const time=point?Number(point.dataset.observationTime):at.time,o=this.caseData.observations.find(o=>o.time===time),value=point||o&&!blank(o[field])?o[field]:field==='descent'?at.descent:at.value,exists=o&&!blank(o[field]),frame=this.$el.getBoundingClientRect(),text=(point?'Chọn ':exists?'Sửa ':'Thêm ')+POINT_NAMES[field]+' '+value+(POINT_UNITS[field]||'')+' · '+clockAt(this.caseData,time);
         this.hover={x:clamp(clientX-frame.left+14,8,Math.max(8,frame.width-260)),y:clientY-frame.top+16,text,preview:!point&&!exists?{field,time,value}:null};
       })

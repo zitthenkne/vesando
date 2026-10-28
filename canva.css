@@ -991,4 +991,46 @@
 /* Text on brand-filled buttons stays readable in both themes. */
 #app#app#app#app .studio-workspace .toolbox .btn.primary,#app#app#app#app .studio-workspace .toolbox .btn.primary *{color:var(--cv-on-brand,#fff)!important}
 /* Data table cells: no leftover tint from older dark rules; the panel surface shows through. */
-#app#app#app#app#app .studio-workspace .toolbox .next-data-table tbody td{background:transparent!important}
+#app#app#app#app#app .studio-workspace .toolbox .next-data-table tbody td{background:transparent!important}/* ===== Round 20: task-first data entry ===== */
+/* Bút ghi: floating pen picker over the canvas while entering data (Canva's tool-options pill). */
+#app#app#app#app .workarea .cv-pen{position:absolute!important;top:10px;left:50%;transform:translateX(-50%);z-index:15;display:flex;align-items:center;gap:2px;margin:0;padding:4px!important;border-radius:999px;background:var(--surface)!important;box-shadow:0 8px 28px #0f172a2e,0 0 0 1px #0f172a14;white-space:nowrap;max-width:calc(100% - 24px)}
+#app#app#app#app .workarea .next-context:not(.anchored)~.cv-pen{display:none}
+#app#app#app#app .workarea .cv-pen-label{display:inline-flex;align-items:center;gap:6px;padding:0 8px 0 10px;font-size:12px;font-weight:600;color:var(--muted)}
+#app#app#app#app .workarea .cv-pen-label svg{width:15px;height:15px}
+#app#app#app#app#app .workarea .cv-pen>button{display:inline-flex!important;align-items:center;gap:7px;min-height:36px!important;height:auto!important;padding:0 8px 0 5px!important;border:0!important;border-radius:999px!important;background:transparent!important;box-shadow:none!important;color:var(--ink)!important;font-size:13px!important;font-weight:600;cursor:pointer;transition:background .15s,box-shadow .15s}
+#app#app#app#app#app .workarea .cv-pen>button:hover{background:var(--cv-hover)!important}
+#app#app#app#app#app .workarea .cv-pen>button[aria-checked=true]{background:var(--brand-soft,#e6f4f1)!important;color:var(--brand,#0f766e)!important;box-shadow:inset 0 0 0 1.5px var(--brand,#0f766e)!important}
+#app#app#app#app .workarea .cv-pen-mark{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line);color:var(--pen,var(--ink))}
+#app#app#app#app .workarea .cv-pen-mark svg{width:15px;height:15px;stroke-width:3}
+#app#app#app#app .workarea .cv-pen kbd{min-width:18px;padding:3px 5px;border:0;border-radius:6px;background:var(--cv-tile);color:var(--muted);font:700 10px/1 inherit;text-align:center;box-shadow:none}
+#app#app#app#app .workarea .cv-pen>button[aria-checked=true] kbd{background:var(--surface);color:var(--brand,#0f766e)}
+@container canvas (max-width:859px){#app#app#app#app#app .studio-workspace:not(.focused) .workarea .cv-pen{top:58px}}
+@media (max-width:760px){
+  #app#app#app#app#app#app .workarea .cv-pen{top:60px}
+  #app#app#app#app .workarea .cv-pen-label{display:none}
+  #app#app#app#app .workarea .cv-pen kbd{display:none}
+}
+/* Phiếu nhập: plotted values carry their chart symbol in the series colour. */
+#app#app#app .studio-workspace .toolbox .cv-field-mark{display:inline-grid;place-items:center;width:20px;height:20px;margin-right:6px;border-radius:50%;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line);color:var(--pen,var(--ink));vertical-align:-5px;font-style:normal}
+#app#app#app .studio-workspace .toolbox .cv-field-mark svg{width:12px;height:12px;stroke-width:3}
+/* Series colours are drawn for white paper; their marks keep a paper-white disc in the dark theme too. */
+:root[data-theme=dark] #app#app#app#app :is(.studio-workspace .toolbox .cv-field-mark,.workarea .cv-pen-mark){background:#fff;box-shadow:none}
+#app#app#app .studio-workspace .toolbox .cv-group-hint{margin-left:8px;font-size:11px;font-weight:500;color:var(--muted)}
+#app#app#app#app .studio-workspace .toolbox [data-next-group=core]>.next-field-grid{padding:4px 2px 10px}
+#app#app#app#app .studio-workspace .toolbox .next-field[data-field=descent]{grid-column:1/-1}
+#app#app#app#app .studio-workspace .toolbox [data-next-group=core] .next-field[data-field=fhr]{grid-column:auto}
+/* Độ lọt: one tap per fifth, 5/5 (high) on the left like the chart's scale reads from top. */
+#app#app#app#app#app#app .studio-workspace .toolbox .cv-scale>button,#app#app#app#app#app#app .studio-workspace .toolbox .cv-scale>button:last-child{flex:1 1 0;font-size:14px!important;font-weight:700}
+#app#app#app#app .studio-workspace .toolbox .cv-scale>button small{margin-left:1px;font-size:10px;font-weight:600;opacity:.6}
+/* Theo dõi: fields whose interval has elapsed at this moment. */
+#app#app#app .studio-workspace .toolbox .cv-due-chip{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:999px;background:#fef3c7;color:#92400e;font-size:10.5px;font-weight:700;font-style:normal;white-space:nowrap;vertical-align:1px}
+#app#app#app .studio-workspace .toolbox .cv-due-chip.late{background:#fee2e2;color:#b91c1c}
+#app#app#app#app .studio-workspace .toolbox .next-field.cv-due :is(input,select){box-shadow:inset 0 0 0 1.5px #f59e0b!important}
+:root[data-theme=dark] #app#app#app .studio-workspace .toolbox .cv-due-chip{background:#78350f;color:#fde68a}
+:root[data-theme=dark] #app#app#app .studio-workspace .toolbox .cv-due-chip.late{background:#7f1d1d;color:#fecaca}
+#app#app#app#app .studio-workspace .toolbox .cv-next-due{display:flex!important;align-items:center;gap:10px;width:100%;min-height:44px;margin:0 0 14px!important;padding:8px 12px!important;border:0!important;border-radius:12px!important;background:#fef3c7!important;color:#78350f!important;font-size:13px!important;font-weight:500;text-align:left;box-shadow:none!important}
+#app#app#app#app .studio-workspace .toolbox .cv-next-due.here{background:var(--brand-soft,#e6f4f1)!important;color:var(--ink)!important}
+#app#app#app#app .studio-workspace .toolbox .cv-next-due>span{flex:1;min-width:0}
+#app#app#app#app .studio-workspace .toolbox .cv-next-due svg{width:16px;height:16px;flex:none}
+#app#app#app#app .studio-workspace .toolbox button.cv-next-due:hover{filter:brightness(.97)}
+:root[data-theme=dark] #app#app#app#app .studio-workspace .toolbox .cv-next-due:not(.here){background:#451a03!important;color:#fde68a!important}
