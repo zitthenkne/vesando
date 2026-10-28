@@ -1269,3 +1269,63 @@
 #app#app#app#app#app#app#app .studio-workspace .toolbox nav.design-nav{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important}
 #app#app#app#app#app#app .studio-workspace .toolbox .time-presets>button{white-space:nowrap}
 #app#app#app#app#app#app .studio-workspace .toolbox .time-presets>button:first-child{flex:1.6}
+/* ===== Round 26 (Vòng 59): tools where the hand expects them ===== */
+/* Vertical tool dock on the right edge of the canvas: pens, head figure, select box, zoom. */
+#app#app#app#app#app#app .studio-workspace .workarea .next-canvas-controls.cv-dock{position:absolute!important;top:50%!important;right:12px!important;left:auto!important;bottom:auto!important;transform:translateY(-50%)!important;z-index:15;display:flex!important;flex-direction:column!important;align-items:center;gap:6px!important;width:auto!important;margin:0!important;padding:6px!important;border:0!important;border-radius:18px!important;background:var(--surface)!important;box-shadow:0 10px 30px #0f172a2b,0 0 0 1px #0f172a12!important}
+#app#app#app#app .workarea .cv-dock-group{display:flex;flex-direction:column;align-items:center;gap:2px}
+#app#app#app#app .workarea .cv-dock-group+.cv-dock-group{padding-top:6px;border-top:1px solid var(--line)}
+#app#app#app#app .workarea .cv-dock-cap{padding:2px 0 4px;font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+#app#app#app#app#app#app .workarea .cv-dock-btn{display:grid!important;justify-items:center;align-content:center;gap:3px;width:54px!important;min-width:0!important;min-height:52px!important;height:auto!important;padding:6px 2px!important;border:0!important;border-radius:12px!important;background:transparent!important;box-shadow:none!important;color:var(--ink)!important;cursor:pointer;list-style:none}
+#app#app#app#app#app#app .workarea .cv-dock-btn::-webkit-details-marker{display:none}
+#app#app#app#app#app#app .workarea .cv-dock-btn:hover:not(:disabled){background:var(--cv-hover)!important}
+#app#app#app#app#app#app .workarea .cv-dock-btn:disabled{opacity:.35;cursor:not-allowed}
+#app#app#app#app#app#app .workarea .cv-dock-btn>svg{width:20px;height:20px}
+#app#app#app#app .workarea .cv-dock-btn>small{font-size:10.5px;font-weight:700;line-height:1.1;white-space:nowrap}
+#app#app#app#app#app#app .workarea .cv-dock-btn:is([aria-checked=true],[aria-pressed=true]),#app#app#app#app#app#app .workarea .next-zoom-menu[open]>.cv-dock-btn{background:var(--brand-soft,#e6f4f1)!important;color:var(--brand,#0f766e)!important;box-shadow:inset 0 0 0 1.5px var(--brand,#0f766e)!important}
+#app#app#app#app .workarea .cv-dock-pen .cv-pen-mark{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 1px var(--line);color:var(--pen,var(--ink))}
+#app#app#app#app .workarea .cv-dock-pen .cv-pen-mark svg{width:16px;height:16px;stroke-width:3}
+/* Zoom menu opens to the left of the dock. */
+#app#app#app#app#app .workarea .cv-dock .next-zoom-menu{position:relative}
+#app#app#app#app#app#app .workarea .cv-dock .next-zoom-menu>div{position:absolute!important;right:calc(100% + 12px)!important;left:auto!important;top:auto!important;bottom:0!important;width:240px;padding:8px!important;border-radius:14px!important;background:var(--surface)!important;box-shadow:0 12px 36px #0f172a33,0 0 0 1px #0f172a12!important;display:grid;gap:4px;z-index:40}
+#app#app#app#app#app#app .workarea .cv-dock .next-zoom-menu>div>.btn{justify-content:flex-start;width:100%}
+/* Minimap stays bottom-left on its own. */
+#app#app#app#app#app .workarea .chart-frame>.next-minimap{position:absolute!important;left:12px;bottom:12px;z-index:14}
+/* Phone: the dock becomes a short horizontal pill under the standard picker; zoom tools stay in the bottom bar. */
+@media (max-width:760px){
+  #app#app#app#app#app#app#app .studio-workspace .workarea .next-canvas-controls.cv-dock{top:60px!important;right:auto!important;left:50%!important;transform:translateX(-50%)!important;flex-direction:row!important;padding:4px!important;border-radius:999px!important}
+  #app#app#app#app#app .workarea .cv-dock-group{flex-direction:row}
+  #app#app#app#app#app .workarea .cv-dock-cap,#app#app#app#app#app .workarea .cv-dock .next-zoom-actions{display:none!important}
+  #app#app#app#app#app#app#app .workarea .cv-dock-btn{grid-auto-flow:column;width:auto!important;min-height:38px!important;padding:0 10px 0 6px!important;border-radius:999px!important}
+}
+/* Time row: one pill with the moment being viewed; tap it for an exact date and time. */
+#app#app#app#app .next-time-heading.cv-time-row{display:flex;align-items:center;gap:8px}
+#app#app#app#app#app .next-time-heading .cv-time-pill{display:inline-flex!important;align-items:center;gap:8px;min-height:40px;padding:0 14px 0 12px!important;border:0!important;border-radius:999px!important;background:var(--surface)!important;box-shadow:0 0 0 1px var(--line)!important;color:var(--ink)!important;cursor:pointer;list-style:none;font-size:13px!important}
+#app#app#app#app#app .next-time-heading .cv-time-pill::-webkit-details-marker{display:none}
+#app#app#app#app#app .next-time-heading .cv-time-pill:hover{box-shadow:0 0 0 1px var(--brand,#0f766e)!important}
+#app#app#app#app .next-time-heading .cv-time-pill>strong{font-size:15px;font-weight:800;font-variant-numeric:tabular-nums}
+#app#app#app#app .next-time-heading .cv-time-pill>small{font-size:12px;color:var(--muted);font-weight:600}
+#app#app#app#app .next-time-heading .cv-time-pill>svg{width:16px;height:16px;color:var(--muted)}
+#app#app#app#app .next-time-heading .cv-time-pill>svg:first-child{color:var(--brand,#0f766e)}
+/* Head figure entry points. */
+#app#app#app#app#app .studio-workspace .toolbox .cv-head-link{display:inline-flex!important;align-items:center;gap:6px;margin-top:6px;min-height:30px!important;padding:0 10px 0 8px!important;border:0!important;border-radius:999px!important;background:var(--cv-tile)!important;box-shadow:none!important;color:var(--brand,#0f766e)!important;font-size:12px!important;font-weight:700}
+#app#app#app#app .studio-workspace .toolbox .cv-head-link svg{width:14px;height:14px}
+#app#app#app#app .studio-workspace .toolbox .cv-head-section{margin:4px 0 16px;padding:12px;border-radius:14px;background:var(--cv-tile)}
+#app#app#app#app .studio-workspace .toolbox .cv-head-section>h4{display:flex;align-items:center;gap:6px;margin:0 0 6px!important;color:var(--ink)}
+#app#app#app#app .studio-workspace .toolbox .cv-head-section>h4 svg{width:15px;height:15px}
+#app#app#app#app#app#app .workarea .cv-dock .next-zoom-actions{display:flex!important;flex-direction:column!important;align-items:center;gap:2px!important;margin:0!important;padding-left:0!important;padding-right:0!important}
+/* Leave room for the dock so it never covers the grid. */
+#app#app#app#app#app .studio-workspace:not(.focused) .workarea .chart-frame:has(>.cv-dock) .chart-scroll{padding-right:84px!important}
+#app#app#app#app#app#app .next-time-heading.cv-time-row{justify-content:flex-start!important;overflow:visible!important}
+#app#app#app#app#app#app .next-time-heading .next-exact-time>summary.cv-time-pill{width:auto!important;height:40px!important;flex:none;font-size:13px!important;gap:8px!important;justify-content:flex-start}
+@media (max-width:760px){
+  #app#app#app#app#app#app .studio-workspace .workarea .next-canvas-controls.cv-dock{visibility:visible!important}
+  #app#app#app#app#app .studio-workspace:not(.focused) .workarea .chart-frame:has(>.cv-dock) .chart-scroll{padding-right:0!important}
+}
+#app#app#app#app#app#app#app .workarea .cv-dock .next-zoom-actions,#app#app#app#app#app#app#app .workarea .cv-dock{flex-wrap:nowrap!important;height:auto!important;min-height:0!important;max-height:none!important}
+@media (max-width:760px){
+  #app#app#app#app#app#app#app#app .workarea .cv-dock .next-zoom-actions,#app#app#app#app#app#app#app#app .workarea .cv-dock-cap{display:none!important}
+  #app#app#app#app#app#app#app#app .workarea .cv-dock-btn{min-height:36px!important;gap:6px!important}
+  #app#app#app#app#app#app .workarea .cv-dock-btn>small{font-size:12px}
+}
+@media (max-width:760px){#app#app#app#app#app#app#app#app .workarea .cv-dock-btn{align-items:center!important;align-content:center!important}}
+@media (max-width:760px){#app#app#app#app#app#app#app#app .workarea .cv-dock-head{display:none!important}}
