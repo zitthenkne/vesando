@@ -309,7 +309,7 @@
   #app#app#app#app .studio-workspace:not(.focused) .workbench-bar .session-actions{flex:0 0 auto;flex-wrap:nowrap;gap:6px;margin-left:auto}
   #app#app#app#app .studio-workspace:not(.focused) .workbench-bar .next-bar-inline{flex:1 1 auto;min-width:0}
   /* Selection toolbar follows the selected point (placement and clamping in workspace-next.js). */
-  #app#app#app#app .studio-workspace:not(.focused) .workarea .next-context.anchored{z-index:12}
+  #app#app#app#app .studio-workspace:not(.focused) .workarea .next-context.anchored{z-index:16}
   /* Footer zones: navigation left, pages next to zoom, zoom right — fixed widths so nothing collides. */
   #app#app#app#app .studio-workspace:not(.focused) .workarea .canvas-navigation{width:260px;justify-content:flex-end}
   #app#app#app#app .studio-workspace:not(.focused) .workarea>.cv-pages:not(.open){left:auto!important;right:284px!important;transform:none!important}
@@ -468,7 +468,7 @@
 #app#app#app .studio-workspace .toolbox .switch-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border:0!important;cursor:pointer}
 #app#app#app .studio-workspace .toolbox .switch-row>input[type=checkbox]{-webkit-appearance:none;appearance:none;flex:0 0 auto;width:40px;height:24px;margin:0;border-radius:999px;background:#cbd5e1;position:relative;cursor:pointer;transition:background .15s;border:0!important}
 #app#app#app .studio-workspace .toolbox .switch-row>input[type=checkbox]::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px #0003;transition:transform .15s}
-#app#app#app .studio-workspace .toolbox .switch-row>input[type=checkbox]:checked{background:var(--brand,#0f766e)}
+#app#app#app .studio-workspace .toolbox .switch-row>input[type=checkbox]:checked{background:var(--brand,#0f766e)!important}
 #app#app#app .studio-workspace .toolbox .switch-row>input[type=checkbox]:checked::after{transform:translateX(16px)}
 #app#app#app .studio-workspace .toolbox .switch-row>input[type=checkbox]:focus-visible{outline:2px solid var(--brand,#0f766e);outline-offset:2px}
 /* "Nâng cao" disclosure reads as a quiet text link, not a section. */
@@ -577,7 +577,7 @@
 /* ===== Round 10: one selection system — Canva's top context toolbar + a small floating mini-bar by the point ===== */
 @media (min-width:761px){
   /* Properties toolbar: fixed at the top centre of the canvas, single line (overrides the point-anchored inline position). */
-  #app#app#app#app .studio-workspace:not(.focused) .workarea .next-context{position:absolute!important;top:10px!important;left:50%!important;right:auto!important;bottom:auto!important;transform:translateX(-50%)!important;margin:0!important;flex-wrap:nowrap!important;white-space:nowrap;max-width:calc(100% - 32px)!important;overflow-x:auto;scrollbar-width:none;z-index:14}
+  #app#app#app#app .studio-workspace:not(.focused) .workarea .next-context{position:absolute!important;top:10px!important;left:50%!important;right:auto!important;bottom:auto!important;transform:translateX(-50%)!important;margin:0!important;flex-wrap:nowrap!important;white-space:nowrap;max-width:calc(100% - 32px)!important;overflow-x:auto;scrollbar-width:none;z-index:16}
   #app#app#app#app .studio-workspace:not(.focused) .workarea .next-context>*{flex:0 0 auto}
   #app#app#app#app .studio-workspace:not(.focused) .workarea .next-context>strong{max-width:220px;overflow:hidden;text-overflow:ellipsis}
   /* Separators between control groups, like Canva's toolbar dividers. */
@@ -718,3 +718,115 @@
 #app#app#app .project-home .home-quick-actions{margin:12px 0 0!important;padding:0!important}#app#app#app .project-home .home-quick-actions:not(:has(>button:nth-child(2))){display:none!important}
 /* Phone: the editor covers the whole viewport in the canvas colour, so no page background shows between the canvas and the bottom bar. */
 @media (max-width:760px){#app#app#app main.studio-workspace:not(.focused){min-height:100dvh;background:var(--cv-canvas)!important}#app#app#app main.studio-workspace:not(.focused)>.workbench{background:var(--cv-canvas)!important}}
+
+/* ===== Round 15: properties panel like Canva's edit panel — object card, action tiles, slider, segmented controls, switches ===== */
+/* Object card: what is selected, with its section colour; the panel never repeats the name elsewhere. */
+#app#app#app#app .studio-workspace .toolbox .cv-prop-head{display:flex;align-items:center;gap:12px;padding:12px;margin:0 0 10px;border-radius:14px;background:var(--cv-tile)}
+#app#app#app#app .studio-workspace .toolbox .cv-prop-head.empty{background:transparent;box-shadow:inset 0 0 0 1.5px var(--line)}
+#app#app#app#app .studio-workspace .toolbox .cv-prop-swatch{flex:0 0 auto;width:40px;height:40px;display:grid;place-items:center;border-radius:12px;background:color-mix(in srgb,var(--cv-accent,var(--brand,#0f766e)) 16%,var(--surface));color:var(--cv-accent,var(--brand,#0f766e))}
+#app#app#app#app .studio-workspace .toolbox .cv-prop-swatch>svg{width:20px;height:20px}
+#app#app#app#app .studio-workspace .toolbox .cv-prop-head>div{min-width:0;display:grid;gap:1px}
+#app#app#app#app .studio-workspace .toolbox .cv-prop-head .next-selection-title{margin:0!important;font-size:15px!important;font-weight:700;line-height:1.3;color:var(--ink)!important;overflow-wrap:anywhere}
+#app#app#app#app .studio-workspace .toolbox .cv-prop-head small{font-size:12px;color:var(--muted)}
+/* Breadcrumb: quiet chips, the current level filled. */
+#app#app#app#app .studio-workspace .toolbox .next-crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:2px;margin:0 0 14px;font-size:12px}
+#app#app#app#app .studio-workspace .toolbox .next-crumbs>span{color:var(--muted);opacity:.6;padding:0 1px}
+#app#app#app#app .studio-workspace .toolbox .next-crumbs>:is(button,b){display:inline-flex;align-items:center;gap:4px;min-height:28px!important;padding:0 10px!important;border:0!important;border-radius:999px!important;background:transparent!important;box-shadow:none!important;color:var(--muted)!important;font-size:12px!important;font-weight:600}
+#app#app#app#app .studio-workspace .toolbox .next-crumbs>button:hover{background:var(--cv-hover)!important;color:var(--ink)!important}
+#app#app#app#app .studio-workspace .toolbox .next-crumbs>b{background:var(--brand-soft,#e6f4f1)!important;color:var(--brand,#0f766e)!important}
+#app#app#app#app .studio-workspace .toolbox .next-crumbs svg{width:13px;height:13px}
+#app#app#app#app .studio-workspace .toolbox .next-crumbs>.next-return{margin-left:auto;color:var(--brand,#0f766e)!important}
+/* Content/Display: a segmented pill; a lone tab is not shown. */
+#app#app#app#app .studio-workspace .toolbox .next-property-tabs{display:flex;gap:2px;padding:3px;margin:0 0 16px!important;border:0!important;border-radius:12px;background:var(--cv-tile)}
+#app#app#app#app .studio-workspace .toolbox .next-property-tabs:has(>button:only-child){display:none}
+#app#app#app#app .studio-workspace .toolbox .next-property-tabs>button{flex:1;min-height:34px!important;padding:0 12px!important;border:0!important;border-radius:9px!important;background:transparent!important;box-shadow:none!important;color:var(--muted)!important;font-size:13px;font-weight:600}
+#app#app#app#app .studio-workspace .toolbox .next-property-tabs>button[aria-pressed=true]{background:var(--surface)!important;color:var(--ink)!important;box-shadow:0 1px 3px #0f172a1f!important}
+/* Quick actions: icon tiles in one row (Canva's position/flip tiles). */
+#app#app#app#app .studio-workspace .toolbox .cv-prop-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 16px}
+#app#app#app#app .studio-workspace .toolbox .cv-tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:72px!important;padding:10px 4px!important;border:0!important;border-radius:12px!important;background:var(--cv-tile)!important;box-shadow:none!important;color:var(--ink)!important;font-size:12px!important;font-weight:600;line-height:1.2;text-align:center;cursor:pointer;transition:background .15s,color .15s,transform .15s}
+#app#app#app#app .studio-workspace .toolbox .cv-tile>svg{width:20px;height:20px;color:var(--muted);transition:color .15s}
+#app#app#app#app .studio-workspace .toolbox .cv-tile:hover:not(:disabled){background:var(--brand-soft,#e6f4f1)!important;color:var(--brand,#0f766e)!important;transform:translateY(-1px)}
+#app#app#app#app .studio-workspace .toolbox .cv-tile:is(:hover:not(:disabled),[aria-pressed=true],.on)>svg{color:var(--brand,#0f766e)}
+#app#app#app#app .studio-workspace .toolbox .cv-tile:is([aria-pressed=true],.on){background:var(--brand-soft,#e6f4f1)!important;color:var(--brand,#0f766e)!important;box-shadow:inset 0 0 0 2px var(--brand,#0f766e)!important}
+#app#app#app#app .studio-workspace .toolbox .cv-tile:disabled{opacity:.45;cursor:default}
+/* Setting groups: a soft outlined card with a heading and its live value. */
+#app#app#app#app .studio-workspace .toolbox .cv-prop-group{display:grid;gap:12px;padding:14px;margin:0 0 12px;border-radius:14px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line)}
+#app#app#app#app .studio-workspace .toolbox .cv-prop-group>header{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+#app#app#app#app .studio-workspace .toolbox .cv-prop-group h4{margin:0;font-size:13px;font-weight:700;color:var(--ink)}
+#app#app#app#app .studio-workspace .toolbox .cv-prop-group output{font-size:13px;font-weight:700;color:var(--brand,#0f766e);font-variant-numeric:tabular-nums}
+#app#app#app#app .studio-workspace .toolbox .cv-slider-row{display:flex;align-items:center;gap:12px}
+#app#app#app#app .studio-workspace .toolbox .cv-slider-row>input[type=range]{-webkit-appearance:none;appearance:none;flex:1;min-width:0;height:4px!important;min-height:0!important;padding:0!important;margin:0;border:0!important;border-radius:999px!important;box-shadow:none!important;background:linear-gradient(var(--brand,#0f766e),var(--brand,#0f766e)) 0/var(--fill,20%) 100% no-repeat,var(--line)!important;cursor:pointer}
+#app#app#app#app .studio-workspace .toolbox .cv-slider-row>input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 0 0 1px #0f172a26,0 2px 6px #0f172a40}
+#app#app#app#app .studio-workspace .toolbox .cv-slider-row>input[type=range]::-moz-range-thumb{width:18px;height:18px;border:0;border-radius:50%;background:#fff;box-shadow:0 0 0 1px #0f172a26,0 2px 6px #0f172a40}
+#app#app#app#app .studio-workspace .toolbox .cv-slider-row>input[type=range]:focus-visible{outline:2px solid var(--brand,#0f766e);outline-offset:6px}
+#app#app#app#app .studio-workspace .toolbox .cv-num{flex:0 0 auto;width:64px!important;min-height:36px!important;height:36px;padding:0 4px!important;text-align:center;font-variant-numeric:tabular-nums}
+/* Segmented control (scope). */
+#app#app#app#app .studio-workspace .toolbox .cv-seg{display:flex;gap:2px;padding:3px;border-radius:10px;background:var(--cv-tile)}
+#app#app#app#app .studio-workspace .toolbox .cv-seg>button{flex:1;min-height:32px!important;padding:0 8px!important;border:0!important;border-radius:8px!important;background:transparent!important;box-shadow:none!important;color:var(--muted)!important;font-size:12px!important;font-weight:600}
+#app#app#app#app .studio-workspace .toolbox .cv-seg>button[aria-pressed=true]{background:var(--surface)!important;color:var(--ink)!important;box-shadow:0 1px 3px #0f172a1f!important;cursor:default}
+#app#app#app#app .studio-workspace .toolbox .cv-seg>button[aria-pressed=false]:hover{color:var(--brand,#0f766e)!important}
+/* Switch rows replace bare checkboxes in panels. */
+#app#app#app#app .studio-workspace .toolbox :is(.cv-switch-row,.next-panel .next-check){display:flex!important;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px!important;margin:0 0 12px!important;border-radius:14px;background:var(--cv-tile);font-size:13px;font-weight:600;cursor:pointer}
+#app#app#app#app .studio-workspace .toolbox .cv-switch-row>span{display:grid;gap:2px;min-width:0}
+#app#app#app#app .studio-workspace .toolbox .cv-switch-row b{font-size:13px;font-weight:700;color:var(--ink)}
+#app#app#app#app .studio-workspace .toolbox .cv-switch-row small{font-size:12px;font-weight:500;color:var(--muted)}
+#app#app#app#app .studio-workspace .toolbox :is(.cv-switch-row,.next-panel .next-check)>input[type=checkbox]{-webkit-appearance:none;appearance:none;order:2;flex:0 0 auto;width:40px!important;height:24px!important;min-width:40px!important;min-height:24px!important;padding:0!important;margin:0!important;border:0!important;border-radius:999px!important;background:color-mix(in srgb,var(--muted,#64748b) 40%,var(--surface))!important;position:relative;cursor:pointer;transition:background .15s;accent-color:auto}
+#app#app#app#app .studio-workspace .toolbox :is(.cv-switch-row,.next-panel .next-check)>input[type=checkbox]::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px #0003;transition:transform .15s}
+#app#app#app#app .studio-workspace .toolbox :is(.cv-switch-row,.next-panel .next-check)>input[type=checkbox]:checked{background:var(--brand,#0f766e)!important}
+#app#app#app#app .studio-workspace .toolbox :is(.cv-switch-row,.next-panel .next-check)>input[type=checkbox]:checked::after{transform:translateX(16px)}
+#app#app#app#app .studio-workspace .toolbox :is(.cv-switch-row,.next-panel .next-check)>input[type=checkbox]:focus-visible{outline:2px solid var(--brand,#0f766e);outline-offset:2px}
+/* One short info line instead of paragraphs of muted text. */
+#app#app#app#app .studio-workspace .toolbox .cv-prop-note{display:flex;align-items:flex-start;gap:8px;margin:2px 0 8px!important;padding:0 4px;font-size:12px!important;line-height:1.45;color:var(--muted)!important}
+#app#app#app#app .studio-workspace .toolbox .cv-prop-note>svg{flex:0 0 auto;width:14px;height:14px;margin-top:2px}
+/* "Tùy chọn khác" is an accordion row; reset is a quiet footer action. */
+#app#app#app#app .studio-workspace .toolbox .cv-prop-more{margin:8px 0 0!important;border-top:1px solid var(--line)}
+#app#app#app#app .studio-workspace .toolbox .cv-prop-more>summary{display:flex;align-items:center;justify-content:space-between;min-height:46px;padding:0 4px;list-style:none;font-size:13px!important;font-weight:600;color:var(--ink)!important;cursor:pointer}
+#app#app#app#app .studio-workspace .toolbox .cv-prop-more>summary::-webkit-details-marker{display:none}
+#app#app#app#app .studio-workspace .toolbox .cv-prop-more>summary>svg{color:var(--muted);transition:transform .15s}
+#app#app#app#app .studio-workspace .toolbox .cv-prop-more[open]>summary>svg{transform:rotate(180deg)}
+#app#app#app#app .studio-workspace .toolbox .cv-prop-more>.btn{width:100%;justify-content:flex-start;gap:8px;margin:0 0 8px}
+#app#app#app#app#app#app .studio-workspace .toolbox .cv-prop-reset{text-decoration:none!important;box-shadow:none!important;display:flex!important;align-items:center;justify-content:center;gap:6px;width:100%;min-height:40px!important;margin:6px 0 0!important;border:0!important;border-radius:10px!important;background:transparent!important;color:var(--muted)!important;font-size:13px!important;font-weight:600}
+#app#app#app#app#app#app .studio-workspace .toolbox .cv-prop-reset:hover{background:var(--cv-hover)!important;color:var(--ink)!important}
+/* The selection toolbar inside the panel becomes a "Chỉnh nhanh" card: label left, control right; no repeated name, chips or close. */
+#app#app#app#app .studio-workspace .toolbox .next-panel .next-context{display:flex!important;flex-wrap:wrap!important;align-items:center;gap:8px!important;padding:14px!important;margin:0 0 12px!important;border:0!important;border-radius:14px!important;background:var(--surface)!important;box-shadow:inset 0 0 0 1px var(--line)!important;position:static!important;transform:none!important;width:auto!important;max-width:none!important;white-space:normal!important;overflow:visible!important}
+#app#app#app#app .studio-workspace .toolbox .next-panel .next-context::before{content:'Chỉnh nhanh';flex:0 0 100%;font-size:13px;font-weight:700;color:var(--ink)}
+#app#app#app#app .studio-workspace .toolbox .next-panel .next-context>:is(strong,small,.icon-btn[aria-label="Bỏ chọn đối tượng"]){display:none!important}
+#app#app#app#app .studio-workspace .toolbox .next-panel .next-context>label:not(.next-check){flex:0 0 100%;display:flex!important;align-items:center;justify-content:space-between;gap:12px;min-height:40px;font-size:13px!important;color:var(--muted)!important}
+#app#app#app#app .studio-workspace .toolbox .next-panel .next-context>label>:is(select,input:not([type=checkbox]):not([type=color])){flex:0 0 auto;width:60%!important;max-width:180px!important;min-height:38px!important;font-size:13px!important}
+#app#app#app#app .studio-workspace .toolbox .next-panel .next-context>label>input[type=color]{flex:0 0 auto;width:52px!important;height:38px!important;min-height:38px!important;padding:3px!important;border-radius:10px!important}
+#app#app#app#app .studio-workspace .toolbox .next-panel .next-context>.next-check{flex:0 0 100%;margin:0!important}
+#app#app#app#app .studio-workspace .toolbox .next-panel .next-context>:is(.btn,.icon-btn){flex:1 1 40%;width:auto!important;min-height:40px!important;justify-content:center;font-size:13px!important}
+#app#app#app#app .studio-workspace .toolbox .next-panel .next-context>.icon-btn{display:inline-flex!important;align-items:center;gap:6px;height:auto!important;border:0!important;border-radius:10px!important;background:var(--cv-tile)!important;color:var(--ink)!important}
+#app#app#app#app .studio-workspace .toolbox .next-panel .next-context>.icon-btn[aria-label^="Thêm chú thích"]::after{content:'Thêm chú thích';font-weight:600}
+/* Point content: time and its move button on one line; record is the one wide primary action. */
+#app#app#app#app .studio-workspace .toolbox .cv-inline-field{display:flex;align-items:flex-end;gap:8px;margin:0 0 14px}
+#app#app#app#app .studio-workspace .toolbox .cv-inline-field>.field{flex:1;min-width:0;margin:0!important}
+#app#app#app#app .studio-workspace .toolbox .cv-inline-field>.btn{flex:0 0 auto;gap:6px;min-height:44px!important}
+#app#app#app#app .studio-workspace .toolbox .btn.cv-wide{width:100%;justify-content:center;gap:8px;min-height:44px!important;margin:6px 0 4px}
+#app#app#app#app .studio-workspace .toolbox .text-btn.cv-link{display:inline-flex;align-items:center;gap:6px;color:var(--brand,#0f766e)!important;font-weight:600}
+/* Styles panel: parts are toggle chips; presets are cards that lift on hover. */
+#app#app#app#app .studio-workspace .toolbox .cv-prop-kicker{margin:6px 0 10px!important;font-size:13px!important;font-weight:700;color:var(--ink)!important}
+#app#app#app#app .studio-workspace .toolbox .next-style-parts{display:flex!important;flex-wrap:wrap;gap:8px!important;margin:0 0 14px!important}
+#app#app#app#app .studio-workspace .toolbox .next-style-parts>label{position:relative;display:inline-flex!important;align-items:center;gap:6px;min-height:36px;padding:0 14px 0 10px!important;margin:0!important;border-radius:999px;background:var(--cv-tile);font-size:13px;font-weight:600;cursor:pointer;transition:background .15s,box-shadow .15s,color .15s}
+#app#app#app#app .studio-workspace .toolbox .next-style-parts>label>input{position:absolute;opacity:0;pointer-events:none}
+#app#app#app#app .studio-workspace .toolbox .next-style-parts>label>svg{width:14px;height:14px}
+#app#app#app#app .studio-workspace .toolbox .next-style-parts>label:has(input:checked){background:var(--brand-soft,#e6f4f1);color:var(--brand,#0f766e);box-shadow:inset 0 0 0 2px var(--brand,#0f766e)}
+#app#app#app#app .studio-workspace .toolbox .next-style-parts>label:has(input:focus-visible){outline:2px solid var(--brand,#0f766e);outline-offset:2px}
+#app#app#app#app .studio-workspace .toolbox .next-style-preset{display:grid!important;grid-template-columns:88px minmax(0,1fr);gap:14px;align-items:center;padding:10px!important;margin:0 0 10px!important;border:0!important;border-radius:14px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line);transition:box-shadow .15s,transform .15s}
+#app#app#app#app .studio-workspace .toolbox .next-style-preset:hover{box-shadow:inset 0 0 0 2px var(--brand,#0f766e),0 8px 20px -12px #0f172a55;transform:translateY(-1px)}
+#app#app#app#app .studio-workspace .toolbox .next-style-preset>img{width:88px!important;height:112px!important;object-fit:cover;object-position:top;border-radius:10px;box-shadow:0 0 0 1px var(--line)}
+#app#app#app#app .studio-workspace .toolbox .next-style-preset h3{margin:0 0 2px!important;font-size:14px!important}
+#app#app#app#app .studio-workspace .toolbox .next-style-preset p{margin:0 0 8px!important;font-size:12px!important;line-height:1.4;color:var(--muted)}
+#app#app#app#app .studio-workspace .toolbox .next-style-preset .btn{min-height:32px!important;padding:0 12px!important;font-size:12px!important;border-radius:999px!important}
+/* Phone: sheet height is three small glyph buttons beside the close button, not a full-width row (names stay for screen readers). */
+@media (max-width:760px){
+  #app#app#app#app .studio-workspace .toolbox .next-sheet-sizes{position:sticky!important;top:11px!important;z-index:12;display:flex!important;gap:2px;width:max-content;padding:3px!important;margin:-50px 52px 14px auto!important;border-radius:10px!important;background:var(--cv-tile)!important}
+  #app#app#app#app .studio-workspace .toolbox .next-sheet-sizes>button{flex:0 0 auto!important;display:grid;place-items:center;width:34px!important;min-width:34px!important;height:30px!important;min-height:30px!important;padding:0!important;border:0!important;border-radius:8px!important;background:transparent!important;color:var(--muted)!important;font-size:0!important;box-shadow:none!important}
+  #app#app#app#app .studio-workspace .toolbox .next-sheet-sizes>button::before{content:'';width:14px;height:16px;border-radius:3px;box-shadow:inset 0 0 0 1.5px currentColor;background:linear-gradient(to top,currentColor var(--cv-h),transparent var(--cv-h))}
+  #app#app#app#app .studio-workspace .toolbox .next-sheet-sizes>button:nth-child(1){--cv-h:30%}
+  #app#app#app#app .studio-workspace .toolbox .next-sheet-sizes>button:nth-child(2){--cv-h:55%}
+  #app#app#app#app .studio-workspace .toolbox .next-sheet-sizes>button:nth-child(3){--cv-h:100%}
+  #app#app#app#app .studio-workspace .toolbox .next-sheet-sizes>button[aria-pressed=true]{background:var(--surface)!important;color:var(--brand,#0f766e)!important;box-shadow:0 1px 3px #0f172a1f!important}
+  #app#app#app#app .studio-workspace .toolbox .cv-prop-tiles{gap:6px}
+  #app#app#app#app .studio-workspace .toolbox .cv-tile{min-height:66px!important}
+}
