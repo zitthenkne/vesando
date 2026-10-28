@@ -151,7 +151,7 @@ async function check(p,name,fn){await fn();console.log('PASS:',name);}
     });
     await check(p,'Editable data table tracks dirty cells and commits a batch atomically',async()=>{
       await app(p,a=>a.work.open('table'));
-      await p.locator('.next-data-table td[data-table-row="0"][data-table-col="0"] input').fill('146');
+      const fhrRow=await app(p,a=>a.work.tableFields.findIndex(f=>f.key==='fhr'));await p.locator('.next-data-table td[data-table-row="'+fhrRow+'"][data-table-col="0"] input').fill('146');
       assert.equal(await p.locator('.next-data-table td.changed').count(),1);
       assert.equal(await app(p,a=>a.work.selection[0].field),'fhr');
       assert.equal(await app(p,a=>a.activeCase.observations[0].fhr),140);

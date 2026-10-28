@@ -13,7 +13,7 @@ function headConventionConflict(o){return finite(o.descent)&&finite(o.station)&&
 const fetalHeartY=v=>G.fhrY+(200-clamp(v,80,200))*G.fhrH/120;
 function plotValueAt(y,field){if(field==='fhr')return Math.round(clamp(200-(y-G.fhrY)*120/G.fhrH,80,200));const value=(G.progressY+G.progressH-y)*10/G.progressH;return field==='descent'?Math.round(clamp(value,0,5)):Math.round(clamp(value,0,10)*2)/2}
 function plotBounds(field){return field==='fhr'?{y:G.fhrY,height:G.fhrH}:field==='descent'?{y:cervixY(5),height:G.progressH/2}:{y:G.progressY,height:G.progressH}}
-const SERIES_LIST=[{key:'ctc',label:'CTC'},{key:'des',label:'Đầu trên vệ'},{key:'fhr',label:'Tim thai'},{key:'pulse',label:'Mạch mẹ'},{key:'alert',label:'Báo động'},{key:'action',label:'Hành động'}];
+const SERIES_LIST=[{key:'ctc',label:'CTC'},{key:'des',label:'Độ lọt'},{key:'fhr',label:'Tim thai'},{key:'pulse',label:'Mạch mẹ'},{key:'alert',label:'Báo động'},{key:'action',label:'Hành động'}];
 const PALETTES=[
   {id:'clinical',label:'Lâm sàng',colors:['#d42f4e','#2469ab','#172b3a','#172b3a','#b65c24','#b72935']},
   {id:'accessible',label:'Dễ phân biệt',colors:['#9c4f00','#006b85','#20313f','#4b5662','#7e5200','#7c2460']},

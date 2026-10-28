@@ -1569,3 +1569,30 @@
 @media (prefers-reduced-motion:reduce){#app#app#app#app .project-home .cv-shortcuts>button.cv-task:hover{transform:none}#app#app#app#app .presenter .cv-present-dots>button{transition:none}}
 /* Windows high contrast: chosen states keep a visible outline. */
 @media (forced-colors:active){#app :is(.cv-dock-btn,.cv-seg>button,.cv-drag-seg>button,.cv-ctx-seg>button,.cv-marker-tiles>button,.cv-line-tiles>button,.head-position-grid>button,.cv-note-kinds>button,.design-nav>button):is([aria-checked=true],[aria-pressed=true],.active){outline:2px solid Highlight!important}#app .cv-swatches>button,#app .cv-ctx-color::before{forced-color-adjust:none}}
+/* ===== Round 37 (Vòng 70): data table and extra tools ===== */
+#app#app#app#app .studio-workspace .toolbox .cv-table-groups{display:flex;gap:6px;margin:0 0 10px;overflow-x:auto;scrollbar-width:none}
+#app#app#app#app#app .studio-workspace .toolbox .cv-table-groups>button{flex:none;min-height:32px!important;padding:0 12px!important;border:0!important;border-radius:999px!important;background:var(--cv-tile)!important;box-shadow:none!important;color:var(--muted)!important;font-size:12.5px!important;font-weight:600;white-space:nowrap}
+#app#app#app#app#app .studio-workspace .toolbox .cv-table-groups>button[aria-pressed=true]{background:var(--ink)!important;color:var(--surface)!important}
+/* Current moment column: tinted header and cells. */
+#app#app#app#app#app .studio-workspace .toolbox .next-data-table th.now{background:var(--brand-soft,#e6f4f1)!important}
+#app#app#app#app#app .studio-workspace .toolbox .next-data-table th.now button{color:var(--brand,#0f766e)!important;font-weight:800}
+#app#app#app#app#app#app .studio-workspace .toolbox .next-data-table tbody td.now{background:color-mix(in srgb,var(--brand,#0f766e) 6%,transparent)!important}
+/* Plotted rows carry their chart symbol; rows with nothing recorded are dimmed. */
+#app#app#app#app#app .studio-workspace .toolbox .next-data-table th.core{font-weight:700}
+#app#app#app#app#app .studio-workspace .toolbox .next-data-table th.empty{opacity:.6}
+#app#app#app#app .studio-workspace .toolbox .next-data-table th .cv-field-mark{margin-right:6px}
+/* Out-of-range cells flagged like the entry sheet. */
+#app#app#app#app#app#app .studio-workspace .toolbox .next-data-table tbody td.alert :is(input,select){color:#b91c1c!important;font-weight:700}
+:root[data-theme=dark] #app#app#app#app#app#app .studio-workspace .toolbox .next-data-table tbody td.alert :is(input,select){color:#fca5a5!important}
+#app#app#app#app#app#app .studio-workspace .toolbox .next-data-table tbody td.alert{box-shadow:inset 0 -2px 0 #dc2626}
+/* "Thêm" menu: guided steps as a switch row. */
+#app#app#app .rail-more-panel .rail-more-guided.switch-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:10px;padding:10px 4px 0;border-top:1px solid var(--line);font-size:13px;font-weight:600;color:var(--ink);cursor:pointer}
+#app#app#app .rail-more-panel .rail-more-guided small{display:block;font-size:11.5px;font-weight:400;color:var(--muted)}
+#app#app#app#app .rail-more-panel .rail-more-guided>input{-webkit-appearance:none;appearance:none;flex:0 0 40px;width:40px;height:24px;margin:0;border-radius:999px;background:#cbd5e1;position:relative;cursor:pointer;border:0}
+#app#app#app#app .rail-more-panel .rail-more-guided>input::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px #0003;transition:transform .15s}
+#app#app#app#app .rail-more-panel .rail-more-guided>input:checked{background:var(--brand,#0f766e)}
+#app#app#app#app .rail-more-panel .rail-more-guided>input:checked::after{transform:translateX(16px)}
+#app#app#app#app .rail-more-panel .rail-more-grid{gap:6px!important}
+#app#app#app#app#app .rail-more-panel .rail-more-open{display:flex!important;flex-direction:row!important;align-items:center;justify-content:flex-start;gap:10px;min-height:46px!important;height:auto!important;padding:8px 12px!important;text-align:left}
+#app#app#app#app#app .rail-more-panel .rail-more-open svg{width:18px;height:18px;flex:none}
+#app#app#app#app .rail-more-panel .rail-more-guided.switch-row{margin-top:8px;padding-top:8px}
