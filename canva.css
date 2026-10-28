@@ -1491,3 +1491,32 @@
   #app#app#app#app#app .studio-workspace:not(.focused) .workarea .standard-picker{width:auto!important;max-width:220px;flex:0 1 auto!important}
   #app#app#app#app#app .studio-workspace:not(.focused) .workarea .standard-picker select{font-size:13px!important;padding-right:28px!important}
 }
+/* ===== Round 33 (Vòng 66): home starts from the two jobs ===== */
+#app#app#app .project-home .cv-shortcuts{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px!important;margin:4px 0 22px!important;padding:0!important;overflow:visible!important}
+#app#app#app#app .project-home .cv-shortcuts>button.cv-task{grid-column:span 5;display:grid!important;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;width:auto!important;padding:18px 18px!important;border:0!important;border-radius:18px!important;background:var(--surface)!important;box-shadow:0 1px 2px #0f172a14,0 0 0 1px var(--line)!important;text-align:left;transition:box-shadow .15s,transform .15s}
+@media (min-width:761px){#app#app#app#app .project-home .cv-shortcuts>button.cv-task{grid-column:span 5}#app#app#app .project-home .cv-shortcuts{grid-template-columns:repeat(10,minmax(0,1fr))}#app#app#app#app .project-home .cv-shortcuts>button.cv-task{grid-column:span 5}#app#app#app#app .project-home .cv-shortcuts>button:not(.cv-task){grid-column:span 2}}
+#app#app#app#app .project-home .cv-shortcuts>button.cv-task:hover{transform:translateY(-1px);box-shadow:0 10px 26px #0f172a1f,0 0 0 1px var(--brand,#0f766e)!important}
+#app#app#app#app .project-home .cv-shortcuts>button.cv-task .cv-sc-icon{width:52px!important;height:52px!important;border-radius:16px!important}
+#app#app#app#app .project-home .cv-task-copy{display:grid;gap:3px;min-width:0}
+#app#app#app#app .project-home .cv-task-copy>b{font-size:17px;color:var(--ink)}
+#app#app#app#app .project-home .cv-task-copy>small{font-size:13px;color:var(--muted);line-height:1.35}
+#app#app#app#app .project-home .cv-shortcuts>button.cv-task>svg{width:20px;height:20px;color:var(--brand,#0f766e)}
+#app#app#app#app .project-home .cv-shortcuts>button:not(.cv-task){width:auto!important;justify-self:center}
+/* AI hub becomes the third way in, quieter than the two jobs. */
+#app#app#app .project-home .home-ai-start #home-ai-title{display:flex;align-items:center;justify-content:center;gap:10px;font-size:clamp(20px,2.2vw,26px)!important}
+#app#app#app .project-home .home-ai-start #home-ai-title svg{width:24px;height:24px}
+@media (max-width:760px){
+  #app#app#app .project-home .cv-shortcuts{grid-template-columns:repeat(5,minmax(0,1fr));gap:8px!important;margin:0 0 16px!important}
+  #app#app#app#app .project-home .cv-shortcuts>button.cv-task{padding:14px!important;gap:12px}
+  #app#app#app#app .project-home .cv-shortcuts>button:not(.cv-task){width:100%!important;flex:none!important}
+  #app#app#app#app .project-home .cv-shortcuts>button:not(.cv-task) .cv-sc-icon{width:46px!important;height:46px!important}
+  #app#app#app#app .project-home .cv-shortcuts>button:not(.cv-task)>span:last-child{font-size:11px}
+}
+#app#app#app#app#app .project-home .cv-shortcuts>button.cv-task{justify-items:start;justify-content:stretch}
+#app#app#app#app#app .project-home .cv-task-copy{justify-self:stretch;text-align:left}
+#app#app#app#app#app .project-home .cv-shortcuts>button.cv-task>svg{justify-self:end}
+#app#app#app#app .project-home .home-ai-start{padding-top:clamp(20px,3vw,32px)!important;padding-bottom:clamp(16px,2.5vw,26px)!important}
+#app#app#app#app .project-home .home-ai-start textarea{min-height:72px!important;height:72px}
+#app#app#app#app .project-home .home-ai-start #home-ai-title{margin-bottom:14px!important}
+#app#app#app#app .project-home .home-ai-start .home-hub-compose>p{display:none}
+@media (max-width:760px){#app#app#app#app .project-home .home-ai-start #home-ai-title{display:block;text-align:center}#app#app#app#app .project-home .home-ai-start #home-ai-title svg{display:inline-block;vertical-align:-3px;margin-right:6px}}
