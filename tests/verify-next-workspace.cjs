@@ -124,10 +124,11 @@ async function check(p,name,fn){await fn();console.log('PASS:',name);}
     await check(p,'Annotation layout is independent of its anchor and survives validation/export',async()=>{
       await app(p,a=>a.work.open('notes'));await p.getByRole('button',{name:'Thêm chú thích',exact:true}).click();
       await p.locator('.next-note-form textarea').fill('Ghi chú thử vị trí');
-      await p.locator('.next-note-form input[type=number]').first().fill('7.5');
-      await p.locator('.next-note-form input[type=number]').nth(1).fill('35');
-      await p.locator('.next-note-form input[type=number]').nth(2).fill('24');
-      await p.locator('.next-note-form select').first().selectOption('box');
+      await p.locator('.next-note-form input[type=time]').fill(await app(p,a=>a.work.shortClock(7.5).slice(0,5)));await p.locator('.next-note-form input[type=time]').dispatchEvent('change');
+      await p.locator('.cv-note-offset>summary').click();
+      await p.locator('.next-note-form input[type=number]').first().fill('35');
+      await p.locator('.next-note-form input[type=number]').nth(1).fill('24');
+      await p.locator('.cv-note-kinds').getByRole('button',{name:'Hộp ghi chú'}).click();
       await p.getByRole('button',{name:'Lưu chú thích',exact:true}).click();
       const note=await app(p,a=>a.activeCase.events.find(e=>e.label==='Ghi chú thử vị trí'));
       assert.equal(note.time,7.5);assert.deepEqual(note.layout,{dx:35,dy:24,z:0,kind:'box'});
