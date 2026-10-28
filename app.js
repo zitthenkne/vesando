@@ -723,6 +723,9 @@ const app=createApp({
       if(event.altKey&&['ArrowLeft','ArrowRight'].includes(event.key)&&mode.value==='exam'){event.preventDefault();selectMoment(clamp(selectedMoment.value+(event.key==='ArrowLeft'?-1:1),0,caseForView(activeCase.value).observations.length-1));return}
       // Bút ghi khi bấm lưới chuyển dạ: C = độ mở CTC, L = độ lọt (đầu trên vệ).
       if((key==='c'||key==='l')&&!mod&&!event.altKey&&work.space==='capture'){event.preventDefault();plotField.value=key==='c'?'cervix':'descent';return}
+      // [ ] mốc trước / sau; N mốc mới (khi đang nhập dữ liệu).
+      if((key==='['||key===']')&&!mod&&!event.altKey&&work.space==='capture'){const t=work.stepTarget(key==='['?-1:1);if(t!==null){event.preventDefault();work.go(t)}return}
+      if(key==='n'&&!mod&&!event.altKey&&work.space==='capture'){event.preventDefault();work.newMoment();return}
       if(key==='f'&&!mod&&!event.altKey){event.preventDefault();toggleFocus()}
       if(event.key==='Escape'&&focusMode.value)toggleFocus();
     }

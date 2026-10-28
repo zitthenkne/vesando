@@ -1552,3 +1552,20 @@
 @media (max-width:760px){#app#app#app .presenter .presenter-progress>strong{font-size:17px!important}#app#app#app .presenter .presenter-progress{min-width:0}}
 #app#app#app .presenter .presenter-progress{min-width:0!important;overflow:hidden}
 #app#app#app#app .presenter .cv-present-dots>button{min-width:2px!important}
+/* ===== Round 36 (Vòng 69): dark theme, keyboard and contrast pass ===== */
+/* Dark swatches (navy, black) need a light ring to be seen on dark panels. */
+:root[data-theme=dark] #app#app#app#app#app#app .studio-workspace .toolbox :is(.cv-swatches>button,.head-color-row>.color-swatch){box-shadow:inset 0 0 0 1.5px #ffffff40!important}
+:root[data-theme=dark] #app#app#app#app#app#app .studio-workspace .toolbox :is(.cv-swatches>button,.head-color-row>.color-swatch)[aria-pressed=true]{box-shadow:inset 0 0 0 1.5px #ffffff40,0 0 0 2px var(--surface),0 0 0 4px var(--brand,#5eead4)!important}
+:root[data-theme=dark] #app#app#app#app .next-context .cv-ctx-color::before{box-shadow:inset 0 0 0 1.5px #ffffff40,0 0 0 2px var(--surface),0 0 0 3px var(--line)}
+/* Selection header swatch: a paper-white tile so series colours read in the dark theme. */
+:root[data-theme=dark] #app#app#app#app .studio-workspace .toolbox .cv-prop-swatch{background:#fff!important}
+/* Keyboard focus: one visible ring on every new control. */
+#app#app#app#app :is(.cv-dock-btn,.cv-task,.cv-journey li>button,.cv-journey-next,.cv-present-dots>button,.cv-reuse,.cv-latest-tile,.cv-alert-row,.cv-note-presets>button,.cv-note-kinds>button,.cv-line-tiles>button,.cv-marker-tiles>button,.cv-swatches>button,.head-position-grid>button,.cv-time-pill,.cv-moment-add,.cv-head-link,.cv-grab,.next-context .icon-btn):focus-visible{outline:2.5px solid var(--brand,#0f766e)!important;outline-offset:2px!important}
+:root[data-theme=dark] #app#app#app#app :is(.cv-dock-btn,.cv-task,.cv-journey li>button,.cv-journey-next,.cv-reuse,.cv-latest-tile,.cv-alert-row,.cv-note-presets>button,.cv-note-kinds>button,.cv-swatches>button,.head-position-grid>button,.cv-time-pill,.next-context .icon-btn):focus-visible{outline-color:#5eead4!important}
+/* Shortcut hint chip inside a button. */
+#app#app#app#app .studio-workspace .toolbox .cv-kbd{margin-left:6px;padding:1px 5px;border-radius:5px;background:#ffffff33;color:inherit;font:700 10px/1.3 inherit;border:0;box-shadow:none}
+@media (max-width:760px),(hover:none){#app#app#app#app .studio-workspace .toolbox .cv-kbd{display:none}}
+/* Motion: hover lifts and zone fades respect the reduced-motion setting. */
+@media (prefers-reduced-motion:reduce){#app#app#app#app .project-home .cv-shortcuts>button.cv-task:hover{transform:none}#app#app#app#app .presenter .cv-present-dots>button{transition:none}}
+/* Windows high contrast: chosen states keep a visible outline. */
+@media (forced-colors:active){#app :is(.cv-dock-btn,.cv-seg>button,.cv-drag-seg>button,.cv-ctx-seg>button,.cv-marker-tiles>button,.cv-line-tiles>button,.head-position-grid>button,.cv-note-kinds>button,.design-nav>button):is([aria-checked=true],[aria-pressed=true],.active){outline:2px solid Highlight!important}#app .cv-swatches>button,#app .cv-ctx-color::before{forced-color-adjust:none}}
