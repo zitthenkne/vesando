@@ -1135,3 +1135,55 @@
 /* Timeline: a + chip at the end adds the next moment. */
 #app#app#app .next-moment-track>.cv-moment-add{display:grid!important;place-items:center;flex:0 0 40px!important;width:40px!important;min-width:40px!important;height:40px;padding:0!important;border-radius:50%!important;background:var(--brand-soft,#e6f4f1)!important;color:var(--brand,#0f766e)!important;box-shadow:none!important}
 #app#app#app .next-moment-track>.cv-moment-add svg{width:18px;height:18px}
+/* ===== Round 23 (Vòng 56): monitoring — alerts first ===== */
+/* A value outside the reference range is flagged while typing. */
+#app#app#app#app#app .studio-workspace .toolbox .next-field.cv-alert :is(input,select){box-shadow:inset 0 0 0 1.5px #dc2626!important}
+#app#app#app#app .studio-workspace .toolbox .cv-limit{display:flex;align-items:center;gap:5px;margin-top:4px;font-size:11.5px;font-weight:600;color:#b91c1c}
+#app#app#app#app .studio-workspace .toolbox .cv-limit svg{width:13px;height:13px;flex:none}
+:root[data-theme=dark] #app#app#app#app .studio-workspace .toolbox .cv-limit{color:#fca5a5}
+#app#app#app#app#app#app .studio-workspace .toolbox .cv-reuse.bad{background:#fee2e2!important;color:#b91c1c!important}
+:root[data-theme=dark] #app#app#app#app#app#app .studio-workspace .toolbox .cv-reuse.bad{background:#7f1d1d!important;color:#fecaca!important}
+/* Alert block at the top of the entry sheet (Theo dõi). */
+#app#app#app#app .studio-workspace .toolbox .cv-alerts{margin:0 0 12px;padding:10px;border-radius:14px;background:#fef3c7;color:#78350f}
+#app#app#app#app .studio-workspace .toolbox .cv-alerts.critical{background:#fee2e2;color:#7f1d1d}
+#app#app#app#app .studio-workspace .toolbox .cv-alerts>header{display:flex;align-items:center;gap:8px;padding:0 4px 8px}
+#app#app#app#app .studio-workspace .toolbox .cv-alerts>header>strong{flex:1;font-size:13.5px}
+#app#app#app#app .studio-workspace .toolbox .cv-alerts>header>svg{width:18px;height:18px}
+#app#app#app#app#app .studio-workspace .toolbox .cv-alerts>header>.text-btn{min-height:28px!important;padding:0 10px!important;border-radius:999px!important;background:#ffffffb3!important;color:inherit!important;font-size:12px!important;font-weight:700}
+#app#app#app#app#app .studio-workspace .toolbox .cv-alert-row{display:flex!important;align-items:center;gap:8px;width:100%;min-height:40px!important;margin:0 0 4px!important;padding:6px 10px!important;border:0!important;border-radius:10px!important;background:#ffffffd9!important;color:var(--ink,#0f172a)!important;text-align:left;font-size:12.5px!important;font-weight:600;box-shadow:none!important}
+#app#app#app#app .studio-workspace .toolbox .cv-alert-row:last-child{margin-bottom:0!important}
+#app#app#app#app .studio-workspace .toolbox .cv-alert-row>span{flex:1;min-width:0}
+#app#app#app#app .studio-workspace .toolbox .cv-alert-row>small{color:var(--muted);font-weight:500}
+#app#app#app#app .studio-workspace .toolbox .cv-alert-row>svg{width:15px;height:15px;color:var(--muted)}
+#app#app#app#app#app .studio-workspace .toolbox .cv-alert-row[data-level=critical]{box-shadow:inset 3px 0 0 #dc2626!important}
+#app#app#app#app#app .studio-workspace .toolbox .cv-alert-row[data-level=warn]{box-shadow:inset 3px 0 0 #f59e0b!important}
+:root[data-theme=dark] #app#app#app#app .studio-workspace .toolbox .cv-alerts{background:#451a03;color:#fde68a}
+:root[data-theme=dark] #app#app#app#app .studio-workspace .toolbox .cv-alerts.critical{background:#450a0a;color:#fecaca}
+:root[data-theme=dark] #app#app#app#app#app .studio-workspace .toolbox :is(.cv-alert-row,.cv-alerts>header>.text-btn){background:#0f172acc!important;color:#f1f5f9!important}
+/* Số đo mới nhất: one row of tiles, abnormal ones tinted. */
+#app#app#app#app .studio-workspace .toolbox .cv-latest{display:flex;gap:6px;margin:0 0 12px;padding-bottom:2px;overflow-x:auto;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,#000 88%,transparent);mask-image:linear-gradient(90deg,#000 88%,transparent)}
+#app#app#app#app#app .studio-workspace .toolbox .cv-latest-tile{flex:0 0 auto;display:grid!important;justify-items:start;gap:1px;min-width:68px;min-height:0!important;padding:7px 10px!important;border:0!important;border-radius:12px!important;background:var(--cv-tile)!important;box-shadow:none!important;color:var(--ink)!important;text-align:left}
+#app#app#app#app .studio-workspace .toolbox .cv-latest-tile>small{font-size:10.5px;color:var(--muted);font-weight:600}
+#app#app#app#app .studio-workspace .toolbox .cv-latest-tile>b{font-size:16px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
+#app#app#app#app .studio-workspace .toolbox .cv-latest-tile>b>i{margin-left:2px;font-size:10.5px;font-style:normal;font-weight:600;color:var(--muted)}
+#app#app#app#app .studio-workspace .toolbox .cv-latest-tile>em{font-size:10.5px;font-style:normal;color:var(--muted)}
+#app#app#app#app#app .studio-workspace .toolbox .cv-latest-tile.alert{background:#fee2e2!important;color:#991b1b!important}
+:root[data-theme=dark] #app#app#app#app#app .studio-workspace .toolbox .cv-latest-tile.alert{background:#7f1d1d!important;color:#fecaca!important}
+#app#app#app#app#app .studio-workspace .toolbox .cv-latest-tile:hover{filter:brightness(.97)}
+/* Floating alert on the canvas (Theo dõi), top-left; desktop only (the phone sheet carries the block above). */
+#app#app#app#app .workarea .cv-alert-pill{position:absolute;top:10px;right:12px;z-index:15;display:inline-flex;align-items:center;gap:8px;max-width:min(320px,calc(50% - 210px));min-height:40px;padding:0 14px 0 12px;border:0;border-radius:999px;background:#fef3c7;color:#78350f;font:inherit;font-size:12.5px;font-weight:700;box-shadow:0 8px 24px #0f172a26;cursor:pointer}
+#app#app#app#app .workarea .cv-alert-pill.critical{background:#dc2626;color:#fff;animation:cv-pulse 2s ease-in-out 3}
+#app#app#app#app .workarea .cv-alert-pill>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#app#app#app#app .workarea .cv-alert-pill>svg{width:16px;height:16px;flex:none}
+#app#app#app#app .workarea .cv-alert-pill>b{flex:none;padding:1px 7px;border-radius:999px;background:#ffffff40}
+@keyframes cv-pulse{50%{box-shadow:0 0 0 8px #dc262633,0 8px 24px #0f172a26}}
+@media (prefers-reduced-motion:reduce){#app#app#app#app .workarea .cv-alert-pill.critical{animation:none}}
+@media (max-width:760px){#app#app#app#app .workarea .cv-alert-pill{display:none}}
+@container canvas (max-width:859px){#app#app#app#app#app .studio-workspace:not(.focused) .workarea .cv-alert-pill{top:58px}}
+/* Rail badge: red for critical findings, amber otherwise; timeline chip with a finding gets a red ring. */
+#app#app#app#app .creation-rail .cv-badge.warn{background:#f59e0b!important;color:#fff!important}
+#app#app#app#app .next-moment-track>button.alert{box-shadow:0 0 0 1.5px #dc2626!important}
+#app#app#app#app .next-moment-track>button.alert .next-issue-mark{color:#dc2626;font-weight:800}
+/* Issues list: level stripe on clinical findings. */
+#app#app#app#app#app .studio-workspace .toolbox .next-issue-group>button[data-level=critical]{box-shadow:inset 3px 0 0 #dc2626!important}
+#app#app#app#app#app .studio-workspace .toolbox .next-issue-group>button[data-level=warn]{box-shadow:inset 3px 0 0 #f59e0b!important}
