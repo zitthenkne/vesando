@@ -26,7 +26,7 @@ const EVENT_COLORS=[{color:'#6d28d9',label:'Tím (mặc định)'},{color:'#0e6b
 const mixHex=(a,b,t)=>'#'+[1,3,5].map(i=>{const x=parseInt(a.slice(i,i+2),16);return Math.round(x+(parseInt(b.slice(i,i+2),16)-x)*t).toString(16).padStart(2,'0')}).join('');
 // Callout colours from one base colour; the default violet keeps its original hand-tuned shades.
 function notePalette(color,mono){if(mono)return {ink:'#222222',text:'#111111',edge:'#9a9a9a',leader:'#777777',fill:'#ffffff'};const c=/^#[\da-f]{6}$/i.test(color||'')?color.toLowerCase():EVENT_COLORS[0].color;if(c===EVENT_COLORS[0].color)return {ink:c,text:'#3b1a7a',edge:'#c9b8f5',leader:'#a78bfa',fill:'#fbf9ff'};return {ink:c,text:mixHex(c,'#000000',.45),edge:mixHex(c,'#ffffff',.62),leader:mixHex(c,'#ffffff',.35),fill:mixHex(c,'#ffffff',.96)}}
-const POINT_NAMES={cervix:'CTC',descent:'Đầu trên vệ',fhr:'Tim thai'},POINT_UNITS={cervix:' cm',descent:'/5',fhr:' lần/phút'},SERIES_OF={cervix:'ctc',descent:'des',fhr:'fhr'};
+const POINT_NAMES={cervix:'CTC',descent:'Độ lọt',fhr:'Tim thai'},POINT_UNITS={cervix:' cm',descent:'/5',fhr:' lần/phút'},SERIES_OF={cervix:'ctc',descent:'des',fhr:'fhr'};
 const QUICK_COLORS=['#d42f4e','#2469ab','#0e6b62','#172b3a','#b45309','#6d28d9'];
 const SYMBOL_LABELS={cross:'×',circle:'○',dot:'●',square:'□',diamond:'◇',plus:'+',none:'—'};
 const SYMBOL_NAMES={cross:'Chữ X',circle:'Tròn rỗng',dot:'Chấm đặc',square:'Vuông',diamond:'Thoi',plus:'Dấu cộng',none:'Không ký hiệu'};
