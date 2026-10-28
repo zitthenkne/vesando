@@ -71,8 +71,10 @@ const app=createApp({
     function startPanelResize(e){if(e.button!==0)return;const shell=e.currentTarget.parentElement.getBoundingClientRect(),dir=e.clientX>shell.left+shell.width/2?1:-1;panelDrag.value={x:e.clientX,width:panelWidth.value,dir};e.currentTarget.setPointerCapture(e.pointerId);e.preventDefault()}
     const panelOnLeft=()=>{const shell=document.querySelector('.inspector-shell'),work=document.querySelector('.workbench>.workarea');return !!(shell&&work&&shell.getBoundingClientRect().left<work.getBoundingClientRect().left)};
     function movePanelResize(e){if(!panelDrag.value)return;panelWidth.value=clamp(panelDrag.value.width+(e.clientX-panelDrag.value.x)*panelDrag.value.dir,260,520)}
-    const designTab=ref('layout'),sizeScope=ref('board'),selectedSection=ref('progress'),theme=ref('light'),commandOpen=ref(false);
-    const designTabs=[{id:'layout',label:'Bố cục',icon:'move'},{id:'canvas',label:'Giờ & nội dung',icon:'panels-top-left'},{id:'head',label:'Kiểu thế',icon:'rotate-cw'},{id:'symbols',label:'Màu, chữ & nét',icon:'pen-tool'},{id:'template',label:'Mẫu có sẵn',icon:'layout-template'}];
+    const designTab=ref('template'),sizeScope=ref('board'),selectedSection=ref('progress'),theme=ref('light'),commandOpen=ref(false);
+    // Ordered by how often an author reaches for them: pick a look, adjust colours, then size and time window.
+    const designTabs=[{id:'template',label:'Mẫu',icon:'layout-template'},{id:'symbols',label:'Màu sắc',icon:'palette'},{id:'layout',label:'Bố cục',icon:'move'},{id:'canvas',label:'Nội dung',icon:'list-checks'},{id:'head',label:'Kiểu thế',icon:'rotate-cw'}];
+    watch(designTab,()=>Vue.nextTick(()=>document.querySelectorAll('.toolbox').forEach(t=>{t.scrollTop=0})));
     const media=window.matchMedia('(max-width:760px)'),mobile=ref(media.matches);
     const currentTool=computed(()=>mode.value==='clinical'&&toolTab.value==='review'?{id:'review',label:'Đọc sản đồ',hint:'Đọc dấu hiệu, dữ liệu còn thiếu và nguồn đối chiếu.',icon:'clipboard-check'}:toolTabs.find(t=>t.id===toolTab.value)||(toolTab.value==='overview'?{id:'overview',label:'Sản đồ',hint:'Chọn công cụ khi cần chỉnh sửa.',icon:'file-chart-column'}:{id:'guide',label:'Quy ước',hint:'Đọc quy ước và nguồn tham chiếu.',icon:'book-open'}));
     function toolLabel(tool){return mode.value==='clinical'?({review:'Đọc sản đồ',export:'Xuất'}[tool.id]||tool.label):tool.label}

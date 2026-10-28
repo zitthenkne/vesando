@@ -1233,3 +1233,39 @@
   #app#app#app#app#app .studio-workspace .toolbox .cv-moment-nav{justify-content:center}
   #app#app#app#app .studio-workspace .toolbox .cv-group-hint{display:none}
 }
+/* ===== Round 25 (Vòng 58): design panel for an author ===== */
+/* One switch style everywhere in the panel (old check-field switches were 34 px with a 40 px knob path and spilled). */
+#app#app#app#app#app .studio-workspace .toolbox .check-field{display:flex!important;flex-direction:row-reverse;align-items:center;justify-content:space-between;gap:12px;padding:8px 2px!important;overflow:visible}
+#app#app#app#app#app .studio-workspace .toolbox .check-field>input[type=checkbox]{-webkit-appearance:none;appearance:none;flex:0 0 40px!important;width:40px!important;min-width:40px!important;height:24px!important;min-height:0!important;margin:0!important;padding:0!important;border:0!important;border-radius:999px!important;background:#cbd5e1!important;position:relative;cursor:pointer}
+#app#app#app#app#app .studio-workspace .toolbox .check-field>input[type=checkbox]::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px #0003;transition:transform .15s}
+#app#app#app#app#app .studio-workspace .toolbox .check-field>input[type=checkbox]:checked{background:var(--brand,#0f766e)!important}
+#app#app#app#app#app .studio-workspace .toolbox .check-field>input[type=checkbox]:checked::after{transform:translateX(16px)}
+:root[data-theme=dark] #app#app#app#app#app .studio-workspace .toolbox :is(.check-field,.switch-row)>input[type=checkbox]:not(:checked){background:#475569!important}
+/* Design tabs: four short tabs on one line. */
+#app#app#app#app .studio-workspace .toolbox .design-nav{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:4px!important;border-radius:14px;background:var(--cv-tile);border:0!important}
+#app#app#app#app#app .studio-workspace .toolbox .design-nav>button{display:grid!important;justify-items:center;gap:3px;min-height:52px!important;padding:6px 2px!important;border:0!important;border-radius:10px!important;background:transparent!important;box-shadow:none!important;color:var(--muted)!important;font-size:11.5px!important;font-weight:600;white-space:nowrap}
+#app#app#app#app#app .studio-workspace .toolbox .design-nav>button.active{background:var(--surface)!important;color:var(--brand,#0f766e)!important;box-shadow:0 1px 3px #0f172a26!important}
+#app#app#app#app#app .studio-workspace .toolbox .design-nav>button::after{display:none!important}
+#app#app#app#app .studio-workspace .toolbox .design-nav>button svg{width:18px;height:18px}
+/* "Công cụ khác" sits at the end as a quiet disclosure. */
+#app#app#app#app .studio-workspace .toolbox .design-advanced{margin:18px 0 8px!important;border-top:1px solid var(--line)!important;padding-top:6px}
+#app#app#app#app .studio-workspace .toolbox .design-advanced>summary{display:flex!important;align-items:center;gap:8px}
+#app#app#app#app .studio-workspace .toolbox .design-advanced>summary>svg:first-child{width:15px;height:15px}
+#app#app#app#app .studio-workspace .toolbox .design-advanced>summary>svg:last-child{margin-left:auto}
+/* Row groups: segmented choice and chip toggles instead of a select and checkboxes. */
+#app#app#app#app .studio-workspace .toolbox .cv-row-mode{margin:12px 0 10px}
+#app#app#app#app .studio-workspace .toolbox .cv-chip-toggles{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+#app#app#app#app#app .studio-workspace .toolbox .cv-chip-toggles>button{display:inline-flex!important;align-items:center;gap:5px;min-height:32px!important;padding:0 12px 0 9px!important;border:0!important;border-radius:999px!important;background:var(--cv-tile)!important;box-shadow:none!important;color:var(--muted)!important;font-size:12.5px!important;font-weight:600}
+#app#app#app#app#app .studio-workspace .toolbox .cv-chip-toggles>button[aria-pressed=true]{background:var(--brand-soft,#e6f4f1)!important;color:var(--brand,#0f766e)!important}
+#app#app#app#app .studio-workspace .toolbox .cv-chip-toggles svg{width:14px;height:14px}
+/* Time window presets read as one segmented control. */
+#app#app#app#app .studio-workspace .toolbox .time-presets{display:flex!important;gap:2px;padding:3px!important;border-radius:12px;background:var(--cv-tile);border:0!important}
+#app#app#app#app#app .studio-workspace .toolbox .time-presets>button{flex:1;min-height:34px!important;padding:0 6px!important;border:0!important;border-radius:9px!important;background:transparent!important;box-shadow:none!important;color:var(--muted)!important;font-size:12.5px!important;font-weight:600}
+#app#app#app#app#app .studio-workspace .toolbox .time-presets>button.active{background:var(--surface)!important;color:var(--brand,#0f766e)!important;box-shadow:0 1px 3px #0f172a26!important}
+/* Lock ratio as a switch row under the ±10% buttons. */
+#app#app#app#app .studio-workspace .toolbox .size-ratio-lock{margin:4px 0 8px}
+#app#app#app#app#app .studio-workspace .toolbox .design-nav{background:var(--cv-tile)!important}
+#app#app#app#app#app#app .studio-workspace .toolbox .design-nav>button{width:100%!important;min-width:0!important;max-width:none!important;margin:0!important;flex:none!important}
+#app#app#app#app#app#app#app .studio-workspace .toolbox nav.design-nav{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important}
+#app#app#app#app#app#app .studio-workspace .toolbox .time-presets>button{white-space:nowrap}
+#app#app#app#app#app#app .studio-workspace .toolbox .time-presets>button:first-child{flex:1.6}
