@@ -802,6 +802,7 @@ const app=createApp({
       mode,homeOpen,toolTab,inputsOpen,focusMode,panelWidth,ui,design,projectIDs,recordStep,deviceError,libraryError,personalDesignName,cases,newExamCase,plotField,
       schedule:()=>schedulePlan(standard.value==='lcg'),nextDue:()=>nextDue.value,
       headMarker:(time,marker)=>{headTime.value=time;setHeadMarker(marker)},
+      printPack:k=>k==='handover'?printHandover():printExamPack(k==='key'),downloadPack:k=>downloadExamPack(k==='key'),
       headApplyAll:time=>{headTime.value=time;headApplyScope.value='all';applyHeadStyle()},
       current:()=>activeCase.value,time:()=>viewTime.value,standard:()=>standard.value,hasDraft:()=>workspaceHasDraft.value,
       chart:()=>mode.value==='clinical'?clinicalChart.value:(examCharts.value||[]).find(c=>c.caseData.id===activeCase.value.id),
