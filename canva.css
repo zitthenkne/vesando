@@ -886,3 +886,62 @@
   #app#app#app#app .studio-workspace:not(.focused):has(.workbench.inspector-open) .workarea .next-context>label:not(.next-check)>:is(input,select){font-size:13px!important}
   #app#app#app#app .studio-workspace:not(.focused):has(.workbench.inspector-open) .workarea .next-context{padding-left:8px!important}
 }
+/* ===== Round 17: case form cards, library cards, airy data table, version timeline ===== */
+#app .cv-sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+/* Case info: grouped cards with an icon heading; save stays in reach at the bottom. */
+#app#app#app#app .studio-workspace .toolbox .cv-case-form{display:grid;gap:12px}
+#app#app#app#app .studio-workspace .toolbox .cv-form-card{min-width:0;margin:0;padding:12px 14px 14px;border:0;border-radius:14px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line)}
+#app#app#app#app .studio-workspace .toolbox .cv-form-card>legend{float:left;width:100%;display:flex;align-items:center;gap:8px;margin:0 0 10px;padding:0;font-size:13px;font-weight:700;color:var(--ink)}
+#app#app#app#app .studio-workspace .toolbox .cv-form-card>legend+*{clear:both}
+#app#app#app#app .studio-workspace .toolbox .cv-form-card>legend>svg{width:16px;height:16px;color:var(--brand,#0f766e)}
+#app#app#app#app .studio-workspace .toolbox .cv-case-form .next-field-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px!important;margin:0!important}
+#app#app#app#app .studio-workspace .toolbox .cv-case-form .field{display:grid!important;gap:4px;margin:0!important;min-height:0!important;font-size:12px!important;font-weight:600;color:var(--muted)}
+#app#app#app#app .studio-workspace .toolbox .cv-case-form .field.wide{grid-column:1/-1}
+#app#app#app#app .studio-workspace .toolbox .cv-case-form .field>:is(input,textarea){margin:0!important;font-weight:500;color:var(--ink)}
+#app#app#app#app .studio-workspace .toolbox .cv-title-field>input{font-size:15px!important;font-weight:600!important}
+#app#app#app#app .studio-workspace .toolbox .cv-sticky-actions{position:sticky;bottom:-20px;z-index:5;display:flex!important;gap:8px;margin:4px -16px -20px!important;padding:12px 16px 16px!important;background:var(--surface);box-shadow:0 -8px 20px -14px #0f172a55}
+#app#app#app#app .studio-workspace .toolbox .cv-sticky-actions>.btn.primary{flex:1;justify-content:center;gap:8px;min-height:44px!important}
+/* Library: collection chips; each case a card with thumbnail, meta and icon toggles. */
+#app#app#app#app .studio-workspace .toolbox .cv-collections{margin:0 0 14px}
+#app#app#app#app .studio-workspace .toolbox .next-library-item{padding:8px!important;margin:0 0 10px!important;border:0!important;border-radius:14px!important;background:var(--surface)!important;box-shadow:inset 0 0 0 1px var(--line)!important;transition:box-shadow .15s}
+#app#app#app#app .studio-workspace .toolbox .next-library-item:hover{box-shadow:inset 0 0 0 2px var(--brand,#0f766e),0 8px 20px -12px #0f172a55!important}
+#app#app#app#app .studio-workspace .toolbox .next-library-open{display:grid!important;grid-template-columns:72px minmax(0,1fr);gap:12px;align-items:center;width:100%;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;text-align:left;cursor:pointer}
+#app#app#app#app .studio-workspace .toolbox .next-library-open>img{width:72px!important;height:90px!important;object-fit:cover;object-position:top;border-radius:8px;box-shadow:0 0 0 1px var(--line)}
+#app#app#app#app .studio-workspace .toolbox .next-library-open>span{display:grid;gap:3px;min-width:0}
+#app#app#app#app .studio-workspace .toolbox .next-library-open strong{font-size:14px;line-height:1.3}
+#app#app#app#app .studio-workspace .toolbox .next-library-open small{font-size:12px;color:var(--muted)}
+#app#app#app#app .studio-workspace .toolbox .next-library-open b{justify-self:start;padding:2px 8px;border-radius:999px;background:#fef3c7;color:#92400e;font-size:11px}
+#app#app#app#app .studio-workspace .toolbox .cv-item-actions{display:flex;justify-content:flex-end;gap:2px;margin:6px 0 0;padding-top:6px;border-top:1px solid var(--line)}
+#app#app#app#app .studio-workspace .toolbox .cv-item-actions>.icon-btn{width:34px!important;height:34px!important;min-height:34px!important;border:0!important;border-radius:9px!important;background:transparent!important;box-shadow:none!important;color:var(--muted)!important}
+#app#app#app#app .studio-workspace .toolbox .cv-item-actions>.icon-btn:hover{background:var(--cv-hover)!important;color:var(--ink)!important}
+#app#app#app#app .studio-workspace .toolbox .cv-item-actions>.icon-btn[aria-pressed=true]{background:var(--brand-soft,#e6f4f1)!important;color:var(--brand,#0f766e)!important}
+/* Data table: one toolbar row; cells are borderless until hovered, changed cells tinted, the selected one ringed. */
+#app#app#app#app .studio-workspace .toolbox .cv-table-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 12px}
+#app#app#app#app .studio-workspace .toolbox .cv-table-bar>select{flex:0 1 220px;min-width:0;min-height:38px!important}
+#app#app#app#app .studio-workspace .toolbox .cv-table-bar>.btn{min-height:38px!important;gap:6px}
+#app#app#app#app .studio-workspace .toolbox .cv-table-bar>.btn.primary{margin-left:auto}
+#app#app#app#app .studio-workspace .toolbox .next-data-table td{padding:3px!important}
+#app#app#app#app#app .studio-workspace .toolbox .next-data-table td :is(input,select){min-height:38px!important;background-color:transparent!important;background-image:none!important;padding-right:8px!important;border-radius:8px!important}
+#app#app#app#app#app .studio-workspace .toolbox .next-data-table td :is(input,select):hover{background-color:var(--cv-tile)!important}
+#app#app#app#app#app .studio-workspace .toolbox .next-data-table td :is(input,select):focus{background-color:var(--surface)!important}
+#app#app#app#app#app .studio-workspace .toolbox .next-data-table td.changed :is(input,select){background-color:color-mix(in srgb,#f59e0b 18%,var(--surface))!important}
+#app#app#app#app#app .studio-workspace .toolbox .next-data-table td.selected :is(input,select){box-shadow:0 0 0 2px var(--brand,#0f766e)!important}
+/* Versions: name field and save button in one pill; saved versions on a small timeline. */
+#app#app#app#app .studio-workspace .toolbox .cv-pill-form{display:flex!important;align-items:center;gap:6px;padding:4px 4px 4px 14px!important;margin:0 0 16px!important;border-radius:999px;background:var(--cv-tile);transition:box-shadow .15s}
+#app#app#app#app .studio-workspace .toolbox .cv-pill-form:focus-within{box-shadow:0 0 0 2px var(--brand,#0f766e)}
+#app#app#app#app .studio-workspace .toolbox .cv-pill-form>svg{flex:0 0 auto;color:var(--muted)}
+#app#app#app#app#app .studio-workspace .toolbox .cv-pill-form>input{flex:1;min-width:0;min-height:40px!important;padding:0 4px!important;border:0!important;background:transparent!important;box-shadow:none!important}
+#app#app#app#app .studio-workspace .toolbox .cv-pill-form>.btn{flex:0 0 auto;min-height:40px!important;border-radius:999px!important}
+#app#app#app#app .studio-workspace .toolbox .next-version-row{position:relative;margin:0!important;padding:0 0 0 22px!important;border:0!important;background:transparent!important}
+#app#app#app#app .studio-workspace .toolbox .next-version-row::before{content:'';position:absolute;left:6px;top:0;bottom:0;width:2px;background:var(--line)}
+#app#app#app#app .studio-workspace .toolbox .next-version-row::after{content:'';position:absolute;left:2px;top:17px;width:10px;height:10px;border-radius:50%;background:var(--surface);box-shadow:inset 0 0 0 2px var(--brand,#0f766e)}
+#app#app#app#app .studio-workspace .toolbox .next-version-row.active::after{background:var(--brand,#0f766e)}
+#app#app#app#app .studio-workspace .toolbox .next-version-row>button{display:grid!important;gap:2px;width:100%;padding:10px 12px!important;margin:0 0 4px!important;border:0!important;border-radius:12px!important;background:transparent!important;box-shadow:none!important;text-align:left;cursor:pointer}
+#app#app#app#app .studio-workspace .toolbox .next-version-row:is(:hover,.active)>button{background:var(--cv-hover)!important}
+#app#app#app#app .studio-workspace .toolbox .next-version-row>button>:is(small,span){font-size:12px;color:var(--muted)}
+#app#app#app#app .studio-workspace .toolbox .next-version-compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px;padding:14px;border-radius:14px;box-shadow:inset 0 0 0 1px var(--line)}
+#app#app#app#app .studio-workspace .toolbox .next-version-compare>*{grid-column:1/-1;margin:0!important}
+#app#app#app#app .studio-workspace .toolbox .next-version-compare>label:nth-of-type(1),#app#app#app#app .studio-workspace .toolbox .next-version-compare>label:nth-of-type(2){grid-column:auto}
+#app#app#app#app .studio-workspace .toolbox .next-version-compare>h3{font-size:13px!important;margin:0!important}
+#app#app#app#app .studio-workspace .toolbox .next-data-table td input::placeholder{color:var(--line);opacity:1}
+@media (max-width:760px){#app#app#app#app#app .studio-workspace .toolbox .cv-table-bar{flex-wrap:nowrap}#app#app#app#app#app .studio-workspace .toolbox .cv-table-bar>select{flex:1 1 auto}#app#app#app#app#app .studio-workspace .toolbox .cv-table-bar>.btn:not(.primary){flex:0 0 40px;width:40px;padding:0!important;justify-content:center;font-size:0!important}#app#app#app#app#app .studio-workspace .toolbox .cv-table-bar>.btn.primary{flex:0 1 auto;font-size:12px!important}}
