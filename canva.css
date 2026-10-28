@@ -699,3 +699,20 @@
   #app#app#app#app .studio-workspace:not(.focused) .workbench-bar .session-save-state::before{content:'';flex:0 0 auto;width:15px;height:15px;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z'/%3E%3Cpath d='m9 13.5 2 2 4-4'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z'/%3E%3Cpath d='m9 13.5 2 2 4-4'/%3E%3C/svg%3E") center/contain no-repeat}
 }
 #app#app#app .cv-page-remove{top:4px!important;right:4px!important;width:20px!important;height:20px!important;min-width:20px!important;min-height:20px!important;padding:0!important}
+
+/* ===== Round 14: home — no duplicate entry points, tighter rhythm ===== */
+/* The hero's source tabs repeat the round shortcuts (Dán bảng, Mở tệp); the hero is the AI prompt only. */
+#app#app#app .project-home .home-source-tabs{display:none!important}
+#app#app#app .project-home .home-hub-compose>h2{max-width:none;white-space:normal;text-wrap:balance}
+@media (min-width:1100px){#app#app#app .project-home .home-hub-compose>h2{white-space:nowrap;font-size:clamp(28px,2.6vw,40px)}}
+#app#app#app .project-home .home-hub-compose>form>div>span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+#app#app#app .project-home .home-ai-start{padding:40px clamp(16px,4vw,48px) 28px!important}
+#app .cv-shortcuts{margin:22px 0 6px!important}
+
+
+#app#app#app .project-home:not([data-library=all]) .home-greeting{margin-bottom:12px!important}
+/* Empty library: the call to action is the primary button. */
+#app#app#app .project-home .library-empty{border:0!important;border-radius:20px!important;background:var(--cv-tile)!important}
+#app#app#app .project-home .library-empty>.btn:last-child{border:0!important;background:var(--brand,#0f766e)!important;color:var(--cv-on-brand)!important;border-radius:12px!important;min-height:44px;padding:0 18px!important;font-weight:700}
+#app#app#app .project-home .home-ai-start{margin-bottom:0!important}#app#app#app .project-home .home-create-options{margin:0!important;padding:0!important;gap:0!important;min-height:0!important}
+#app#app#app .project-home .home-quick-actions{margin:12px 0 0!important;padding:0!important}#app#app#app .project-home .home-quick-actions:not(:has(>button:nth-child(2))){display:none!important}
