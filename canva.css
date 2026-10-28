@@ -945,3 +945,39 @@
 #app#app#app#app .studio-workspace .toolbox .next-version-compare>h3{font-size:13px!important;margin:0!important}
 #app#app#app#app .studio-workspace .toolbox .next-data-table td input::placeholder{color:var(--line);opacity:1}
 @media (max-width:760px){#app#app#app#app#app .studio-workspace .toolbox .cv-table-bar{flex-wrap:nowrap}#app#app#app#app#app .studio-workspace .toolbox .cv-table-bar>select{flex:1 1 auto}#app#app#app#app#app .studio-workspace .toolbox .cv-table-bar>.btn:not(.primary){flex:0 0 40px;width:40px;padding:0!important;justify-content:center;font-size:0!important}#app#app#app#app#app .studio-workspace .toolbox .cv-table-bar>.btn.primary{flex:0 1 auto;font-size:12px!important}}
+/* ===== Round 18: entry sheet, paste stepper, compact presenter ===== */
+/* Entry: the who/when card scrolls with the form (sticky it slid under the panel title, cut in half). */
+#app#app#app#app .studio-workspace .toolbox .next-entry-head{position:relative!important;top:auto!important;box-shadow:none!important}
+/* Free-text readings and short option sets take the whole row; text boxes lose the resize grip. */
+#app#app#app#app .studio-workspace .toolbox .next-field:has(textarea),#app#app#app#app .studio-workspace .toolbox .next-field:has(.next-classification){grid-column:1/-1}
+#app#app#app#app .studio-workspace .toolbox .next-field textarea{resize:none!important;min-height:64px!important}
+/* Option sets: one segmented pill, chosen value white and lifted. */
+#app#app#app#app .studio-workspace .toolbox .next-classification{display:flex!important;flex-wrap:nowrap!important;gap:2px!important;width:100%;padding:3px!important;border-radius:12px!important;background:var(--cv-tile)!important;border:0!important}
+#app#app#app#app#app .studio-workspace .toolbox .next-classification>button{flex:1 1 0;min-width:0;min-height:36px!important;padding:0 6px!important;border:0!important;border-radius:9px!important;background:transparent!important;box-shadow:none!important;color:var(--muted)!important;font-size:13px!important;font-weight:600;white-space:nowrap}
+#app#app#app#app#app .studio-workspace .toolbox .next-classification>button:hover{color:var(--ink)!important}
+#app#app#app#app#app .studio-workspace .toolbox .next-classification>button[aria-pressed=true]{background:var(--surface)!important;color:var(--brand,#0f766e)!important;box-shadow:0 1px 3px #0f172a26!important}
+#app#app#app#app#app .studio-workspace .toolbox .next-classification>button:last-child{flex:0 0 auto;font-weight:500;font-size:12px!important}
+/* Paste from Excel: numbered stepper with ticks for finished steps. */
+#app#app#app#app .studio-workspace .toolbox .next-import-steps{display:flex!important;gap:4px;margin:0 0 16px!important;padding:0!important;list-style:none;counter-reset:none}
+#app#app#app#app .studio-workspace .toolbox .next-import-steps>li{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;gap:4px;padding:0!important;margin:0!important;border:0!important;background:transparent!important;color:var(--muted);font-size:12px;font-weight:600;text-align:center;position:relative}
+#app#app#app#app .studio-workspace .toolbox .next-import-steps>li::before{content:'';position:absolute;top:13px;left:calc(-50% + 16px);right:calc(50% + 16px);height:2px;background:var(--line)}
+#app#app#app#app .studio-workspace .toolbox .next-import-steps>li:first-child::before{display:none}
+#app#app#app#app .studio-workspace .toolbox .next-import-steps>li.done::before,#app#app#app#app .studio-workspace .toolbox .next-import-steps>li[aria-current=step]::before{background:var(--brand,#0f766e)}
+#app#app#app#app .studio-workspace .toolbox .next-import-steps>li>span{width:28px;height:28px;display:grid;place-items:center;border-radius:50%;background:var(--cv-tile);color:var(--muted);font-size:12px;font-weight:700}
+#app#app#app#app .studio-workspace .toolbox .next-import-steps>li>span>svg{width:14px;height:14px}
+#app#app#app#app .studio-workspace .toolbox .next-import-steps>li.done{color:var(--ink)}
+#app#app#app#app .studio-workspace .toolbox .next-import-steps>li.done>span{background:var(--brand-soft,#e6f4f1);color:var(--brand,#0f766e)}
+#app#app#app#app .studio-workspace .toolbox .next-import-steps>li[aria-current=step]{color:var(--brand,#0f766e)}
+#app#app#app#app .studio-workspace .toolbox .next-import-steps>li[aria-current=step]>span{background:var(--brand,#0f766e);color:var(--cv-on-brand,#fff);box-shadow:0 0 0 4px var(--brand-soft,#e6f4f1)}
+/* Column mapping: each column a soft row, include toggle left, target right. */
+#app#app#app#app .studio-workspace .toolbox .next-column-map{display:flex!important;align-items:center;gap:10px;padding:8px 10px!important;margin:0 0 6px!important;border:0!important;border-radius:12px;background:var(--cv-tile)}
+#app#app#app#app .studio-workspace .toolbox .next-column-map>label{flex:1;min-width:0;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#app#app#app#app .studio-workspace .toolbox .next-column-map>select{flex:0 0 52%;min-height:36px!important;background-color:var(--surface)!important}
+#app#app#app#app#app .studio-workspace .toolbox .next-column-map input[type=checkbox]{width:18px;height:18px;margin:0;accent-color:var(--brand,#0f766e)}
+#app#app#app#app .studio-workspace .toolbox .next-panel-import .btn.primary>svg:last-child{margin-left:4px}
+/* Presenter: a slimmer dark bar; reading chips and the quiet line appear on hover (alerts always stay). */
+#app#app#app .studio-workspace .presenter{width:min(580px,calc(100vw - 32px))!important;background:#1f2430eb!important;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-radius:20px!important}
+@media (hover:hover) and (min-width:761px){
+  #app#app#app .studio-workspace .presenter:not(:hover):not(:focus-visible):not(:has(:focus-visible)) :is(.presenter-chips,.presenter-quiet){display:none!important}
+  #app#app#app .studio-workspace .presenter:not(:hover):not(:focus-visible):not(:has(:focus-visible)) .presenter-body{padding-top:0!important;padding-bottom:4px!important}
+}
