@@ -716,3 +716,5 @@
 #app#app#app .project-home .library-empty>.btn:last-child{border:0!important;background:var(--brand,#0f766e)!important;color:var(--cv-on-brand)!important;border-radius:12px!important;min-height:44px;padding:0 18px!important;font-weight:700}
 #app#app#app .project-home .home-ai-start{margin-bottom:0!important}#app#app#app .project-home .home-create-options{margin:0!important;padding:0!important;gap:0!important;min-height:0!important}
 #app#app#app .project-home .home-quick-actions{margin:12px 0 0!important;padding:0!important}#app#app#app .project-home .home-quick-actions:not(:has(>button:nth-child(2))){display:none!important}
+/* Phone: the editor covers the whole viewport in the canvas colour, so no page background shows between the canvas and the bottom bar. */
+@media (max-width:760px){#app#app#app main.studio-workspace:not(.focused){min-height:100dvh;background:var(--cv-canvas)!important}#app#app#app main.studio-workspace:not(.focused)>.workbench{background:var(--cv-canvas)!important}}
