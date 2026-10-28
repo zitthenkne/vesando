@@ -1446,4 +1446,19 @@
 #app#app#app#app#app .studio-workspace .toolbox .cv-purpose>.text-btn{justify-self:start;display:inline-flex;align-items:center;gap:6px;font-size:12.5px!important}
 #app#app#app#app .studio-workspace .toolbox .cv-purpose>.text-btn svg{width:14px;height:14px}
 #app#app#app#app .studio-workspace .toolbox .export-inspector{container-type:inline-size}
-@container (max-width:300px){#app#app#app#app .studio-workspace .toolbox .cv-pack-actions{flex-direction:column}}
+@container (max-width:250px){#app#app#app#app .studio-workspace .toolbox .cv-pack-actions{flex-direction:column}}
+/* ===== Round 31 (Vòng 64): top bar says where you are and whether it is saved ===== */
+#app#app#app .workbench-bar .session-save-state{display:inline-flex!important;align-items:center;gap:6px}
+#app#app#app .workbench-bar .cv-save-dot{width:7px;height:7px;border-radius:50%;background:#cbd5e1;flex:none}
+#app#app#app .workbench-bar .session-save-state[data-state=saved] .cv-save-dot{background:#4ade80;box-shadow:0 0 0 3px #4ade8033}
+#app#app#app .workbench-bar .session-save-state[data-state=draft] .cv-save-dot{background:#60a5fa;box-shadow:0 0 0 3px #60a5fa33}
+#app#app#app .workbench-bar .session-save-state[data-state=error] .cv-save-dot{background:#f87171;box-shadow:0 0 0 3px #f8717133}
+#app#app#app .workbench-bar .cv-mode-chip{display:inline-flex;align-items:center;padding:1px 7px;border-radius:999px;background:#ffffff2e;color:inherit;font-size:10.5px;font-weight:800;letter-spacing:.02em;text-transform:uppercase}
+#app#app#app .workbench-bar .cv-mode-chip[data-mode=clinical]{background:#f43f5e;color:#fff}
+/* Saved state on the save button. */
+#app#app#app#app .workbench-bar .next-save.saved{opacity:.85}
+#app#app#app#app .workbench-bar .next-save.saved svg{color:#86efac}
+/* Case menu: a separator under the case-level actions. */
+#app#app#app .case-menu-list .cv-menu-sep{margin:4px 8px;border:0;border-top:1px solid var(--line)}
+@media (max-width:760px){#app#app#app .workbench-bar .cv-mode-chip{padding:0 5px;font-size:9.5px}}
+@media (max-width:760px){#app#app#app#app .workbench-bar .cv-mode-chip:not([data-mode=clinical]){background:var(--brand-soft,#e6f4f1);color:var(--brand,#0f766e)}}
