@@ -802,6 +802,7 @@ const app=createApp({
       mode,homeOpen,toolTab,inputsOpen,focusMode,panelWidth,ui,design,projectIDs,recordStep,deviceError,libraryError,personalDesignName,cases,newExamCase,plotField,
       schedule:()=>schedulePlan(standard.value==='lcg'),nextDue:()=>nextDue.value,
       headMarker:(time,marker)=>{headTime.value=time;setHeadMarker(marker)},
+      headApplyAll:time=>{headTime.value=time;headApplyScope.value='all';applyHeadStyle()},
       current:()=>activeCase.value,time:()=>viewTime.value,standard:()=>standard.value,hasDraft:()=>workspaceHasDraft.value,
       chart:()=>mode.value==='clinical'?clinicalChart.value:(examCharts.value||[]).find(c=>c.caseData.id===activeCase.value.id),
       settle:async()=>{if(!await settlePoint())return false;if(draftDirty.value){notify('Lưu hoặc hủy phần nhập trong bảng cũ trước khi chuyển.','error');return false}return true},

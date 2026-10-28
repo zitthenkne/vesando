@@ -1329,3 +1329,31 @@
 }
 @media (max-width:760px){#app#app#app#app#app#app#app#app .workarea .cv-dock-btn{align-items:center!important;align-content:center!important}}
 @media (max-width:760px){#app#app#app#app#app#app#app#app .workarea .cv-dock-head{display:none!important}}
+/* ===== Round 27 (Vòng 60): head position figure, first things first ===== */
+#app#app#app#app#app .studio-workspace .toolbox .cv-head-section .head-marker-editor>.check-field{padding:6px 2px!important;font-weight:600;font-size:13px}
+#app#app#app#app .studio-workspace .toolbox .cv-head-hint{margin:2px 0 10px!important;font-size:12px;color:var(--muted)}
+#app#app#app#app#app .studio-workspace .toolbox .head-marker-editor fieldset{border:0!important;padding:0!important;margin:0!important;min-width:0}
+#app#app#app#app .studio-workspace .toolbox .head-orientation{margin:4px 0 8px!important;font-size:11px;color:var(--muted);text-align:center}
+/* Eight positions as picture tiles, four per row. */
+#app#app#app#app#app .studio-workspace .toolbox .head-position-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important;margin:0 0 12px!important}
+#app#app#app#app#app#app .studio-workspace .toolbox .head-position-grid>button{display:grid!important;justify-items:center;gap:1px;min-width:0!important;min-height:0!important;padding:6px 2px 7px!important;border:0!important;border-radius:12px!important;background:var(--surface)!important;box-shadow:inset 0 0 0 1px var(--line)!important;color:var(--ink)!important;cursor:pointer}
+#app#app#app#app#app#app .studio-workspace .toolbox .head-position-grid>button:hover{box-shadow:inset 0 0 0 1px var(--brand,#0f766e)!important}
+#app#app#app#app#app#app .studio-workspace .toolbox .head-position-grid>button.active{background:var(--brand-soft,#e6f4f1)!important;box-shadow:inset 0 0 0 2px var(--brand,#0f766e)!important}
+#app#app#app#app .studio-workspace .toolbox .head-position-grid>button>svg{width:44px;height:44px;background:#fff;border-radius:50%}
+#app#app#app#app .studio-workspace .toolbox .head-position-grid>button>strong{font-size:12px;font-weight:800}
+#app#app#app#app .studio-workspace .toolbox .head-position-grid>button>span{font-size:9.5px;line-height:1.2;color:var(--muted);text-align:center;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+/* Options and fine-tune as quiet disclosures. */
+#app#app#app#app#app .studio-workspace .toolbox .head-marker-editor details.control-disclosure{margin:0 0 6px!important;border:0!important;border-top:1px solid var(--line)!important;border-radius:0!important;background:transparent!important}
+#app#app#app#app#app .studio-workspace .toolbox .head-marker-editor details.control-disclosure>summary{display:flex!important;align-items:center;justify-content:space-between;padding:10px 2px!important;font-size:13px!important;font-weight:600;color:var(--ink)}
+#app#app#app#app .studio-workspace .toolbox .cv-head-options .choice-caption{display:block;margin:10px 0 6px;font-size:11.5px;font-weight:600;color:var(--muted)}
+#app#app#app#app#app .studio-workspace .toolbox .head-marker-editor .fontanelle-choice{display:flex!important;gap:2px;padding:3px!important;border-radius:12px;background:var(--surface);border:0!important}
+#app#app#app#app#app#app .studio-workspace .toolbox .head-marker-editor .fontanelle-choice>button{flex:1;min-width:0;min-height:34px!important;padding:2px 4px!important;border:0!important;border-radius:9px!important;background:transparent!important;box-shadow:none!important;color:var(--muted)!important;font-size:12px!important;font-weight:600;line-height:1.2}
+#app#app#app#app#app#app .studio-workspace .toolbox .head-marker-editor .fontanelle-choice>button.active{background:var(--brand-soft,#e6f4f1)!important;color:var(--brand,#0f766e)!important}
+#app#app#app#app .studio-workspace .toolbox .head-color-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:12px 0 6px}
+#app#app#app#app .studio-workspace .toolbox .head-color-row>span{flex-basis:100%;font-size:11.5px;font-weight:600;color:var(--muted)}
+#app#app#app#app#app#app .studio-workspace .toolbox .head-color-row>.color-swatch{width:28px!important;height:28px!important;min-height:0!important;padding:0!important;border:0!important;border-radius:50%!important;background:var(--swatch)!important;box-shadow:inset 0 0 0 1px #0000001a!important}
+#app#app#app#app#app#app .studio-workspace .toolbox .head-color-row>.color-swatch.active{box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--brand,#0f766e)!important}
+#app#app#app#app#app .studio-workspace .toolbox .cv-head-all{margin-top:8px!important;background:var(--surface)!important}
+/* The point toolbar gets a direct head-figure button for descent points. */
+#app#app#app .point-toolbar>.point-head-button{color:var(--brand,#0f766e)!important}
+#app#app#app .point-toolbar>.point-head-button svg{width:17px;height:17px}
