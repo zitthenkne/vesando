@@ -1092,3 +1092,46 @@
 #app#app#app#app#app#app .studio-workspace .toolbox .cv-swatches>button,#app#app#app#app .studio-workspace .toolbox .cv-swatch-custom{width:32px!important;height:32px!important;min-width:0!important}
 #app#app#app#app#app#app .studio-workspace .toolbox .cv-marker-tiles>button{width:auto!important;min-width:0!important}
 #app#app#app#app#app .studio-workspace .toolbox .cv-style-editor>.cv-prop-tiles{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+/* ===== Round 22 (Vòng 55): moment-by-moment entry ===== */
+/* Moment header: the time being entered is the headline, with ‹ › to step moments; the case is a small line. */
+#app#app#app#app .studio-workspace .toolbox .next-entry-head.cv-moment-head{display:grid!important;grid-template-columns:1fr auto;align-items:center;gap:10px 8px;padding:12px!important}
+#app#app#app#app .studio-workspace .toolbox .cv-moment-nav{grid-column:1;display:flex;align-items:center;gap:6px;min-width:0}
+#app#app#app#app#app .studio-workspace .toolbox .cv-moment-nav>button{width:34px;height:34px;min-height:0!important;padding:0!important;display:grid;place-items:center;border:0!important;border-radius:10px!important;background:var(--surface)!important;box-shadow:0 1px 2px #0f172a1a!important;color:var(--ink)!important}
+#app#app#app#app#app .studio-workspace .toolbox .cv-moment-nav>button:disabled{opacity:.35;box-shadow:none!important}
+#app#app#app#app .studio-workspace .toolbox .cv-moment-time{display:grid;justify-items:center;min-width:88px;line-height:1.1}
+#app#app#app#app .studio-workspace .toolbox .cv-moment-time>strong{font-size:24px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;color:var(--ink)}
+#app#app#app#app .studio-workspace .toolbox .cv-moment-time>small{font-size:11.5px;color:var(--muted)}
+#app#app#app#app#app .studio-workspace .toolbox .next-entry-head>b.cv-moment-state{grid-column:2;grid-row:1;margin:0;justify-self:end;padding:4px 10px;border-radius:999px;font-size:11.5px;font-weight:700;background:var(--surface);color:var(--muted)}
+#app#app#app#app#app .studio-workspace .toolbox .next-entry-head>b.cv-moment-state[data-state=recorded]{background:#dcfce7;color:#15803d}
+#app#app#app#app#app .studio-workspace .toolbox .next-entry-head>b.cv-moment-state[data-state=draft]{background:#dbeafe;color:#1d4ed8}
+:root[data-theme=dark] #app#app#app#app#app .studio-workspace .toolbox .next-entry-head>b.cv-moment-state[data-state=recorded]{background:#14532d;color:#86efac}
+:root[data-theme=dark] #app#app#app#app#app .studio-workspace .toolbox .next-entry-head>b.cv-moment-state[data-state=draft]{background:#1e3a8a;color:#bfdbfe}
+#app#app#app#app .studio-workspace .toolbox .cv-moment-case{grid-column:1/-1;display:flex;align-items:center;gap:8px;padding-top:10px;border-top:1px solid var(--line)}
+#app#app#app#app#app#app .studio-workspace .toolbox .cv-moment-case>.next-case-edit{flex:1;min-width:0;justify-content:flex-start;gap:8px;min-height:32px!important;padding:0 4px!important;background:transparent!important;font-size:13px!important;font-weight:600;color:var(--ink)!important}
+#app#app#app#app .studio-workspace .toolbox .cv-moment-case>.next-case-edit>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#app#app#app#app .studio-workspace .toolbox .cv-moment-case>.next-case-edit>svg{flex:none;width:15px;height:15px;color:var(--muted)}
+#app#app#app#app#app#app .studio-workspace .toolbox .cv-moment-case>.cv-new-moment{display:inline-flex;align-items:center;gap:4px;min-height:32px!important;padding:0 12px!important;border-radius:999px!important;background:var(--brand,#0f766e)!important;color:var(--cv-on-brand,#fff)!important;font-size:12.5px!important;font-weight:700}
+#app#app#app#app .studio-workspace .toolbox .cv-moment-case>.cv-new-moment svg{width:14px;height:14px}
+/* Group summary: filled count and "Như lần trước". */
+#app#app#app#app .studio-workspace .toolbox .next-entry-groups>details>summary{display:flex!important;align-items:center;gap:8px}
+#app#app#app#app .studio-workspace .toolbox .next-entry-groups>details>summary>span{flex:1;min-width:0}
+#app#app#app#app .studio-workspace .toolbox .cv-group-count{font-style:normal;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--cv-tile);color:var(--muted);font-variant-numeric:tabular-nums}
+#app#app#app#app#app .studio-workspace .toolbox .cv-repeat{color:var(--brand,#0f766e)!important}
+/* "Lần trước" value can be tapped to reuse it. */
+#app#app#app#app#app .studio-workspace .toolbox .cv-reuse{display:inline!important;min-height:0!important;height:auto!important;padding:1px 7px!important;margin:0 1px;border:0!important;border-radius:999px!important;background:var(--brand-soft,#e6f4f1)!important;color:var(--brand,#0f766e)!important;font:inherit;font-weight:700;cursor:pointer;box-shadow:none!important}
+#app#app#app#app#app .studio-workspace .toolbox .cv-reuse:hover{filter:brightness(.96)}
+#app#app#app#app .studio-workspace .toolbox .cv-reuse svg{display:inline-block!important;width:11px;height:11px;margin-left:3px;vertical-align:-1px}
+/* Footer: step chips, the real next time on the secondary button, change count on Ghi nhận. */
+#app#app#app#app .studio-workspace .toolbox .cv-step-seg{grid-column:1/-1;display:flex;align-items:center;gap:4px}
+#app#app#app#app .studio-workspace .toolbox .cv-step-seg>span{flex:1;font-size:12px;color:var(--muted)}
+#app#app#app#app#app .studio-workspace .toolbox .cv-step-seg>button{min-height:30px!important;height:30px;padding:0 10px!important;border:0!important;border-radius:999px!important;background:var(--cv-tile)!important;box-shadow:none!important;color:var(--muted)!important;font-size:12px!important;font-weight:600}
+#app#app#app#app#app .studio-workspace .toolbox .cv-step-seg>button[aria-pressed=true]{background:var(--ink)!important;color:var(--surface)!important}
+#app#app#app#app .studio-workspace .toolbox .next-record-footer>.btn:not(.primary)>svg{width:14px;height:14px;margin:0 2px}
+#app#app#app#app .studio-workspace .toolbox .cv-count{display:inline-grid;place-items:center;min-width:20px;height:20px;margin-left:6px;padding:0 6px;border-radius:999px;background:#ffffff38;font-size:11.5px;font-weight:800}
+/* Drafts at other moments: soft chips. */
+#app#app#app#app .studio-workspace .toolbox .next-other-drafts{display:flex!important;flex-wrap:wrap;align-items:center;gap:6px;padding:10px 12px!important;border:0!important;border-radius:12px;background:#dbeafe;color:#1e3a8a;font-size:12.5px}
+#app#app#app#app#app .studio-workspace .toolbox .next-other-drafts>button{min-height:26px!important;padding:0 10px!important;border-radius:999px!important;background:#fff!important;color:#1d4ed8!important;font-weight:700}
+:root[data-theme=dark] #app#app#app#app .studio-workspace .toolbox .next-other-drafts{background:#1e3a8a;color:#dbeafe}
+/* Timeline: a + chip at the end adds the next moment. */
+#app#app#app .next-moment-track>.cv-moment-add{display:grid!important;place-items:center;flex:0 0 40px!important;width:40px!important;min-width:40px!important;height:40px;padding:0!important;border-radius:50%!important;background:var(--brand-soft,#e6f4f1)!important;color:var(--brand,#0f766e)!important;box-shadow:none!important}
+#app#app#app .next-moment-track>.cv-moment-add svg{width:18px;height:18px}
