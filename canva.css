@@ -981,3 +981,14 @@
   #app#app#app .studio-workspace .presenter:not(:hover):not(:focus-visible):not(:has(:focus-visible)) :is(.presenter-chips,.presenter-quiet){display:none!important}
   #app#app#app .studio-workspace .presenter:not(:hover):not(:focus-visible):not(:has(:focus-visible)) .presenter-body{padding-top:0!important;padding-bottom:4px!important}
 }
+/* ===== Round 19: narrow panels and dark-mode finish ===== */
+/* Narrow panel (tablet): date/time fields take a full row so their values are not cut. */
+#app#app#app#app .studio-workspace .toolbox .cv-case-form{container-type:inline-size}
+@container (max-width:320px){#app#app#app#app .studio-workspace .toolbox .cv-case-form .field:has(input:is([type=date],[type=time],[type=datetime-local])){grid-column:1/-1}}
+/* Native pickers follow the theme (calendar/clock icons were dark on dark). */
+:root[data-theme=dark] #app :is(input,select,textarea){color-scheme:dark}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]) #app :is(input,select,textarea){color-scheme:dark}}
+/* Text on brand-filled buttons stays readable in both themes. */
+#app#app#app#app .studio-workspace .toolbox .btn.primary,#app#app#app#app .studio-workspace .toolbox .btn.primary *{color:var(--cv-on-brand,#fff)!important}
+/* Data table cells: no leftover tint from older dark rules; the panel surface shows through. */
+#app#app#app#app#app .studio-workspace .toolbox .next-data-table tbody td{background:transparent!important}
