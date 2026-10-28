@@ -1462,3 +1462,32 @@
 #app#app#app .case-menu-list .cv-menu-sep{margin:4px 8px;border:0;border-top:1px solid var(--line)}
 @media (max-width:760px){#app#app#app .workbench-bar .cv-mode-chip{padding:0 5px;font-size:9.5px}}
 @media (max-width:760px){#app#app#app#app .workbench-bar .cv-mode-chip:not([data-mode=clinical]){background:var(--brand-soft,#e6f4f1);color:var(--brand,#0f766e)}}
+/* ===== Round 32 (Vòng 65): bedside phone entry ===== */
+#app#app#app .studio-workspace .toolbox .cv-grab{display:none}
+@media (max-width:760px){
+  /* Grab handle on the sheet, like Canva's mobile panels: tap to cycle the height. */
+  #app#app#app#app#app .studio-workspace .toolbox .cv-grab{display:grid!important;place-items:center;position:sticky;top:0;z-index:13;width:72px!important;height:18px!important;min-height:0!important;margin:-14px auto 0!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important}
+  #app#app#app#app .studio-workspace .toolbox .cv-grab>i{width:40px;height:4px;border-radius:999px;background:var(--line)}
+  /* 16 px inputs: iOS zooms the page when a smaller input is focused. */
+  #app#app#app#app#app .studio-workspace .toolbox :is(input:not([type=checkbox]):not([type=range]):not([type=color]),select,textarea){font-size:16px!important}
+  /* Compact sheet = control strip: moment ‹ › and the two record buttons, nothing else. */
+  #app#app#app#app#app .studio-workspace[data-next-sheet=compact] .inspector-shell .toolbox:has(.next-panel-entry){height:auto!important;max-height:240px}
+  #app#app#app#app .studio-workspace[data-next-sheet=compact] .next-panel-entry :is(.cv-journey,.cv-alerts,.cv-latest,.cv-next-due,.next-entry-groups,.next-change-list,.next-other-drafts,.cv-moment-case,.cv-step-seg){display:none!important}
+  #app#app#app#app .studio-workspace[data-next-sheet=compact] .next-panel-entry{padding-bottom:0!important}
+  #app#app#app#app#app .studio-workspace[data-next-sheet=compact] .next-panel-entry .next-entry-head.cv-moment-head{margin:0 0 8px!important;padding:8px!important}
+  #app#app#app#app#app .studio-workspace[data-next-sheet=compact] .next-panel-entry .next-record-footer{position:static!important;margin:0!important;padding:0!important;box-shadow:none!important}
+  /* Journey on a phone: one pill with the next step only. */
+  #app#app#app#app#app .studio-workspace .toolbox .cv-journey>ol{display:none!important}
+  #app#app#app#app#app .studio-workspace .toolbox .cv-journey{flex-wrap:nowrap;padding:4px 4px 4px 4px;margin-bottom:10px}
+  #app#app#app#app#app#app .studio-workspace .toolbox .cv-journey-next{order:0;min-height:34px!important;grid-template-columns:auto 1fr auto;column-gap:6px}
+  #app#app#app#app#app#app .studio-workspace .toolbox .cv-journey-next>small{grid-row:1;align-self:center;font-size:11px}
+  #app#app#app#app#app#app .studio-workspace .toolbox .cv-journey-next>b{grid-column:2;grid-row:1;align-self:center}
+  #app#app#app#app#app#app .studio-workspace .toolbox .cv-journey-next>svg{grid-column:3;grid-row:1}
+  /* Footer: step chips without their label, smaller. */
+  #app#app#app#app#app .studio-workspace .toolbox .cv-step-seg>span{display:none}
+  #app#app#app#app#app .studio-workspace .toolbox .cv-step-seg{justify-content:flex-end}
+  #app#app#app#app#app#app .studio-workspace .toolbox .cv-step-seg>button{min-height:28px!important;height:28px;flex:1}
+  /* Standard picker: a pill sized to its text, not a full-width row. */
+  #app#app#app#app#app .studio-workspace:not(.focused) .workarea .standard-picker{width:auto!important;max-width:220px;flex:0 1 auto!important}
+  #app#app#app#app#app .studio-workspace:not(.focused) .workarea .standard-picker select{font-size:13px!important;padding-right:28px!important}
+}
