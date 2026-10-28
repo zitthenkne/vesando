@@ -1649,3 +1649,8 @@
 #app#app#app#app .studio-workspace .toolbox .cv-paste-help svg{width:14px;height:14px;flex:none}
 #app#app#app#app#app .studio-workspace .toolbox .cv-paste-help>.text-btn{min-height:28px!important;padding:0 10px!important;border-radius:999px!important;background:var(--brand-soft,#e6f4f1)!important;color:var(--brand,#0f766e)!important;font-weight:700;font-size:12px!important}
 #app#app#app .workbench-bar .session-save-state{-webkit-mask-image:linear-gradient(90deg,#000 85%,transparent);mask-image:linear-gradient(90deg,#000 85%,transparent)}
+/* ===== Round 40 (Vòng 73): end-to-end fixes ===== */
+#app#app#app#app .studio-workspace .toolbox .cv-group-due{font-style:normal;font-size:11px;font-weight:800;padding:2px 8px;border-radius:999px;background:#fef3c7;color:#92400e;white-space:nowrap}
+:root[data-theme=dark] #app#app#app#app .studio-workspace .toolbox .cv-group-due{background:#78350f;color:#fde68a}
+/* Phone: the toast rises above the point toolbar instead of covering it. */
+@media (max-width:760px){#app#app#app#app:has(.point-toolbar) .toast{bottom:calc(200px + env(safe-area-inset-bottom))!important}}
