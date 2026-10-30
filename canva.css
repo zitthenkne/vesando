@@ -1654,3 +1654,120 @@
 :root[data-theme=dark] #app#app#app#app .studio-workspace .toolbox .cv-group-due{background:#78350f;color:#fde68a}
 /* Phone: the toast rises above the point toolbar instead of covering it. */
 @media (max-width:760px){#app#app#app#app:has(.point-toolbar) .toast{bottom:calc(200px + env(safe-area-inset-bottom))!important}}
+/* ===== Round 41 (Vòng 74): phone editor like Canva mobile ===== */
+#app#app#app#app#app#app#app#app :is(.rail-ai,.mobile-present-action,.cv-fit-chip,.cv-zoom-bubble){display:none!important}
+@keyframes cv-sheet-up{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
+@keyframes cv-fade{from{opacity:0}to{opacity:1}}
+@media (max-width:760px){
+  /* Top bar: one 56 px row — home, title, undo/redo, save, menu. Trình chiếu moves into the menu, AI into the bottom bar. */
+  #app#app#app#app#app#app#app#app#app .studio-workspace .workbench-bar{height:56px!important;min-height:56px!important;padding:0 4px!important;border-bottom:1px solid var(--line)!important;background:var(--surface)!important;box-shadow:none!important}
+  #app#app#app#app#app#app#app#app#app .workbench-bar .session-toolbar{display:flex!important;flex-wrap:nowrap!important;align-items:center!important;gap:0!important;height:56px!important;min-height:0!important;padding:0!important}
+  #app#app#app#app#app#app#app#app#app .workbench-bar .workspace-home{display:grid!important;place-items:center;flex:none;width:40px!important;height:40px!important;min-height:0!important;padding:0!important;border:0!important;border-radius:12px!important;background:transparent!important;box-shadow:none!important}
+  #app#app#app#app#app#app#app#app#app .workbench-bar .session-title{display:flex!important;align-items:center!important;flex:1 1 auto!important;min-width:0!important;width:auto!important;max-width:none!important;height:44px!important;padding:0!important;margin:0!important}
+  #app#app#app#app#app#app#app#app#app .workbench-bar .session-title{justify-content:flex-start!important;overflow:hidden}
+  #app#app#app#app#app#app#app#app#app .workbench-bar .session-title>*{min-width:0!important;max-width:100%!important;width:auto!important;margin:0!important}
+  #app#app#app#app#app#app#app#app#app .workbench-bar .session-title .case-title-trigger{height:40px!important;min-height:0!important;padding:0 6px!important;max-width:100%!important;width:auto!important;justify-content:flex-start!important}
+  #app#app#app#app#app#app#app#app#app .workbench-bar .session-title .case-title-trigger strong{min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:15px!important;font-weight:700}
+  #app#app#app#app#app#app#app#app#app .workbench-bar .session-title .case-title-trigger svg{display:none!important}
+  #app#app#app#app#app#app#app#app#app .workbench-bar .session-save-state{display:none!important}
+  #app#app#app#app#app#app#app#app#app .workbench-bar .case-menu{flex:none;margin:0!important}
+  #app#app#app#app#app#app#app#app#app .workbench-bar .case-menu>summary{width:28px!important;min-width:0!important;height:40px!important;min-height:0!important;padding:0!important;display:grid!important;place-items:center}
+  #app#app#app#app#app#app#app#app#app .workbench-bar .history-actions{display:flex!important;flex:none;gap:0!important;margin:0!important;padding:0!important;border:0!important;background:transparent!important}
+  #app#app#app#app#app#app#app#app#app .workbench-bar .history-actions>.icon-btn{display:grid!important;place-items:center;width:38px!important;height:40px!important;min-height:0!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important}
+  #app#app#app#app#app#app#app#app#app .workbench-bar .history-actions>.icon-btn:disabled{opacity:.3}
+  #app#app#app#app#app#app#app#app#app .workbench-bar .history-actions svg{width:20px;height:20px}
+  #app#app#app#app#app#app#app#app#app .workbench-bar .session-actions{display:flex!important;flex:none!important;gap:2px!important;margin:0!important;padding:0!important}
+  #app#app#app#app#app#app#app#app#app .workbench-bar .session-actions>:is(.cv-present,.next-ai-entry,.workspace-search,.tool-groups,.quick-export){display:none!important}
+  #app#app#app#app#app#app#app#app#app .workbench-bar .next-save{width:40px!important;height:40px!important;min-height:0!important;padding:0!important;border-radius:12px!important;font-size:0!important;justify-content:center}
+  #app#app#app#app#app#app#app#app#app .workbench-bar .workspace-menu>summary{width:40px!important;height:40px!important;min-height:0!important;border:0!important;background:transparent!important;box-shadow:none!important}
+  #app#app#app#app#app#app#app#app#app .workbench-bar :is(.next-save,.workspace-menu>summary,.workspace-home) svg{width:20px;height:20px}
+  #app#app#app#app#app#app#app#app#app .mobile-present-action{display:flex!important}
+
+  /* Menus open as bottom sheets over a dimmed page; tapping the dim area closes them (it belongs to the summary). */
+  #app#app#app#app#app#app#app#app#app :is(.workspace-menu,.case-menu,.rail-more,.next-exact-time)[open]>summary::before{content:'';position:fixed;inset:0;z-index:60;background:#0f172a73;cursor:default;animation:cv-fade .15s ease-out}
+  #app#app#app#app#app#app#app#app#app :is(.workspace-menu[open]>div,.case-menu[open]>.case-menu-list,.rail-more[open]>.rail-more-panel,.next-exact-time[open]>form){position:fixed!important;inset:auto 0 0 0!important;z-index:61!important;width:auto!important;min-width:0!important;max-width:none!important;max-height:78dvh!important;overflow:auto!important;margin:0!important;padding:26px 12px calc(14px + env(safe-area-inset-bottom))!important;border:0!important;border-radius:22px 22px 0 0!important;background:var(--surface)!important;box-shadow:0 -10px 40px #0f172a40!important;transform:none!important;animation:cv-sheet-up .2s ease-out}
+  #app#app#app#app#app#app#app#app#app :is(.workspace-menu[open]>div,.case-menu[open]>.case-menu-list,.rail-more[open]>.rail-more-panel,.next-exact-time[open]>form)::before{content:'';position:absolute;top:9px;left:50%;width:40px;height:4px;margin-left:-20px;border-radius:999px;background:var(--line)}
+  #app#app#app#app#app#app#app#app#app :is(.workbench-bar,.creation-rail,.next-timeline):has(details[open]){z-index:70!important}
+  #app#app#app#app#app#app#app#app#app :is(.workspace-menu:not([open])>div,.case-menu:not([open])>.case-menu-list,.rail-more:not([open])>.rail-more-panel){display:none!important}
+  #app#app#app#app#app#app#app#app#app :is(.workspace-menu[open]>div,.case-menu[open]>.case-menu-list)>:is(.btn,label.btn){display:flex!important;align-items:center;gap:14px!important;width:100%!important;min-height:50px!important;height:auto!important;padding:8px 12px!important;border:0!important;border-radius:12px!important;background:transparent!important;box-shadow:none!important;font-size:15px!important;font-weight:600;text-align:left;white-space:normal}
+  #app#app#app#app#app#app#app#app#app :is(.workspace-menu[open]>div,.case-menu[open]>.case-menu-list)>.btn svg{width:20px;height:20px;flex:none}
+  #app#app#app#app#app#app#app#app#app .workspace-menu[open]>div>.mobile-present-action{background:var(--brand-soft,#e6f4f1)!important;color:var(--brand,#0f766e)!important;margin-bottom:6px}
+  #app#app#app#app#app#app#app#app#app .workspace-menu[open]>div>.menu-section-label{margin:10px 12px 2px!important;font-size:12px!important;width:auto!important}
+  #app#app#app#app#app#app#app#app#app .workspace-menu[open]>div .menu-item-text{display:grid;text-align:left}
+  #app#app#app#app#app#app#app#app#app .rail-more[open]>.rail-more-panel>strong{display:block;margin:0 4px 8px;font-size:16px}
+  #app#app#app#app#app#app#app#app#app .rail-more[open]>.rail-more-panel .rail-more-open{min-height:50px!important;font-size:15px!important}
+  /* Exact time: big native date and time fields, then a full-width "Đi tới". */
+  #app#app#app#app#app#app#app#app#app .next-exact-time[open]>form{display:grid!important;grid-template-columns:1fr 1fr!important;gap:12px!important;align-items:end}
+  #app#app#app#app#app#app#app#app#app .next-exact-time[open]>form>label{display:grid!important;gap:6px;min-width:0;font-size:13px;font-weight:700;color:var(--muted)}
+  #app#app#app#app#app#app#app#app#app .next-exact-time[open]>form input{width:100%!important;min-width:0!important;height:48px!important;font-size:16px!important;border-radius:12px!important}
+  #app#app#app#app#app#app#app#app#app .next-exact-time[open]>form>.btn{grid-column:1/-1;display:flex!important;align-items:center;width:100%!important;height:50px!important;min-height:0!important;border:0!important;border-radius:14px!important;background:var(--brand,#0f766e)!important;color:#fff!important;font-size:15px!important;font-weight:700;justify-content:center}
+
+  /* Canvas: time and moments share one row; standard picker and pen share the next; the chart runs edge to edge. */
+  #app#app#app#app#app#app#app#app#app .studio-workspace:not(.focused)>.workbench{padding-left:0!important;padding-right:0!important}
+  #app#app#app#app#app#app#app#app#app .studio-workspace:not(.focused) .workarea{width:100%!important;margin:0!important;padding:0 0 calc(84px + env(safe-area-inset-bottom))!important;gap:0!important}
+  #app#app#app#app#app#app#app#app#app .workarea :is(.workspace,.case-list,.case-card){margin:0!important;padding:0!important;border-radius:0!important}
+  #app#app#app#app#app#app#app#app#app .workarea .next-timeline:not(.compact){display:flex!important;flex-wrap:nowrap!important;align-items:center!important;gap:6px!important;height:52px!important;min-height:0!important;margin:0!important;padding:6px 0 6px 8px!important;background:var(--cv-canvas)!important}
+  #app#app#app#app#app#app#app#app#app .workarea .next-timeline:not(.compact)>.next-time-heading{flex:none!important;width:auto!important;margin:0!important}
+  #app#app#app#app#app#app#app#app#app .workarea .next-timeline:not(.compact)>.next-moment-track{flex:1 1 auto!important;min-width:0!important;display:flex!important;gap:6px!important;margin:0!important;padding:0 8px 0 0!important;overflow-x:auto!important;scrollbar-width:none;scroll-snap-type:x proximity;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10px,#000 calc(100% - 18px),transparent);mask-image:linear-gradient(90deg,transparent,#000 10px,#000 calc(100% - 18px),transparent)}
+  #app#app#app#app#app#app#app#app#app .workarea .next-timeline:not(.compact) .next-moment-track>button{flex:none!important;height:38px!important;min-height:0!important;padding:0 10px!important;scroll-snap-align:center}
+  #app#app#app#app#app#app#app#app#app .workarea .next-timeline:not(.compact) .next-moment-track>button>small{display:none!important}
+  #app#app#app#app#app#app#app#app#app .workarea .next-timeline .cv-time-pill{height:38px!important;padding:0 10px 0 10px!important}
+  #app#app#app#app#app#app#app#app#app .workarea .next-timeline .cv-time-pill>small{display:none!important}
+  #app#app#app#app#app#app#app#app#app .workarea .chart-frame{margin:0!important;padding:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;background:transparent!important}
+  #app#app#app#app#app#app#app#app#app .workarea .chart-frame>.chart-viewbar{display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:6px!important;width:calc(100% - 228px)!important;height:48px!important;min-height:0!important;margin:0!important;padding:4px 8px!important;background:transparent!important;border:0!important}
+  #app#app#app#app#app#app#app#app#app .workarea .chart-viewbar .standard-picker{flex:0 1 auto!important;width:auto!important;min-width:0!important;max-width:100%!important;height:38px!important;min-height:0!important;margin:0!important;padding:0 6px 0 10px!important;gap:4px!important;border:0!important;border-radius:999px!important;background:var(--surface)!important;box-shadow:0 0 0 1px var(--line)!important}
+  #app#app#app#app#app#app#app#app#app .workarea .chart-viewbar .standard-picker>:is(span,svg){display:none!important}
+  #app#app#app#app#app#app#app#app#app .workarea .chart-viewbar .standard-picker>select{field-sizing:content;width:auto!important;max-width:100%!important;min-width:0!important;height:36px!important;min-height:0!important;padding:0 18px 0 2px!important;border:0!important;background-color:transparent!important;box-shadow:none!important;font-size:13px!important;font-weight:700!important;text-overflow:ellipsis}
+  #app#app#app#app#app#app#app#app#app .workarea .chart-viewbar :is(.view-menu,.chart-record-menu){display:none!important}
+  #app#app#app#app#app#app#app#app#app .studio-workspace .workarea .next-canvas-controls.cv-dock{top:4px!important;right:8px!important;left:auto!important;bottom:auto!important;transform:none!important;padding:3px!important;border-radius:999px!important;z-index:15!important}
+  #app#app#app#app#app#app#app#app#app .workarea .cv-dock:not(:has(.cv-dock-pen)){display:none!important}
+  #app#app#app#app#app#app#app#app#app .workarea .cv-dock .cv-dock-btn{min-height:34px!important;height:34px!important;padding:0 10px 0 4px!important}
+  #app#app#app#app#app#app#app#app#app .workarea .cv-dock .cv-pen-mark{width:24px!important;height:24px!important}
+  #app#app#app#app#app#app#app#app#app .workarea .chart-frame>.chart-scroll{margin:0!important;padding:0 4px!important;border-radius:0!important;box-shadow:none!important}
+  #app#app#app#app#app#app#app#app#app .workarea .chart-frame>.chart-scroll>svg.partograph{border-radius:4px;box-shadow:0 1px 3px #0f172a1f,0 0 0 1px #0f172a0d}
+  /* Pages: a small "Ca 1/2" chip at the bottom left, like Canva's page counter. */
+  #app#app#app#app#app#app#app#app#app .workarea>.cv-pages.open{max-width:100%!important;margin:8px 0 0!important}
+  #app#app#app#app#app#app#app#app#app .workarea>.cv-pages:not(.open){margin:8px 8px 0 auto!important;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important}
+  #app#app#app#app#app#app#app#app#app .workarea .cv-pages-toggle{height:34px!important;min-height:0!important;padding:0 10px!important;font-size:13px!important}
+  /* Pinch zoom: live percentage while pinching, and a chip to fit the page again. */
+  #app#app#app#app#app#app#app#app#app .workarea .chart-frame>.cv-fit-chip{display:inline-flex!important;align-items:center;gap:6px;position:absolute!important;right:10px;bottom:10px;z-index:16;height:38px;min-height:0!important;padding:0 14px 0 12px!important;border:0!important;border-radius:999px!important;background:#1f2430e6!important;color:#fff!important;font-size:13px!important;font-weight:700;box-shadow:0 4px 14px #0004!important}
+  #app#app#app#app#app#app#app .workarea .chart-frame>.cv-fit-chip svg{width:16px;height:16px}
+  #app#app#app#app#app#app#app#app#app .workarea .next-view-range{display:none!important}
+  #app#app#app#app#app#app#app#app#app .workarea .chart-frame>.cv-zoom-bubble{display:block!important;position:absolute;left:50%;top:40%;z-index:17;transform:translate(-50%,-50%);padding:8px 16px;border-radius:999px;background:#1f2430e6;color:#fff;font:800 18px/1 inherit;pointer-events:none}
+
+  /* Sheet: a drag handle on top; drag up/down to resize, down from "gọn" to close. The three size buttons go. */
+  #app#app#app#app#app#app#app#app#app .studio-workspace .inspector-shell .toolbox{border-radius:22px 22px 0 0!important;box-shadow:0 -8px 32px #0f172a2e,0 0 0 1px #0f172a0f!important}
+  #app#app#app#app#app#app#app#app#app .studio-workspace .toolbox>.toolbox-mobile-heading{position:sticky!important;top:0!important;z-index:14!important;min-height:52px!important;padding:18px 12px 6px 16px!important;margin:0!important;touch-action:none;-webkit-user-select:none;user-select:none;cursor:grab;background:var(--surface)!important}
+  #app#app#app#app#app#app#app#app#app .studio-workspace .toolbox>.toolbox-mobile-heading::before{content:'';position:absolute;top:7px;left:50%;width:40px;height:4px;margin-left:-20px;border-radius:999px;background:var(--line)}
+  #app#app#app#app#app#app#app#app#app .studio-workspace .toolbox>.toolbox-mobile-heading strong{font-size:17px!important}
+  #app#app#app#app#app#app#app#app#app .studio-workspace .toolbox .next-sheet-sizes{display:none!important}
+  #app#app#app#app#app#app#app#app#app .studio-workspace .toolbox .cv-grab{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip-path:inset(50%)!important;margin:0!important}
+  #app#app#app#app#app#app#app#app#app .studio-workspace:is([data-next-sheet=half],[data-next-sheet=compact]) .inspector-shell .toolbox:not(:has(.next-panel-entry)),#app#app#app#app#app#app#app#app#app .studio-workspace[data-next-sheet=half] .inspector-shell .toolbox{height:min(56dvh,520px)!important;max-height:none!important}
+  #app#app#app#app#app#app#app#app#app .studio-workspace[data-next-sheet=full] .inspector-shell{top:auto!important;height:calc(100dvh - 130px - env(safe-area-inset-bottom))!important;min-height:0!important;max-height:none!important}
+  #app#app#app#app#app#app#app#app#app .studio-workspace[data-next-sheet=full] .inspector-shell .toolbox{height:100%!important;max-height:none!important}
+
+  /* A selected point swaps the bottom bar for its own toolbar (Canva's contextual bar). */
+  #app#app#app#app#app#app#app#app#app:has(.point-toolbar) .creation-rail{visibility:hidden!important}
+  #app#app#app#app#app#app#app#app#app .point-toolbar{left:0!important;right:0!important;bottom:0!important;min-height:68px;padding:8px 8px calc(8px + env(safe-area-inset-bottom))!important;border-radius:20px 20px 0 0!important;gap:4px!important;box-shadow:0 -6px 24px #0f172a29,0 0 0 1px #0f172a12!important;animation:cv-sheet-up .16s ease-out}
+  #app#app#app#app#app#app#app#app#app .point-toolbar>button{min-width:46px!important;min-height:46px!important;border-radius:12px!important}
+  #app#app#app#app#app#app#app#app#app .point-toolbar>button svg{width:20px;height:20px}
+  #app#app#app#app#app#app#app#app#app .point-toolbar .point-toolbar-label{flex:1 1 auto!important;min-width:0;max-width:none!important;display:grid!important;padding:0 6px!important;font-size:12px!important;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #app#app#app#app#app#app#app#app#app .point-toolbar .point-toolbar-label b{display:block;font-size:14px;overflow:hidden;text-overflow:ellipsis}
+  #app#app#app#app#app#app#app#app#app .point-toolbar>.point-edit-button{padding:0 14px!important;font-size:14px!important;background:var(--brand,#0f766e)!important;color:#fff!important}
+  #app#app#app#app#app#app#app#app#app .point-toolbar>.point-edit-button svg{color:#fff}
+  #app#app#app#app#app#app#app#app#app .point-toolbar .next-near-point{order:-1;flex:1 1 100%;margin:0 0 4px!important;padding:0 0 8px!important;border:0!important;border-bottom:1px solid var(--line)!important}
+  #app#app#app#app#app#app#app#app#app .point-toolbar .point-toolbar-menu{position:fixed!important;left:8px!important;right:8px!important;bottom:calc(132px + env(safe-area-inset-bottom))!important;top:auto!important;min-width:0!important;border-radius:16px!important}
+
+  /* Bottom bar: AI joins the tools; the current tool gets a filled tile; taps press in. */
+  #app#app#app#app#app#app#app#app#app .creation-rail{padding-bottom:env(safe-area-inset-bottom)!important;box-shadow:0 -1px 0 var(--line),0 -6px 18px #0f172a0f!important}
+  #app#app#app#app#app#app#app#app#app .creation-rail>.rail-ai{display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:3px;flex:1 1 0;min-width:0;height:56px;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;color:var(--ink);font-size:11px;font-weight:600}
+  #app#app#app#app#app#app#app#app#app .creation-rail>.rail-ai>svg{width:30px;height:30px;padding:5px;border-radius:10px;background:linear-gradient(135deg,#7c3aed,#0d9488);color:#fff}
+  #app#app#app#app#app#app#app#app#app .creation-rail>button[aria-pressed=true]{outline:0!important;box-shadow:none!important}
+  #app#app#app#app#app#app#app#app#app .creation-rail>button[aria-pressed=true]>svg{background:var(--brand-soft,#e6f4f1)!important;color:var(--brand,#0f766e)!important}
+  #app#app#app#app#app#app#app#app#app .creation-rail>button[aria-pressed=true]>span{color:var(--brand,#0f766e)!important;font-weight:800}
+  #app#app#app#app#app#app#app#app#app .creation-rail>:is(button,details>summary){-webkit-tap-highlight-color:transparent;transition:transform .08s}
+  #app#app#app#app#app#app#app#app#app .creation-rail>:is(button,details>summary):active{transform:scale(.92)}
+}
+@media (max-width:760px) and (prefers-reduced-motion:reduce){
+  #app#app#app#app#app#app#app#app#app :is(.workspace-menu[open]>div,.case-menu[open]>.case-menu-list,.rail-more[open]>.rail-more-panel,.next-exact-time[open]>form,.point-toolbar),#app#app#app#app#app#app#app#app#app :is(.workspace-menu,.case-menu,.rail-more,.next-exact-time)[open]>summary::before{animation:none}
+}

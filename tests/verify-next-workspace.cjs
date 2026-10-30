@@ -444,11 +444,12 @@ async function check(p,name,fn){await fn();console.log('PASS:',name);}
       await p.setViewportSize({width:390,height:844});await app(p,a=>{a.work.hand='right';a.work.sheet='half'});
       await p.screenshot({path:path.join(output,'phone.png'),fullPage:true});
       assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true);
-      assert.equal(await p.locator('.next-sheet-sizes').isVisible(),true);
-      await p.getByRole('button',{name:'Toàn màn hình',exact:true}).click();
-      assert.equal(await app(p,a=>a.work.sheet),'full');
-      await p.getByRole('button',{name:'Gọn',exact:true}).click();
-      assert.equal(await app(p,a=>a.work.sheet),'compact');
+      // Phone sheet resizes by dragging its handle (Canva mobile), not by three size buttons.
+      assert.equal(await p.locator('.next-sheet-sizes').isVisible(),false);
+      const swipe=async dy=>{const b=await p.locator('.toolbox-mobile-heading').boundingBox(),x=b.x+b.width/2,y=b.y+8;await p.mouse.move(x,y);await p.mouse.down();await p.mouse.move(x,y+dy/2);await p.mouse.move(x,y+dy);await p.mouse.up();await p.waitForTimeout(600)};
+      await swipe(-120);assert.equal(await app(p,a=>a.work.sheet),'full');
+      await swipe(120);await swipe(120);assert.equal(await app(p,a=>a.work.sheet),'compact');
+      await p.locator('.cv-grab').dispatchEvent('click');assert.equal(await app(p,a=>a.work.sheet),'half','The handle still cycles the height for keyboard and screen-reader users');
       await app(p,a=>{a.work.sheet='half';a.work.go(.5)});await p.locator('#next-fhr').fill('144');
       await p.locator('#next-fhr').press('Control+Enter');
       assert.equal(await app(p,a=>a.clinical.observations.find(o=>o.time===.5).fhr),144);
