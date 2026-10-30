@@ -1868,3 +1868,33 @@
   #app#app#app#app#app#app#app#app#app .creation-rail>.next-pinned-tool{order:2}
   #app#app#app#app#app#app#app#app#app .creation-rail>.rail-more{order:3;position:sticky!important;right:0;z-index:2;background:var(--surface);box-shadow:-10px 0 12px -6px var(--surface),12px 0 0 var(--surface)}
 }
+/* ===== Round 44 (Vòng 77): phone — dialogs as sheets, table, sharing ===== */
+@media (max-width:760px){
+  /* Dialogs rise from the bottom edge like Canva's mobile sheets instead of floating with margins. */
+  #app#app#app#app#app#app#app#app#app dialog:is(.command-dialog,.studio-plus-dialog,.workspace-preferences,.shortcut-sheet,.usage-guide:not(.is-walkthrough))[open]{position:fixed!important;inset:auto 0 0 0!important;width:100%!important;max-width:none!important;max-height:92dvh!important;margin:0!important;border:0!important;border-radius:22px 22px 0 0!important;padding-bottom:env(safe-area-inset-bottom)!important;transform:none!important;animation:cv-sheet-up .2s ease-out}
+  #app#app#app#app#app#app#app#app#app dialog:is(.command-dialog,.studio-plus-dialog,.workspace-preferences,.shortcut-sheet,.usage-guide:not(.is-walkthrough))[open]::before{content:'';position:absolute;top:7px;left:50%;z-index:3;width:40px;height:4px;margin-left:-20px;border-radius:999px;background:var(--line)}
+  /* Search: a full-height sheet, nothing about keys a phone does not have. */
+  #app#app#app#app#app#app#app#app#app dialog.command-dialog[open]{height:92dvh!important}
+  #app#app#app#app#app#app#app#app#app dialog.command-dialog :is(.command-footer,.command-list>button>kbd,.command-list>button>svg:last-child){display:none!important}
+  #app#app#app#app#app#app#app#app#app dialog.command-dialog .command-top{padding-top:18px!important}
+  #app#app#app#app#app#app#app#app#app dialog.command-dialog .command-top input{font-size:16px!important}
+  #app#app#app#app#app#app#app#app#app dialog.command-dialog .command-list>button{min-height:56px!important}
+
+  /* Bảng dữ liệu: fills the sheet, slimmer label column. */
+  #app#app#app#app#app#app#app#app#app .studio-workspace[data-next-sheet=full] .next-panel-table>div:has(>table){max-height:calc(100dvh - 300px)!important}
+  #app#app#app#app#app#app#app#app#app .studio-workspace:not([data-next-sheet=full]) .next-panel-table>div:has(>table){max-height:calc(min(56dvh,520px) - 170px)!important}
+  #app#app#app#app#app#app#app#app#app .next-panel-table table :is(th,td):first-child{width:98px!important;min-width:98px!important;max-width:98px!important;font-size:12.5px!important}
+
+  /* Xuất: "Chia sẻ ảnh" opens the phone's share sheet; copying to a clipboard matters less on a phone. */
+  #app#app#app#app#app#app#app#app#app .export-download:has(.share-image) .copy-image{display:none!important}
+  #app#app#app#app#app#app#app#app#app .export-download .share-image{flex:1 1 0!important}
+
+  /* Bottom bar: seven tools fit without the last one slipping under "Thêm". */
+  #app#app#app#app#app#app#app#app#app .creation-rail{padding-left:4px!important;padding-right:4px!important}
+  #app#app#app#app#app#app#app#app#app .creation-rail>:is(button,details){flex:1 0 50px!important;min-width:50px!important}
+}
+@media (max-width:760px){
+  #app#app#app#app#app#app#app#app#app dialog.command-dialog[open]{display:flex!important;flex-direction:column!important}
+  #app#app#app#app#app#app#app#app#app dialog.command-dialog[open]>*{min-height:0;flex:none}
+  #app#app#app#app#app#app#app#app#app dialog.command-dialog .command-list{flex:1 1 auto!important;max-height:none!important;overflow:auto!important}
+}
