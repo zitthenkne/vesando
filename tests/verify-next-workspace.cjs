@@ -453,6 +453,10 @@ async function check(p,name,fn){await fn();console.log('PASS:',name);}
       await app(p,a=>{a.work.sheet='half';a.work.go(.5)});await p.locator('#next-fhr').fill('144');
       await p.locator('#next-fhr').press('Control+Enter');
       assert.equal(await app(p,a=>a.clinical.observations.find(o=>o.time===.5).fhr),144);
+      // Tapping Ghi nhận while a field is focused records: the bottom bar must not spring back under the finger mid-tap.
+      await p.locator('#next-fhr').fill('146');
+      const save=await p.locator('.next-record-footer button.primary').last().boundingBox();await p.mouse.click(save.x+save.width/2,save.y+save.height/2);await p.waitForTimeout(300);
+      assert.equal(await app(p,a=>a.clinical.observations.find(o=>o.time===.5).fhr),146);
       await p.setViewportSize({width:390,height:500});
       const rect=await p.locator('.next-record-footer').boundingBox(),dock=await p.locator('.creation-rail').isVisible();
       assert.ok(rect&&rect.y+rect.height<=500-(dock?60:0)+1,'Record actions stay on screen above the phone dock with a shorter visual viewport');

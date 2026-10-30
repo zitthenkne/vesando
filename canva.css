@@ -1834,9 +1834,9 @@
   #app#app#app#app#app#app#app#app#app:has(.chart-cell-editor) :is(.creation-rail,.point-toolbar,.next-context){visibility:hidden!important}
 
   /* Typing: while the keyboard is up the bottom bar and step chips give their room to the form. */
-  #app#app#app#app#app#app#app#app#app:has(.toolbox :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]),textarea):focus) .creation-rail{display:none!important}
-  #app#app#app#app#app#app#app#app#app:has(.toolbox :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]),textarea):focus) .inspector-shell{bottom:0!important}
-  #app#app#app#app#app#app#app#app#app:has(.toolbox :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]),textarea):focus) .toolbox .cv-step-seg{display:none!important}
+  html.cv-typing #app#app#app#app#app#app#app#app#app .creation-rail{display:none!important}
+  html.cv-typing #app#app#app#app#app#app#app#app#app .inspector-shell{bottom:0!important}
+  html.cv-typing #app#app#app#app#app#app#app#app#app .toolbox .cv-step-seg{display:none!important}
 
   /* Point menu: a tidy sheet above the point bar with full-height rows. */
   #app#app#app#app#app#app#app#app#app .point-toolbar .point-toolbar-menu{padding:8px!important;border:0!important;border-radius:20px!important;box-shadow:0 -8px 30px #0f172a33,0 0 0 1px #0f172a12!important}
@@ -1897,4 +1897,13 @@
   #app#app#app#app#app#app#app#app#app dialog.command-dialog[open]{display:flex!important;flex-direction:column!important}
   #app#app#app#app#app#app#app#app#app dialog.command-dialog[open]>*{min-height:0;flex:none}
   #app#app#app#app#app#app#app#app#app dialog.command-dialog .command-list{flex:1 1 auto!important;max-height:none!important;overflow:auto!important}
+}
+/* ===== Round 45 (Vòng 78): phone — fixes from a touch-only walk of both flows ===== */
+@media (max-width:760px){
+  /* A selected point takes the bottom like Canva: an open sheet steps aside until the point is let go. */
+  #app#app#app#app#app#app#app#app#app:has(.point-toolbar) .inspector-shell{visibility:hidden!important}
+  /* Toasts sit over the title bar and let taps through, so the pen and the time row stay usable; only "Hoàn tác" catches taps. */
+  #app#app#app#app#app#app#app#app#app:not(:has(.project-home)):is(:has(.workbench.inspector-open),:has(.point-toolbar),:has(.presenter)) .toast{top:calc(4px + env(safe-area-inset-top))!important;bottom:auto!important}
+  #app#app#app#app#app#app#app#app#app .studio-workspace~.toast,#app#app#app#app#app#app#app#app#app .toast{pointer-events:none}
+  #app#app#app#app#app#app#app#app#app .toast :is(button,a){pointer-events:auto}
 }

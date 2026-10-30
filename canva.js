@@ -48,6 +48,15 @@
   addEventListener('scroll',hide,true);
   if(document.body)document.body.appendChild(tip);else document.addEventListener('DOMContentLoaded',()=>document.body.appendChild(tip),{once:true});
 })();
+// Phone: while a field in a sheet is typed into, <html> carries .cv-typing and the bottom bar steps aside. The class is dropped a
+// moment after the field loses focus, so the tap that blurred it still lands on the button it was aimed at (Ghi nhận, ×).
+(function(){
+  const FIELD='input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]),textarea';
+  const inSheet=el=>!!(el?.matches?.(FIELD)&&el.closest('.toolbox'));
+  let timer=0;
+  document.addEventListener('focusin',e=>{if(!inSheet(e.target))return;clearTimeout(timer);document.documentElement.classList.add('cv-typing')});
+  document.addEventListener('focusout',e=>{if(!inSheet(e.target))return;clearTimeout(timer);timer=setTimeout(()=>{if(!inSheet(document.activeElement))document.documentElement.classList.remove('cv-typing')},450)});
+})();
 // Phone: a menu opened as a bottom sheet closes when dragged down by its top edge, like Canva's sheets.
 (function(){
   const SHEETS='.workspace-menu[open]>div,.case-menu[open]>.case-menu-list,.rail-more[open]>.rail-more-panel,.next-exact-time[open]>form';
