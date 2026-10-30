@@ -46,3 +46,21 @@
   addEventListener('scroll',hide,true);
   if(document.body)document.body.appendChild(tip);else document.addEventListener('DOMContentLoaded',()=>document.body.appendChild(tip),{once:true});
 })();
+// Phone: a menu opened as a bottom sheet closes when dragged down by its top edge, like Canva's sheets.
+(function(){
+  const SHEETS='.workspace-menu[open]>div,.case-menu[open]>.case-menu-list,.rail-more[open]>.rail-more-panel,.next-exact-time[open]>form';
+  let drag=null;
+  const begin=(target,y)=>{
+    if(innerWidth>760)return false;
+    const sheet=target.closest?.(SHEETS);
+    if(!sheet||y-sheet.getBoundingClientRect().top>34||target.closest('button,a,input,select,label'))return false;
+    drag={sheet,start:y,dy:0};return true;
+  };
+  const move=y=>{if(!drag)return;drag.dy=Math.max(0,y-drag.start);drag.sheet.style.setProperty('transform','translateY('+drag.dy+'px)','important');drag.sheet.style.setProperty('transition','none','important')};
+  const end=()=>{if(!drag)return;const {sheet,dy}=drag;drag=null;sheet.style.removeProperty('transform');sheet.style.removeProperty('transition');if(dy>60)sheet.parentElement.open=false};
+  document.addEventListener('touchstart',e=>{if(e.touches.length===1)begin(e.target,e.touches[0].clientY)},{passive:true});
+  document.addEventListener('touchmove',e=>{if(!drag)return;e.preventDefault();move(e.touches[0].clientY)},{passive:false});
+  document.addEventListener('touchend',end);document.addEventListener('touchcancel',end);
+  document.addEventListener('mousedown',e=>{if(e.button===0&&begin(e.target,e.clientY))e.preventDefault()});
+  document.addEventListener('mousemove',e=>move(e.clientY));document.addEventListener('mouseup',end);
+})();

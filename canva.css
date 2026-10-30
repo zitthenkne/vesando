@@ -1737,7 +1737,7 @@
 
   /* Sheet: a drag handle on top; drag up/down to resize, down from "gọn" to close. The three size buttons go. */
   #app#app#app#app#app#app#app#app#app .studio-workspace .inspector-shell .toolbox{border-radius:22px 22px 0 0!important;box-shadow:0 -8px 32px #0f172a2e,0 0 0 1px #0f172a0f!important}
-  #app#app#app#app#app#app#app#app#app .studio-workspace .toolbox>.toolbox-mobile-heading{position:sticky!important;top:0!important;z-index:14!important;min-height:52px!important;padding:18px 12px 6px 16px!important;margin:0!important;touch-action:none;-webkit-user-select:none;user-select:none;cursor:grab;background:var(--surface)!important}
+  #app#app#app#app#app#app#app#app#app .studio-workspace .toolbox>.toolbox-mobile-heading{position:sticky!important;top:0!important;z-index:14!important;min-height:52px!important;padding:18px 8px 6px 16px!important;margin:0 -16px 8px!important;touch-action:none;-webkit-user-select:none;user-select:none;cursor:grab;background:var(--surface)!important}
   #app#app#app#app#app#app#app#app#app .studio-workspace .toolbox>.toolbox-mobile-heading::before{content:'';position:absolute;top:7px;left:50%;width:40px;height:4px;margin-left:-20px;border-radius:999px;background:var(--line)}
   #app#app#app#app#app#app#app#app#app .studio-workspace .toolbox>.toolbox-mobile-heading strong{font-size:17px!important}
   #app#app#app#app#app#app#app#app#app .studio-workspace .toolbox .next-sheet-sizes{display:none!important}
@@ -1770,4 +1770,57 @@
 }
 @media (max-width:760px) and (prefers-reduced-motion:reduce){
   #app#app#app#app#app#app#app#app#app :is(.workspace-menu[open]>div,.case-menu[open]>.case-menu-list,.rail-more[open]>.rail-more-panel,.next-exact-time[open]>form,.point-toolbar),#app#app#app#app#app#app#app#app#app :is(.workspace-menu,.case-menu,.rail-more,.next-exact-time)[open]>summary::before{animation:none}
+}
+
+/* ===== Round 42 (Vòng 75): phone — alarms, present, AI, home and landscape ===== */
+@keyframes cv-badge-pulse{0%,100%{box-shadow:0 0 0 0 #dc262699}50%{box-shadow:0 0 0 5px #dc262600}}
+@media (max-width:760px){
+  /* Theo dõi: the alarm is a full-width strip above the chart (it was hidden on phones); tap it to read the checks. */
+  #app#app#app#app#app#app#app#app#app .workarea .chart-frame .cv-alert-pill{display:flex!important;position:absolute!important;top:50px!important;left:8px!important;right:8px!important;max-width:none!important;min-height:44px!important;padding:0 14px!important;border-radius:14px!important;font-size:14px!important;font-weight:700!important;box-shadow:0 4px 14px #0f172a26!important;z-index:15!important}
+  #app#app#app#app#app#app#app#app#app .workarea .chart-frame .cv-alert-pill>span{flex:1 1 auto;min-width:0}
+  #app#app#app#app#app#app#app#app#app .workarea .chart-frame .cv-alert-pill::after{content:'Xem';flex:none;padding:3px 10px;border-radius:999px;background:#ffffff40;font-size:12px}
+  #app#app#app#app#app#app#app#app#app .workarea .chart-frame:has(.cv-alert-pill)>.chart-scroll{padding-top:52px!important}
+  #app#app#app#app#app#app#app#app#app .creation-rail .cv-badge:not(.warn):not(.cv-dot){animation:cv-badge-pulse 1.6s ease-in-out 4}
+
+  /* Toasts go to the top while a sheet, point toolbar or presenter holds the bottom, so they never cover Ghi nhận. */
+  #app#app#app#app#app#app#app#app#app:not(:has(.project-home)):is(:has(.workbench.inspector-open),:has(.point-toolbar),:has(.presenter)) .toast{top:calc(64px + env(safe-area-inset-top))!important;bottom:auto!important}
+
+  /* Trình chiếu: full screen like Canva — the bottom bar steps aside and the clock no longer gets cut. */
+  #app#app#app#app#app#app#app#app#app:has(.presenter) .creation-rail{display:none!important}
+  #app#app#app#app#app#app#app#app#app .studio-workspace .presenter{left:0!important;right:0!important;bottom:0!important;transform:none!important;margin:0!important;width:auto!important;max-width:none!important;border-radius:22px 22px 0 0!important;padding-bottom:calc(12px + env(safe-area-inset-bottom))!important}
+  #app#app#app#app#app#app#app#app#app .presenter .presenter-progress{display:grid!important;grid-template-columns:1fr;align-content:center;gap:2px!important;flex:1 1 auto;min-width:0}
+  #app#app#app#app#app#app#app#app#app .presenter .presenter-progress>strong{line-height:1.1}
+  #app#app#app#app#app#app#app#app#app .presenter .presenter-progress>small{display:block!important;font-size:11.5px!important;white-space:nowrap}
+  #app#app#app#app#app#app#app#app#app .presenter .presenter-progress>.presenter-track{max-width:100%;overflow:hidden}
+
+  /* AI dialog: footer buttons share the width instead of running off the screen. */
+  #app#app#app#app#app#app#app#app#app dialog.ai-studio .json-workbench-footer{display:flex!important;flex-wrap:wrap!important;align-items:center;gap:8px!important;padding:10px 12px calc(10px + env(safe-area-inset-bottom))!important}
+  #app#app#app#app#app#app#app#app#app dialog.ai-studio .json-workbench-footer>:is(span,p){flex:1 1 100%;margin:0!important;font-size:12px}
+  #app#app#app#app#app#app#app#app#app dialog.ai-studio .json-workbench-footer>.btn{flex:0 0 auto!important;width:auto!important;min-width:0!important;padding:0 14px!important}
+  #app#app#app#app#app#app#app#app#app dialog.ai-studio .json-workbench-footer>.ai-send-actions{display:flex!important;flex:1 1 0!important;min-width:0!important;width:auto!important}
+  #app#app#app#app#app#app#app#app#app dialog.ai-studio .json-workbench-footer .ai-send{flex:1 1 auto!important;min-width:0!important;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+  /* Home: the library reads like Canva's recent designs — filters scroll, two cards per row. */
+  #app#app#app#app#app#app#app#app#app .project-home .library-filters{display:flex!important;flex-wrap:nowrap!important;gap:8px!important;overflow-x:auto;scrollbar-width:none;margin-right:-18px;padding-right:18px}
+  #app#app#app#app#app#app#app#app#app .project-home .library-filters>[role=group]{flex:none!important}
+  #app#app#app#app#app#app#app#app#app .project-home .library-filters>.library-tag-filter{flex:none!important;max-width:none!important}
+  #app#app#app#app#app#app#app#app#app .project-home .project-grid:not(.project-list){display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}
+  #app#app#app#app#app#app#app#app#app .project-home .project-grid:not(.project-list) .project-card{min-width:0!important}
+  #app#app#app#app#app#app#app#app#app .project-home .project-grid:not(.project-list) .project-description strong{font-size:13.5px!important;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  #app#app#app#app#app#app#app#app#app .project-home .project-grid:not(.project-list) .project-description>span{font-size:11.5px!important}
+  #app#app#app#app#app#app#app#app#app .project-home .project-grid:not(.project-list) .project-kind{font-size:10.5px!important}
+  /* The AI box stays inviting but no longer fills a whole screen. */
+  #app#app#app#app#app#app#app#app#app .project-home .home-ai-start{padding:18px 14px!important}
+  #app#app#app#app#app#app#app#app#app .project-home .home-ai-start #home-ai-title{font-size:19px!important;line-height:1.25!important;margin-bottom:10px!important}
+  #app#app#app#app#app#app#app#app#app .project-home .home-ai-start textarea{min-height:84px!important}
+}
+/* Phone held sideways: thin chrome so the chart keeps most of the 390 px height. */
+@media (min-width:761px) and (max-height:500px) and (pointer:coarse){
+  #app#app#app#app#app#app#app#app#app .studio-workspace .workbench-bar{height:46px!important;min-height:46px!important}
+  #app#app#app#app#app#app#app#app#app .workbench-bar .session-save-state{display:none!important}
+  #app#app#app#app#app#app#app#app#app .creation-rail>button>span,#app#app#app#app#app#app#app#app#app .creation-rail>details>summary>span{display:none!important}
+  #app#app#app#app#app#app#app#app#app .creation-rail>:is(button,details>summary){min-height:46px!important;height:46px!important}
+  #app#app#app#app#app#app#app#app#app .creation-rail .rail-help{display:none!important}
+  #app#app#app#app#app#app#app#app#app .workarea .cv-empty-canvas,#app#app#app#app#app#app#app#app#app .workarea .next-empty-hint{display:none!important}
+  #app#app#app#app#app#app#app#app#app .workarea .next-moment-track>button>small{display:none!important}
 }
