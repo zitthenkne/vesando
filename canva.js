@@ -38,7 +38,9 @@
   const candidate=e=>e.target.closest?.('button,summary,a,[role=button],[role=radio],[title]');
   document.addEventListener('pointerover',e=>{if(e.pointerType==='touch')return;const el=candidate(e);if(el&&el!==target)show(el)});
   document.addEventListener('pointerout',e=>{if(target&&!target.contains(e.relatedTarget))hide()});
-  document.addEventListener('focusin',e=>{const el=candidate(e);if(el&&el.matches(':focus-visible'))show(el)});
+  // A tap can move focus (menus focus their first item); touch users get no bubble for that.
+  let touchedAt=0;document.addEventListener('pointerdown',e=>{if(e.pointerType==='touch')touchedAt=Date.now()},true);
+  document.addEventListener('focusin',e=>{const el=candidate(e);if(el&&el.matches(':focus-visible')&&Date.now()-touchedAt>1000)show(el)});
   document.addEventListener('focusout',hide);
   document.addEventListener('pointerdown',hide,true);
   document.addEventListener('toggle',e=>{if(e.target.open)hide()},true);

@@ -1824,3 +1824,47 @@
   #app#app#app#app#app#app#app#app#app .workarea .cv-empty-canvas,#app#app#app#app#app#app#app#app#app .workarea .next-empty-hint{display:none!important}
   #app#app#app#app#app#app#app#app#app .workarea .next-moment-track>button>small{display:none!important}
 }
+/* ===== Round 43 (Vòng 76): phone — editing in place, keyboard and touch feel ===== */
+@media (max-width:760px){
+  /* "Sửa" on a point or cell opens as a bottom sheet with a big field, not a card floating over the chart. */
+  #app#app#app#app#app#app#app#app#app .chart-cell-editor{position:fixed!important;inset:auto 0 0 0!important;width:auto!important;max-width:none!important;max-height:72dvh!important;overflow:auto!important;padding:20px 4px calc(10px + env(safe-area-inset-bottom))!important;border:0!important;border-radius:22px 22px 0 0!important;box-shadow:0 -10px 40px #0f172a40!important;z-index:62!important;animation:cv-sheet-up .18s ease-out}
+  #app#app#app#app#app#app#app#app#app .chart-cell-editor::before{content:'';position:absolute;top:8px;left:50%;width:40px;height:4px;margin-left:-20px;border-radius:999px;background:var(--line)}
+  #app#app#app#app#app#app#app#app#app .chart-cell-editor :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]),select){height:50px!important;font-size:16px!important;border-radius:12px!important}
+  #app#app#app#app#app#app#app#app#app .chart-cell-editor :is(.btn,button[type=submit]){min-height:48px!important}
+  #app#app#app#app#app#app#app#app#app:has(.chart-cell-editor) :is(.creation-rail,.point-toolbar,.next-context){visibility:hidden!important}
+
+  /* Typing: while the keyboard is up the bottom bar and step chips give their room to the form. */
+  #app#app#app#app#app#app#app#app#app:has(.toolbox :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]),textarea):focus) .creation-rail{display:none!important}
+  #app#app#app#app#app#app#app#app#app:has(.toolbox :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]),textarea):focus) .inspector-shell{bottom:0!important}
+  #app#app#app#app#app#app#app#app#app:has(.toolbox :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]),textarea):focus) .toolbox .cv-step-seg{display:none!important}
+
+  /* Point menu: a tidy sheet above the point bar with full-height rows. */
+  #app#app#app#app#app#app#app#app#app .point-toolbar .point-toolbar-menu{padding:8px!important;border:0!important;border-radius:20px!important;box-shadow:0 -8px 30px #0f172a33,0 0 0 1px #0f172a12!important}
+  #app#app#app#app#app#app#app#app#app .point-toolbar .point-toolbar-menu>button{min-height:48px!important;font-size:15px!important;border-radius:12px!important}
+  #app#app#app#app#app#app#app#app#app .point-toolbar .point-toolbar-menu .mini-swatches>button{width:40px!important;height:40px!important}
+
+  /* Trình bày tabs: icon over label, centred, like Canva's panel tabs. */
+  #app#app#app#app#app#app#app#app#app .toolbox .design-nav>button{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:3px!important;min-height:54px!important;text-align:center!important;font-size:12px!important}
+  #app#app#app#app#app#app#app#app#app .toolbox .design-nav>button svg{width:20px;height:20px;margin:0!important}
+
+  /* Touch feel: no double-tap zoom on controls, no pull-to-refresh or scroll chaining inside the editor. */
+  #app#app#app#app#app#app#app#app#app :is(button,summary,[role=button],label.btn){touch-action:manipulation}
+  html:not(:has(.project-home)),html:not(:has(.project-home)) body{overscroll-behavior-y:none}
+  #app#app#app#app#app#app#app#app#app :is(.toolbox,.chart-scroll,.chart-cell-editor,.workspace-menu>div,.case-menu-list,.rail-more-panel){overscroll-behavior:contain}
+}
+@media (max-width:760px){
+  /* Bottom bar: tools pinned from "Thêm" join it (they were hidden on phones) and the bar scrolls sideways when full. */
+  #app#app#app#app#app#app#app#app#app .creation-rail{overflow-x:auto!important;overflow-y:hidden!important;scrollbar-width:none;justify-content:flex-start!important}
+  #app#app#app#app#app#app#app#app#app .creation-rail::-webkit-scrollbar{display:none}
+  #app#app#app#app#app#app#app#app#app .creation-rail>:is(button,details){flex:1 0 54px!important;min-width:54px!important}
+  #app#app#app#app#app#app#app#app#app .creation-rail>.next-pinned-tool{display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:3px;height:56px;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;color:var(--ink);font-size:11px;font-weight:600}
+  #app#app#app#app#app#app#app#app#app .creation-rail>.next-pinned-tool>svg{width:30px;height:30px;padding:5px;border-radius:10px;background:var(--cv-tile)}
+  #app#app#app#app#app#app#app#app#app .creation-rail>.next-pinned-tool>span{max-width:58px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #app#app#app#app#app#app#app#app#app .creation-rail>.next-pinned-tool[aria-pressed=true]>svg{background:var(--brand-soft,#e6f4f1);color:var(--brand,#0f766e)}
+  #app#app#app#app#app#app#app#app#app .creation-rail>.next-rail-divider{display:none!important}
+}
+@media (max-width:760px){
+  #app#app#app#app#app#app#app#app#app .creation-rail>.rail-ai{order:1}
+  #app#app#app#app#app#app#app#app#app .creation-rail>.next-pinned-tool{order:2}
+  #app#app#app#app#app#app#app#app#app .creation-rail>.rail-more{order:3;position:sticky!important;right:0;z-index:2;background:var(--surface);box-shadow:-10px 0 12px -6px var(--surface),12px 0 0 var(--surface)}
+}

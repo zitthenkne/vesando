@@ -454,8 +454,10 @@ async function check(p,name,fn){await fn();console.log('PASS:',name);}
       await p.locator('#next-fhr').press('Control+Enter');
       assert.equal(await app(p,a=>a.clinical.observations.find(o=>o.time===.5).fhr),144);
       await p.setViewportSize({width:390,height:500});
-      const rect=await p.locator('.next-record-footer').boundingBox();
-      assert.ok(rect&&rect.y+rect.height<=500-60,'Record actions remain above the phone dock with a shorter visual viewport');
+      const rect=await p.locator('.next-record-footer').boundingBox(),dock=await p.locator('.creation-rail').isVisible();
+      assert.ok(rect&&rect.y+rect.height<=500-(dock?60:0)+1,'Record actions stay on screen above the phone dock with a shorter visual viewport');
+      // While a field is being typed into, the dock steps aside so the keyboard leaves room for the form.
+      assert.equal(await p.evaluate(()=>document.activeElement?.matches('.toolbox input')),!dock);
       await p.setViewportSize({width:1440,height:1000});
     });
     await check(p,'Core validator and SVG regression checks remain valid',async()=>{
